@@ -1,9 +1,24 @@
-import type { NextPage } from 'next'
+import type { NextPage, NextPageContext } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { endpoint } from '../config/endpoint'
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = () => {
+Home.getInitialProps = async (ctx: NextPageContext) => {
+  let tacosJson: any = []
+  tacosJson = await getFetchData(endpoint + '/api/tacos', ctx)
+
+  return {
+    tacos: tacosJson,
+  }
+}
+
+async function getFetchData(url: string, ctx: NextPageContext) {
+  const resp = await fetch(url)
+  return await resp.json()
+}
+
+export default function Home(props: any) {
   return (
     <div className={styles.container}>
       <Head>
@@ -16,6 +31,16 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <ul>
+          {
+            props.tacos && props.tacos.data ? (
+              props.tacos.data.map((taco: any, index: number) =>
+                <li key={index}>{taco.name}</li>
+              )
+            ) : null
+          }
+        </ul>
 
         <p className={styles.description}>
           Get started by editing{' '}
@@ -68,5 +93,3 @@ const Home: NextPage = () => {
     </div>
   )
 }
-
-export default Home
