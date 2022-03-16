@@ -1,12 +1,11 @@
 // React
-import Layout from "../../../../components/globals/Layout"
-import LayoutDemo1 from "../../../../components/globals/LayoutDemo1"
-import WhoWeAreDemo1 from "../../../../components/website/demo1/plaza-catedral/whoWeAre/WhoWeAre"
 
 // CSS
 import styles from "../../../../styles/Demo1CatedralHome.module.css"
 
 // Componets
+import LayoutDemo1 from "../../../../components/globals/LayoutDemo1"
+import WhoWeAreDemo1 from "../../../../components/website/demo1/whoWeAre/WhoWeAre"
 
 // Libraries
 
@@ -39,7 +38,7 @@ const HotelCatedralDemo1 = () => {
 
             {/* ¿Quienes Somos? */}
 
-            <WhoWeAreDemo1 />
+            <WhoWeAreDemo1 url={"/hotels/mision_vision/catedral/"} />
 
         </LayoutDemo1>
     )

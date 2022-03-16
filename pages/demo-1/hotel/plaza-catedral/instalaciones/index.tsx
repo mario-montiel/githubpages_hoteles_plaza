@@ -5,7 +5,8 @@ import LayoutDemo1 from "../../../../../components/globals/LayoutDemo1"
 import styles from "../../../../../styles/Demo1CatedralHome.module.css"
 
 // Componets
-import FacilitiesCatedralDemo1 from "../../../../../components/website/demo1/plaza-catedral/facilities/Facilities"
+import FacilitiesCatedralDemo1 from "../../../../../components/website/demo1/facilities/Facilities"
+import { endpoint } from "../../../../../config/endpoint"
 
 // Libraries
 
@@ -23,7 +24,7 @@ const FacilitiesCatedraDemo1 = () => {
 
             <img
                 className={styles.hotel_face}
-                src="/hotels/facilities/catedral/facilitie_face.jpg"
+                src="/hotels/facilities/catedral/facilitie_face.png"
                 alt="First Image"
             // srcSet="/hotels/main/fachada-catedral-480x400.png 240w,
             //     /hotels/main/fachada-catedral-960x900.png 530w,
@@ -36,7 +37,7 @@ const FacilitiesCatedraDemo1 = () => {
             // "
             />
 
-            <FacilitiesCatedralDemo1 />
+            <FacilitiesCatedralDemo1 url={`${endpoint}/hotels/facilities/catedral/facilitie`} />
 
         </LayoutDemo1>
     )

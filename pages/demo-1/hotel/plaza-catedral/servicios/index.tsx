@@ -1,11 +1,11 @@
 // React
-import LayoutDemo1 from "../../../../../components/globals/LayoutDemo1"
-import ServicesDemo1 from "../../../../../components/website/demo1/plaza-catedral/services/Services"
 
 // CSS
 import styles from "../../../../../styles/Demo1CatedralHome.module.css"
 
 // Componets
+import LayoutDemo1 from "../../../../../components/globals/LayoutDemo1"
+import ServicesDemo1 from "../../../../../components/website/demo1/services/Services"
 
 // Libraries
 

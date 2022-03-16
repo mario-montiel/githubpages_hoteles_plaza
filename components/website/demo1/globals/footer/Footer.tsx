@@ -1,11 +1,12 @@
 // React
-import { useState } from "react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 
 // CSS
 import styles from "./Footer.module.css"
 
 // Componets
-import BookingModalCatedralDemo1 from "../../plaza-catedral/modal/booking/Booking"
+import BookingModalCatedralDemo1 from "../../booking/Booking"
 
 // Libraries
 
@@ -16,30 +17,50 @@ import BookingModalCatedralDemo1 from "../../plaza-catedral/modal/booking/Bookin
 const FooterDemo1 = () => {
 
     // Variables
+    const router = useRouter()
+    const initialUrlDataValues = {
+        logo: '',
+        url: '',
+        adress: ''
+    }
 
     // Use State
+    const [url, setUrl] = useState(initialUrlDataValues)
     const [bookingModal, setBookingModal] = useState<boolean>(false)
 
     // Functions
+
+    // Use Effect
+    useEffect(() => {
+        if (router.asPath.startsWith('/demo-1/hotel/plaza-catedral')) {
+            setUrl({
+                ...url,
+                logo: "catedral_logo",
+                url: "/demo-1/hotel/plaza-catedral",
+                adress: "Av Hidalgo 520 Norte, Primero de Cobián Centro, 35000 Gómez Palacio, Dgo."
+            })
+        } else {
+            setUrl({
+                ...url,
+                logo: 'matamoros_logo',
+                url: "/demo-1/hotel/plaza-matamoros",
+                adress: "Blvd. Matamoros Torreón 125 Nte. Fracc. Punta Laguna, C.P. 27448 Matamoros, Coah. México."
+            })
+        }
+    }, [router.asPath])
 
     return (
         <footer className={styles.footer}>
             <img
                 className={styles.texture_image}
                 src="/hotels/symbols/frame_texture_bottom_left.png"
-                alt=""
+                alt="Logotipo del hotel"
             />
 
             <div className={styles.menu_container}>
                 <ul>
                     <li>VISÍTANOS</li>
-                    <li>
-                        Blvd. Matamoros Torreón
-                        125 Nte. Fracc. Punta Laguna,
-                        C.P. 27448
-                        Matamoros, Coah. México.
-
-                    </li>
+                    <li> {url.adress} </li>
                     <li>871 108 58 30</li>
                     <li>
                         <span>
@@ -85,7 +106,7 @@ const FooterDemo1 = () => {
 
                 <img
                     className={styles.logo_footer}
-                    src="/hotels/logos/catedral_logo.png"
+                    src={`/hotels/logos/${url.logo}.png`}
                     alt="Logotipo del hotel"
                 />
             </div>

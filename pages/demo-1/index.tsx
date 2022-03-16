@@ -46,7 +46,10 @@ const Demo1 = () => {
                         alt="Hotel Plaza Catedral"
                     />
 
-                    <button className={styles.btn_hotel} onClick={() => redirectTo('/demo-1/hotel/plaza-catedral')}>
+                    <button
+                        className={styles.btn_hotel}
+                        onClick={() => redirectTo('/demo-1/hotel/plaza-catedral')}
+                    >
                         <span>
                             ENTRAR
                         </span>
@@ -70,7 +73,10 @@ const Demo1 = () => {
                 "
                 />
 
-                <div className={styles.logo_container}>
+                <div
+                    className={styles.logo_container}
+                    onClick={() => redirectTo('/demo-1/hotel/plaza-matamoros')}
+                >
                     <img
                         className={styles.logo}
                         src="/hotels/logos/matamoros_logo_white.png"
