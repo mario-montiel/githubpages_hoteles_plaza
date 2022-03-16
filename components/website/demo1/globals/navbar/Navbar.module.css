@@ -1,0 +1,79 @@
+.navbar {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 10;
+    position: fixed;
+    background-color: var(--white);
+    box-shadow: 1px 1px 10px 0px rgb(143, 143, 143);
+}
+
+.navbar ul {
+    width: 80%;
+    padding: 0px;
+    display: grid;
+    list-style: none;
+    margin: 1rem auto;
+    align-items: center;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.navbar ul li {
+    text-align: center;
+    margin: auto 8px;
+    font-size: 9.6pt;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.navbar ul li:first-of-type {
+    margin-right: 15px;
+}
+
+.navbar ul li:last-of-type {
+    margin-right: 15px;
+}
+
+.navbar ul li:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.navbar ul li img {
+    object-fit: cover;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: var(--black);
+    position: relative;
+}
+
+.selected a::after {
+    content: "";
+    left: -10%;
+    bottom: -5px;
+    position: absolute;
+    width: 120%;
+    height: 1.5px;
+    background-color: var(--main-color);
+}
+
+.navbar ul button {
+    width: auto;
+    margin: auto;
+    border: none;
+    font-size: 9.6pt;
+    font-weight: bold;
+    color: var(--white);
+    border-radius: 20px;
+    padding: 0.7rem 1.5rem;
+    background-color: var(--main-color);
+    font-family: 'Source Sans Pro', sans-serif;
+    letter-spacing: 2px;
+}
+
+.navbar ul button:hover {
+    cursor: pointer;
+    background-color: var(--demo1-btn-hover);
+}
