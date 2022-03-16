@@ -1,7 +1,6 @@
 // React
 
 // CSS
-import { useEffect, useRef, useState } from "react"
 import styles from "./UbicationContact.module.css"
 
 // Componets
@@ -9,6 +8,7 @@ import styles from "./UbicationContact.module.css"
 // Libraries
 
 // Helpers
+import { endpoint } from "../../../../../config/endpoint"
 
 // Types
 
@@ -28,7 +28,7 @@ const UbicationContactDemo1 = () => {
 
             <img
                 className={styles.texture_top_image}
-                src="/hotels/symbols/frame_texture_top_right.png"
+                src={`${endpoint}/hotels/symbols/frame_texture_top_right.png`}
                 alt="texture_image"
             />
 

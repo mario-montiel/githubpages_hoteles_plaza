@@ -1,7 +1,7 @@
 // React
+import { useEffect, useRef, useState } from "react"
 
 // CSS
-import { useEffect, useRef, useState } from "react"
 import styles from "./Rooms.module.css"
 
 // Componets
@@ -9,6 +9,7 @@ import styles from "./Rooms.module.css"
 // Libraries
 
 // Helpers
+import { endpoint } from "../../../../../config/endpoint"
 
 // Types
 
@@ -32,9 +33,9 @@ const RoomsCatedralDemo1 = () => {
                 <img
                     key={index}
                     className={styles.small_image}
-                    src={`/hotels/rooms/catedral/suite_room${index}.jpg`}
+                    src={`${endpoint}/hotels/rooms/catedral/suite_room${index}.png`}
                     alt="Imágen de la habitación suite"
-                    onClick={() => selectSuiteImage(index)}
+                    onMouseEnter={() => selectSuiteImage(index)}
                 />
             )
         }
@@ -50,7 +51,7 @@ const RoomsCatedralDemo1 = () => {
                 <img
                     key={index}
                     className={`${styles.current_image_selected} suit-images-to-show`}
-                    src={`/hotels/rooms/catedral/suite_room${index}.jpg`}
+                    src={`${endpoint}/hotels/rooms/catedral/suite_room${index}.png`}
                     alt="Imágen de la habitación suite"
                     onClick={() => selectSuiteImage(index)}
                 />
@@ -115,13 +116,13 @@ const RoomsCatedralDemo1 = () => {
 
             <img
                 className={styles.texture_top_image}
-                src="/hotels/symbols/frame_texture_top_right.png"
+                src={`${endpoint}/hotels/symbols/frame_texture_top_right.png`}
                 alt="texture_image"
             />
 
             <img
                 className={styles.symbol}
-                src="/hotels/symbols/frame.png"
+                src={`${endpoint}/hotels/symbols/frame.png`}
                 alt="Símbolo"
             />
 
@@ -139,7 +140,7 @@ const RoomsCatedralDemo1 = () => {
 
                 <img
                     className={styles.simple_room_image}
-                    src="/hotels/rooms/catedral/simple_room.jpg"
+                    src={`${endpoint}/hotels/rooms/catedral/simple_room.png`}
                     alt="Recepción"
                 />
             </div>
@@ -150,7 +151,7 @@ const RoomsCatedralDemo1 = () => {
                 <div />
                 <img
                     className={styles.double_room_image}
-                    src="/hotels/rooms/catedral/double_room.jpg"
+                    src={`${endpoint}/hotels/rooms/catedral/double_room.png`}
                     alt="Recepción"
                 />
                 <div className={styles.text_container}>
@@ -171,7 +172,7 @@ const RoomsCatedralDemo1 = () => {
 
                 <img
                     className={styles.symbol}
-                    src="/hotels/symbols/frame.png"
+                    src={`${endpoint}//hotels/symbols/frame.png`}
                     alt="Símbolo"
                 />
 

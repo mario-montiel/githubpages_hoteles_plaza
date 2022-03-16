@@ -8,6 +8,7 @@ import styles from "./WhoWeAre.module.css"
 // Libraries
 
 // Helpers
+import { endpoint } from "../../../../../config/endpoint"
 
 // Types
 
@@ -23,13 +24,13 @@ const WhoWeAreDemo1 = () => {
 
             <img
                 className={styles.texture_top_image}
-                src="/hotels/symbols/frame_texture_top_right.png"
+                src={`${endpoint}/hotels/symbols/frame_texture_top_right.png`}
                 alt="texture_image"
             />
 
             <img
                 className={styles.symbol}
-                src="/hotels/symbols/frame.png"
+                src={`${endpoint}/hotels/symbols/frame.png`}
                 alt="Símbolo"
             />
 
@@ -53,7 +54,7 @@ const WhoWeAreDemo1 = () => {
                 </div>
                 <img
                     className={styles.lobby}
-                    src="/hotels/mision_vision/catedral/lobby.jpg"
+                    src={`${endpoint}/hotels/mision_vision/catedral/lobby.png`}
                     alt="Recepción"
                 />
             </div>
@@ -65,7 +66,7 @@ const WhoWeAreDemo1 = () => {
                 <div />
                 <img
                     className={styles.lobby}
-                    src="/hotels/mision_vision/catedral/lobby2.jpg"
+                    src={`${endpoint}/hotels/mision_vision/catedral/lobby2.png`}
                     alt="Recepción"
                 />
                 <div className={styles.text_container}>

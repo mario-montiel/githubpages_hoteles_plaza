@@ -23,7 +23,7 @@ const UbicationContactCatedralDemo1 = () => {
 
             <img
                 className={styles.hotel_face}
-                src="/hotels/ubication_contact/catedral/ubi_cont.jpg"
+                src="/hotels/ubication_contact/catedral/ubi_cont.png"
                 alt="First Image"
             // srcSet="/hotels/main/fachada-catedral-480x400.png 240w,
             //     /hotels/main/fachada-catedral-960x900.png 530w,

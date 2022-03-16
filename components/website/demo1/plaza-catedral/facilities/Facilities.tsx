@@ -1,7 +1,7 @@
 // React
+import { useEffect, useRef, useState } from "react"
 
 // CSS
-import { useEffect, useRef, useState } from "react"
 import styles from "./Facilities.module.css"
 
 // Componets
@@ -9,6 +9,7 @@ import styles from "./Facilities.module.css"
 // Libraries
 
 // Helpers
+import { endpoint } from "../../../../../config/endpoint"
 
 // Types
 
@@ -24,7 +25,7 @@ const FacilitiesDemo1 = () => {
     const smallImageRef = useRef<any>(null)
 
     // Functions
-    const generateSuiteRooms = () => {
+    const generateFacilitiesRooms = () => {
         const html: any = []
         const siuteImages: number = 6
         for (let index = 1; index < siuteImages; index++) {
@@ -32,9 +33,9 @@ const FacilitiesDemo1 = () => {
                 <img
                     key={index}
                     className={styles.small_image}
-                    src={`/hotels/facilities/catedral/facilitie${index}.jpg`}
+                    src={`${endpoint}/hotels/facilities/catedral/facilitie${index}.png`}
                     alt="Imágen de la habitación suite"
-                    onClick={() => selectSuiteImage(index)}
+                    onMouseEnter={() => selectSuiteImage(index)}
                 />
             )
         }
@@ -42,7 +43,7 @@ const FacilitiesDemo1 = () => {
         return html
     }
 
-    const generateCurrentSuiteImageSelected = () => {
+    const generateCurrentFacilityImageSelected = () => {
         const html: any = []
         const siuteImages: number = 6
         for (let index = 1; index < siuteImages; index++) {
@@ -50,9 +51,8 @@ const FacilitiesDemo1 = () => {
                 <img
                     key={index}
                     className={`${styles.current_image_selected} suit-images-to-show`}
-                    src={`/hotels/facilities/catedral/facilitie${index}.jpg`}
+                    src={`${endpoint}/hotels/facilities/catedral/facilitie${index}.png`}
                     alt="Imágen de la habitación suite"
-                    onClick={() => selectSuiteImage(index)}
                 />
             )
         }
@@ -115,13 +115,13 @@ const FacilitiesDemo1 = () => {
 
             <img
                 className={styles.texture_top_image}
-                src="/hotels/symbols/frame_texture_top_right.png"
+                src={`${endpoint}/hotels/symbols/frame_texture_top_right.png`}
                 alt="texture_image"
             />
 
             <img
                 className={styles.symbol}
-                src="/hotels/symbols/frame.png"
+                src={`${endpoint}/hotels/symbols/frame.png`}
                 alt="Símbolo"
             />
 
@@ -134,13 +134,13 @@ const FacilitiesDemo1 = () => {
                 <div
                     ref={currentImageRef}
                     className={styles.current_image_container}>
-                    {generateCurrentSuiteImageSelected()}
+                    {generateCurrentFacilityImageSelected()}
                 </div>
 
                 <div
                     ref={smallImageRef}
                     className={styles.small_images}>
-                    {generateSuiteRooms()}
+                    {generateFacilitiesRooms()}
                 </div>
             </div>
 

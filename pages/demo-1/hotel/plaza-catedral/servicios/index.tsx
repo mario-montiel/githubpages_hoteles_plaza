@@ -23,7 +23,7 @@ const ServicesCatedralDemo1 = () => {
 
             <img
                 className={styles.hotel_face}
-                src="/hotels/facilities/catedral/facilitie_face.jpg"
+                src="/hotels/services/catedral/service_face.png"
                 alt="First Image"
             // srcSet="/hotels/main/fachada-catedral-480x400.png 240w,
             //     /hotels/main/fachada-catedral-960x900.png 530w,
