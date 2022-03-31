@@ -1,0 +1,20 @@
+.btn_back_container {
+    margin: 20px 0px 0px 0px;
+}
+
+.btn_back_container button {
+    margin: 0px;
+}
+
+.roomstype_form .input-container {
+    display: none;
+}
+
+.roomstype_form input[type="checkbox"] {
+    margin: 5px 0px;
+    padding: 0px;
+    float: left;
+    width: auto;
+    height: 1.5rem;
+    width: 1.5rem;
+}

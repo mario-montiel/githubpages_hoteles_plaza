@@ -1,0 +1,126 @@
+.title {
+    color: #3B444B;
+}
+
+.data_in_subtitle {
+    font-weight: 400;
+}
+
+.overlay,
+.modal_overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    height: 100%;
+    display: none;
+    position: fixed;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.modal_overlay {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.show_overlay,
+.show_room_modal,
+.show_settings {
+    display: block !important;
+}
+
+/* CARDS */
+
+.room_cards_container {
+    width: 100%;
+    padding: 2rem;
+    display: inline-block;
+    background-color: var(--white);
+}
+
+.room_card {
+    display: inline-block;
+    padding: 5px 15px;
+    width: 7rem;
+    height: 4rem;
+    margin: 0px 1rem 1rem 0px;
+    border-radius: 5px;
+    padding: 0.5rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.room_card:hover {
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.room_text_container {
+    position: absolute;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    font-family: 'Noto Sans', sans-serif;
+    transform: translate(-50%, -50%);
+}
+
+.room_card p {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    margin: 5px 0px;
+}
+
+.room_card_selected {
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.room_card_border {
+    border: 0.5px solid rgb(190, 190, 190);
+}
+
+/* OPTIONS OF CARDS */
+
+.settings {
+    left: 0;
+    top: 5rem;
+    width: auto;
+    z-index: 11;
+    position: absolute;
+    border-radius: 5px;
+    background-color: var(--white);
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.settings ul {
+    list-style: none;
+    padding: 0px;
+    z-index: 11;
+}
+
+.settings ul li {
+    display: flex;
+    align-items: center;
+    color: #333333;
+    margin: 10px 0px;
+    padding: 0px;
+    height: 2rem;
+}
+
+.settings ul li p {
+    padding: 0.5px 1rem 0px 0px;
+    font-size: 13px;
+}
+
+.settings ul li:hover {
+    background-color: #cacaca;
+}
+
+.settings .svg_icon {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin: 0px 5px 0px 0px;
+    padding: 0.5px 0.5rem 0px 1rem;
+}

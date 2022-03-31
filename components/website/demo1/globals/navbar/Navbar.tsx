@@ -43,10 +43,10 @@ const NavbarDemo1 = () => {
     return (
         <nav className={styles.navbar}>
             <ul>
-                <li>
+                <li onClick={() => router.push('/demo-1/')}>
                     <img
                         style={{ width: url.logo === 'catedral_logo' ? '130px' : '80px', height: url.logo === 'catedral_logo' ? '65px' : '65px' }}
-                        src={`/hotels/logos/${url.logo}.png`}
+                        src={`/hotels/logos/${url.logo}.webp`}
                         alt="Logo"
                     />
                 </li>

@@ -7,6 +7,7 @@ import styles from "./Footer.module.css"
 
 // Componets
 import BookingModalCatedralDemo1 from "../../booking/Booking"
+import { convertKelvinToCelsius } from "../../../../../helpers/convertTemperature";
 
 // Libraries
 
@@ -14,8 +15,9 @@ import BookingModalCatedralDemo1 from "../../booking/Booking"
 
 // Types
 
-const FooterDemo1 = () => {
-
+export default function FooterDemo1 ({ weather }: any) {
+    console.log('footer: ', weather);
+    
     // Variables
     const router = useRouter()
     const initialUrlDataValues = {
@@ -29,6 +31,15 @@ const FooterDemo1 = () => {
     const [bookingModal, setBookingModal] = useState<boolean>(false)
 
     // Functions
+    const getCurrentTime = () => {
+        const date = new Date()
+        const hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
+        const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+        const AMorPM = hour < 12 ? 'AM' : 'PM'
+        const time = `${hour}:${minutes} ${AMorPM}`
+        
+        return time
+    }
 
     // Use Effect
     useEffect(() => {
@@ -53,7 +64,7 @@ const FooterDemo1 = () => {
         <footer className={styles.footer}>
             <img
                 className={styles.texture_image}
-                src="/hotels/symbols/frame_texture_bottom_left.png"
+                src="/hotels/symbols/frame_texture_bottom_left.webp"
                 alt="Logotipo del hotel"
             />
 
@@ -64,16 +75,17 @@ const FooterDemo1 = () => {
                     <li>871 108 58 30</li>
                     <li>
                         <span>
-                            <svg className={styles.svg_weather_icon} viewBox="0 0 24 24">
+                            {/* <svg className={styles.svg_weather_icon} viewBox="0 0 24 24">
                                 <path fill="currentColor" d="M6,19A5,5 0 0,1 1,14A5,5 0 0,1 6,9C7,6.65 9.3,5 12,5C15.43,5 18.24,7.66 18.5,11.03L19,11A4,4 0 0,1 23,15A4,4 0 0,1 19,19H6M19,13H17V12A5,5 0 0,0 12,7C9.5,7 7.45,8.82 7.06,11.19C6.73,11.07 6.37,11 6,11A3,3 0 0,0 3,14A3,3 0 0,0 6,17H19A2,2 0 0,0 21,15A2,2 0 0,0 19,13Z" />
-                            </svg>
+                            </svg> */}
+                            <img className={styles.svg_weather_icon} src={`http://openweathermap.org/img/wn/${weather ? weather.data.weather[0].icon : '50d'}.png`} alt="" />
                         </span>
-                        <p className={styles.grades}>25°C</p>
+                        <p className={styles.grades}>{convertKelvinToCelsius(weather && weather.data ? weather.data.main.temp : 0)}</p>
                         <div className={styles.timer_container}>
                             <svg className={styles.svg_time_icon} viewBox="0 0 24 24">
                                 <path fill="currentColor" d="M12 20C16.4 20 20 16.4 20 12S16.4 4 12 4 4 7.6 4 12 7.6 20 12 20M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M12.5 12.8L7.7 15.6L7 14.2L11 11.9V7H12.5V12.8Z" />
                             </svg>
-                            12:00 A.M.
+                            {getCurrentTime()}
                         </div>
                     </li>
                 </ul>
@@ -106,7 +118,7 @@ const FooterDemo1 = () => {
 
                 <img
                     className={styles.logo_footer}
-                    src={`/hotels/logos/${url.logo}.png`}
+                    src={`/hotels/logos/${url.logo}.webp`}
                     alt="Logotipo del hotel"
                 />
             </div>
@@ -119,5 +131,3 @@ const FooterDemo1 = () => {
         </footer>
     )
 }
-
-export default FooterDemo1

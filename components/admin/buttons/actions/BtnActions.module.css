@@ -1,0 +1,24 @@
+.btn_action {
+    width: 3.3rem;
+    height: 2.5rem;
+    border: none;
+    margin: 0px 1rem;
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+}
+
+.btn_action:hover {
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.btn_action > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_action svg {
+    width: 20px;
+    height: 20px;
+}

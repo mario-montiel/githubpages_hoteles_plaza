@@ -23,12 +23,12 @@ const HotelMatamorosDemo1 = () => {
 
             <img
                 className={styles.hotel_face}
-                src="/hotels/main/fachada-matamoros-480x400.png"
+                src="/hotels/main/fachada-matamoros-480x400.webp"
                 alt="First Image"
-                srcSet="/hotels/main/fachada-matamoros-480x400.png 240w,
-                    /hotels/main/fachada-matamoros-960x900.png 530w,
-                    /hotels/main/fachada-matamoros-1440x1040.png 720w,
-                    /hotels/main/fachada-matamoros-1920x1600.png 910w"
+                srcSet="/hotels/main/fachada-matamoros-480x400.webp 240w,
+                    /hotels/main/fachada-matamoros-960x900.webp 530w,
+                    /hotels/main/fachada-matamoros-1440x1040.webp 720w,
+                    /hotels/main/fachada-matamoros-1920x1600.webp 910w"
                 sizes="(max-width: 480px) 120px,
                     (max-width: 960px) 240px,
                     (max-width: 1440px) 530px,
@@ -38,7 +38,13 @@ const HotelMatamorosDemo1 = () => {
 
             {/* ¿Quienes Somos? */}
 
-            <WhoWeAreDemo1 url={"/hotels/mision_vision/matamoros/"} />
+            <WhoWeAreDemo1
+                url={"/hotels/mision_vision/matamoros/"}
+                description="
+                    Somos un hotel que ofrece un excelente servicio y trato cálido a todos nuestros huéspedes.
+                    Situado en una excelente ubicación, en el entronque de la Carretera Torreón -Saltillo, con
+                    todas las comodidades requeridas para una estancia placentera."
+            />
 
         </LayoutDemo1>
     )

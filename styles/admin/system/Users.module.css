@@ -1,0 +1,26 @@
+/* .title {
+    color: #3B444B;
+}
+
+.subtitle {
+    color: #4C565F;
+    font-weight: 600;
+    margin: 30px 0px 0px;
+}
+
+.user_grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+@media screen and (max-width: 1000px) {
+    .user_grid {
+      grid-template-columns: 50% 50%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .user_grid {
+      grid-template-columns: 100%;
+    }
+} */

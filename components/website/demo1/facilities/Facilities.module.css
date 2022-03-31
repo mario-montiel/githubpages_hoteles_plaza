@@ -43,11 +43,13 @@
     overflow: hidden;
 }
 
-.gallery_container .small_images {
-    display: flex;
+.gallery_container .small_images_container {
+    width: 30%;
+    display: grid;
     margin: 15px auto;
     align-items: center;
     justify-content: center;
+    grid-template-columns: repeat(7, 1fr);
 }
 
 .gallery_container .current_image_container {
@@ -62,16 +64,76 @@
     max-width: 20%;
     max-height: auto;
     margin: 10px 5px 0px;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
-.gallery_container .small_images .small_image {
+.gallery_container .small_images_container .small_image {
     width: 7rem;
     margin: 5px;
     height: 5rem;
     opacity: 0.3;
     cursor: pointer;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 .selected {
     opacity: 1 !important;
+}
+
+.icon_right,
+.icon_left {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    margin: auto;
+}
+
+.circles_container {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circles {
+    width: 1rem;
+    margin: 5px;
+    height: 1rem;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: rgb(218, 238, 255);
+}
+
+.circle_selected {
+    background-color: gray;
+}
+
+.square {
+    width: 10rem;
+    height: auto;
 }

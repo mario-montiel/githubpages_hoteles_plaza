@@ -1,0 +1,140 @@
+.title {
+    color: #3B444B;
+}
+
+.subtitle {
+    color: #4C565F;
+    font-weight: 600;
+    margin: 30px 0px 0px 0px;
+}
+
+.data_in_subtitle {
+    font-weight: 400;
+}
+
+.user_grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.container {
+    display: flex;
+    position: relative;
+}
+
+.btn_container {
+    display: flex;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+/* 
+.user_container .reception_text,
+.user_container .restaurant_text,
+.user_container .maintenance_text{
+    display: none;
+}
+
+.user_container p[data-reception="0"],
+.user_container p[data-restaurant="0"],
+.user_container p[data-maintenance="0"] {
+    display: block;
+} */
+
+/* ---  TABLE  --- */
+.table_hotel_data_container {
+    display: flex;
+}
+
+.table_hotel_data_container > h4 {
+    margin: 1rem 0.5rem 0rem 0rem;
+}
+
+.table_hotel_data_container p,
+.table_hotel_data_container b {
+    font-size: 12px;
+    margin: 1.15rem 0rem;
+}
+
+.user_section .data_table_not_found {
+    margin: 25px 0px;
+    font-size: 12px;
+}
+
+.user_section .table_container {
+    margin: 1rem 0rem;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.user_section .table_container .reception_header,
+.user_section .table_container .restaurant_header,
+.user_section .table_container .maintenance_header{
+    border: 0.5px solid rgb(184, 184, 184);
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.user_section .table_container .reception_header .table_header {
+    display: flex;
+    align-items: center;
+}
+
+.user_section .table_container .reception_header .table_header > h5 {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.user_section .table_container .reception_header .table_header .svg_icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    right: 2rem;
+    transition: all 0.3s;
+}
+
+.user_section .table_container .reception_header table,
+.user_section .table_container .restaurant_header table,
+.user_section .table_container .maintenance_header table {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+}
+
+.user_section table button {
+    border: none;
+}
+
+.table_dissapear {
+    display: none;
+}
+
+.svg_transition {
+    transform: rotate(-180deg)
+}
+
+.active_chip,
+.inactive_chip {
+    border-radius: 5px;
+    height: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active_chip {
+    background-color: #47FFB2;
+}
+
+.active_chip > p,
+.inactive_chip > p {
+    color: white;
+    text-align: center;
+}
+
+.inactive_chip {
+    background-color: #FF4747;
+}
+

@@ -13,29 +13,37 @@ import { endpoint } from "../../../../config/endpoint"
 
 // Types
 
-const FacilitiesDemo1 = ({ url }: any) => {
-    
+const FacilitiesDemo1 = ({ url, sections }: any) => {
+
     // Variables
+    const initialImageSectionValue = {
+        section: 1,
+        tPagination: 3,
+        start: 1,
+        end: 5
+    }
 
     // Use State
-    const [currentIndexImage, setCurrentIndexImage] = useState<number>(2)
+    const [imageSection, setImageSection] = useState(initialImageSectionValue)
 
     // Use Ref
     const currentImageRef = useRef<any>(null)
     const smallImageRef = useRef<any>(null)
+    const leftIconRef = useRef<any>(null)
+    const rightIconRef = useRef<any>(null)
+    const circlesContainerRef = useRef<any>(null)
 
     // Functions
     const generateFacilitiesRooms = () => {
         const html: any = []
-        const siuteImages: number = 6
-        for (let index = 1; index < siuteImages; index++) {
+        for (let index = imageSection.start; index < imageSection.end; index++) {
             html.push(
                 <img
                     key={index}
+                    src={`${url}${index}-400x300.webp`}
                     className={styles.small_image}
-                    src={`${url}${index}.png`}
-                    alt="Imágen de la habitación suite"
-                    onMouseEnter={() => selectSuiteImage(index)}
+                    alt="Imágen de las instalaciones del hotel plaza"
+                    onMouseEnter={() => showFacilitiesImageSelected(index)}
                 />
             )
         }
@@ -45,14 +53,13 @@ const FacilitiesDemo1 = ({ url }: any) => {
 
     const generateCurrentFacilityImageSelected = () => {
         const html: any = []
-        const siuteImages: number = 6
-        for (let index = 1; index < siuteImages; index++) {
+        for (let index = imageSection.start; index < imageSection.end; index++) {
             html.push(
                 <img
                     key={index}
-                    className={`${styles.current_image_selected} suit-images-to-show`}
-                    src={`${url}${index}.png`}
+                    src={`${url}${index}.webp`}
                     alt="Imágen de la habitación suite"
+                    className={`${styles.current_image_selected} suit-images-to-show`}
                 />
             )
         }
@@ -60,54 +67,209 @@ const FacilitiesDemo1 = ({ url }: any) => {
         return html
     }
 
-    const showSuiteImageSelected = (index: number) => {
+    const showFacilitiesImageSelected = (index: number) => {
         const images = currentImageRef.current?.children as NodeListOf<HTMLImageElement>
         const smallImages = smallImageRef.current?.children as NodeListOf<HTMLImageElement>
 
         for (let i = 0; i < images.length; i++) {
             images[i].classList.remove(styles.selected)
-            smallImages[i].classList.remove(styles.selected)
+            smallImages[i + 1].classList.remove(styles.selected)
         }
 
         switch (index) {
             case 1:
                 currentImageRef.current!.style.transform = 'translate(15%)'
                 currentImageRef.current!.children[index - 1].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 1].classList.add(styles.selected)
+                smallImageRef.current!.children[index].classList.add(styles.selected)
                 break;
             case 2:
                 currentImageRef.current!.style.transform = 'translate(-5%)'
                 currentImageRef.current!.children[index - 1].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 1].classList.add(styles.selected)
+                smallImageRef.current!.children[index].classList.add(styles.selected)
                 break;
             case 3:
                 currentImageRef.current!.style.transform = 'translate(-25%)'
                 currentImageRef.current!.children[index - 1].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 1].classList.add(styles.selected)
+                smallImageRef.current!.children[index].classList.add(styles.selected)
                 break;
             case 4:
                 currentImageRef.current!.style.transform = 'translate(-45%)'
                 currentImageRef.current!.children[index - 1].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 1].classList.add(styles.selected)
+                smallImageRef.current!.children[index].classList.add(styles.selected)
                 break;
             case 5:
-                currentImageRef.current!.style.transform = 'translate(-65%)'
-                currentImageRef.current!.children[index - 1].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 1].classList.add(styles.selected)
+                currentImageRef.current!.style.transform = 'translate(15%)' /* -65% */
+                currentImageRef.current!.children[index - 5].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 4].classList.add(styles.selected)
+                break;
+            case 6:
+                currentImageRef.current!.style.transform = 'translate(-5%)' /* -85% */
+                currentImageRef.current!.children[index - 5].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 4].classList.add(styles.selected)
+                break;
+            case 7:
+                currentImageRef.current!.style.transform = 'translate(-25%)' /* -105% */
+                currentImageRef.current!.children[index - 5].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 4].classList.add(styles.selected)
+                break;
+            case 8:
+                currentImageRef.current!.style.transform = 'translate(-45%)' /* -125% */
+                currentImageRef.current!.children[index - 5].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 4].classList.add(styles.selected)
+                break;
+            case 9:
+                currentImageRef.current!.style.transform = 'translate(-65%)' /* -145% */
+                currentImageRef.current!.children[index - 5].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 4].classList.add(styles.selected)
+                break;
+            case 10:
+                currentImageRef.current!.style.transform = 'translate(15%)' /* -165% */
+                currentImageRef.current!.children[index - 10].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 9].classList.add(styles.selected)
+                break;
+            case 11:
+                currentImageRef.current!.style.transform = 'translate(-5%)' /* -185% */
+                currentImageRef.current!.children[index - 10].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 9].classList.add(styles.selected)
+                break;
+            case 12:
+                currentImageRef.current!.style.transform = 'translate(-25%)' /* -205% */
+                currentImageRef.current!.children[index - 10].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 9].classList.add(styles.selected)
+                break;
+            case 13:
+                currentImageRef.current!.style.transform = 'translate(-45%)' /* -225% */
+                currentImageRef.current!.children[index - 10].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 9].classList.add(styles.selected)
                 break;
             default:
                 break;
         }
     }
 
-    const selectSuiteImage = (index: number) => {
-        setCurrentIndexImage(index)
-        showSuiteImageSelected(index)
+    const btnRightIcon = () => {
+        const html: any = []
+
+        if (imageSection.section >= 1 && imageSection.section <= (sections - 1)) {
+            html.push(
+                <svg
+                    key={0}
+                    ref={rightIconRef}
+                    viewBox="0 0 24 24"
+                    className={styles.icon_right}
+                    onClick={() => setImageSection({
+                        ...imageSection,
+                        section: imageSection.section + 1
+                    })}
+                >
+                    <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+                </svg>
+            )
+        } else {
+            html.push(
+                <div />
+            )
+        }
+
+        return html
+    }
+
+    const btnLeftIcon = () => {
+        const html: any = []
+
+        if (imageSection.section <= 1) {
+            html.push(
+                <div />
+            )
+        } else {
+            html.push(
+                <svg
+                    key={0}
+                    ref={leftIconRef}
+                    className={styles.icon_left}
+                    viewBox="0 0 24 24"
+                    onClick={() => setImageSection({
+                        ...imageSection,
+                        section: imageSection.section - 1
+                    })}
+                >
+                    <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+                </svg>
+            )
+        }
+
+        return html
+    }
+
+    const showSmallImagesSelected = () => {
+        switch (imageSection.section) {
+            case 1:
+                setImageSection({
+                    ...imageSection,
+                    start: 1,
+                    end: 5
+                })
+                break;
+            case 2:
+                setImageSection({
+                    ...imageSection,
+                    start: 5,
+                    end: 9
+                })
+                break;
+            case 3:
+                setImageSection({
+                    ...imageSection,
+                    start: 10,
+                    end: 14
+                })
+                break;
+        }
+
+        setTimeout(() => {
+            currentImageRef.current!.style.transform = 'translate(-5%)'
+            currentImageRef.current!.children[1].classList.add(styles.selected)
+            smallImageRef.current!.children[2].classList.add(styles.selected)
+        }, 100);
+    }
+
+    const generateCircles = () => {
+        const html: any = []
+
+        for (let index = 0; index < sections; index++) {
+            html.push(
+                <div
+                    key={index}
+                    className={styles.circles}
+                    onClick={() => setImageSection({
+                        ...imageSection,
+                        section: index + 1
+                    })}
+                />
+            )
+        }
+
+        if (circlesContainerRef.current) {
+            printCircleSelected()
+        }
+
+        return html
+    }
+
+    const printCircleSelected = () => {
+        const aCircles = circlesContainerRef.current!.children
+        
+        for (let index = 0; index < aCircles.length; index++) {
+            const circle: HTMLDivElement = aCircles[index];
+            circle.classList.remove(styles.circle_selected)
+        }
+
+        circlesContainerRef.current!.children[imageSection.section - 1].classList.add(styles.circle_selected)
     }
 
     useEffect(() => {
-        showSuiteImageSelected(currentIndexImage)
-    }, [])
+        showSmallImagesSelected()
+    }, [imageSection.section])
 
     return (
         <section className={styles.facilities}>
@@ -115,13 +277,13 @@ const FacilitiesDemo1 = ({ url }: any) => {
 
             <img
                 className={styles.texture_top_image}
-                src={`${endpoint}/hotels/symbols/frame_texture_top_right.png`}
+                src={`${endpoint}/hotels/symbols/frame_texture_top_right.webp`}
                 alt="texture_image"
             />
 
             <img
                 className={styles.symbol}
-                src={`${endpoint}/hotels/symbols/frame.png`}
+                src={`${endpoint}/hotels/symbols/frame.webp`}
                 alt="Símbolo"
             />
 
@@ -133,14 +295,27 @@ const FacilitiesDemo1 = ({ url }: any) => {
 
                 <div
                     ref={currentImageRef}
-                    className={styles.current_image_container}>
+                    className={styles.current_image_container}
+                >
                     {generateCurrentFacilityImageSelected()}
                 </div>
 
                 <div
                     ref={smallImageRef}
-                    className={styles.small_images}>
+                    className={styles.small_images_container}>
+
+                    {btnLeftIcon()}
+
                     {generateFacilitiesRooms()}
+
+                    {btnRightIcon()}
+                </div>
+
+                <div
+                    ref={circlesContainerRef}
+                    className={styles.circles_container}
+                >
+                    {generateCircles()}
                 </div>
             </div>
 

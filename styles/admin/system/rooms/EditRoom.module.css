@@ -1,0 +1,25 @@
+.room_card {
+    width: 10rem;
+    height: 6rem;
+    background-color: red;
+    border-radius: 10px;
+    justify-content: center;
+    position: relative;
+}
+
+.room_card p {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+}
+
+.room_card p:first-child {
+    top: 20%;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.room_card p:last-child {
+    top: 50%;
+}

@@ -12,7 +12,7 @@ import styles from "./WhoWeAre.module.css"
 
 // Types
 
-const WhoWeAreDemo1 = ({ url }: any) => {
+const WhoWeAreDemo1 = ({ url, description }: any) => {
 
     // Variables
 
@@ -24,21 +24,17 @@ const WhoWeAreDemo1 = ({ url }: any) => {
 
             <img
                 className={styles.texture_top_image}
-                src={`${endpoint}/hotels/symbols/frame_texture_top_right.png`}
+                src={`${endpoint}/hotels/symbols/frame_texture_top_right.webp`}
                 alt="texture_image"
             />
 
             <img
                 className={styles.symbol}
-                src={`${endpoint}/hotels/symbols/frame.png`}
+                src={`${endpoint}/hotels/symbols/frame.webp`}
                 alt="Símbolo"
             />
 
-            <p>Somos un hotel que ofrece un excelente servicio
-                y trato cálido a todos nuestros huéspedes.
-                Con una excelente ubicación en Matamoros, Coah.,
-                contamos con todas las comodidades requeridas
-                para una estancia placentera.</p>
+            <p>{description}</p>
 
             {/* === MISION AND VISION === */}
             {/* MISION */}
@@ -54,7 +50,7 @@ const WhoWeAreDemo1 = ({ url }: any) => {
                 </div>
                 <img
                     className={styles.lobby}
-                    src={`${endpoint}${url}lobby.png`}
+                    src={`${endpoint}${url}lobby.webp`}
                     alt="Recepción"
                 />
             </div>
@@ -66,7 +62,7 @@ const WhoWeAreDemo1 = ({ url }: any) => {
                 <div />
                 <img
                     className={styles.lobby}
-                    src={`${endpoint}${url}lobby2.png`}
+                    src={`${endpoint}${url}lobby2.webp`}
                     alt="Recepción"
                 />
                 <div className={styles.text_container}>

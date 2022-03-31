@@ -1,0 +1,11 @@
+.container {
+    padding: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container > h2 {
+    color: var(--text);
+}

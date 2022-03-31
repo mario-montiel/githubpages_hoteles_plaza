@@ -1,0 +1,31 @@
+.chips_container h5 {
+    margin: 1rem 0rem;
+}
+
+.chips_container p {
+    font-size: 13px;
+}
+
+.chip_container,
+.text_container {
+    display: inline-block;
+}
+
+.chip {
+    min-width: 5rem;
+    padding: 0.5rem;
+    border-radius: 30px;
+    text-align: center;
+    margin: 0px 1rem 1rem 0px;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    cursor: default;
+}
+
+.text {
+    width: auto;
+    padding: 0px 1rem 0rem 0rem;
+    margin: 0px;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+}

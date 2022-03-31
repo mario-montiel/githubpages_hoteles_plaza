@@ -1,0 +1,141 @@
+.profile {
+    padding: 1rem;
+}
+
+.profile .container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.profile .container .options {
+    width: 100%;
+    padding: 0px 1rem 0rem 0rem;
+}
+
+.option_active {
+    color: white;
+    background-color: var(--green-sidebar) !important;
+}
+
+.option_active,
+.profile .container .options .watch_option:hover,
+.profile .container .options .edit_option:hover,
+.profile .container .options .reminder_option:hover {
+    background-color: rgb(197, 248, 246);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.profile .container .options .watch_option:hover p,
+.profile .container .options .watch_option:hover svg,
+.profile .container .options .watch_option:hover,
+.profile .container .options .edit_option:hover p,
+.profile .container .options .edit_option:hover svg,
+.profile .container .options .edit_option:hover .edit_option,
+.profile .container .options .reminder_option:hover p,
+.profile .container .options .reminder_option:hover svg,
+.profile .container .options .reminder_option:hover {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.option_active p,
+.option_active svg {
+    color: var(--white) !important;
+    font-weight: 600;
+}
+
+.option_active,
+.profile .container .options .watch_option:hover,
+.profile .container .options .edit_option:hover,
+.profile .container .options .reminder_option:hover {
+    border: 0.5px solid var(--white) !important;
+}
+
+.option_active,
+.profile .container .options .watch_option,
+.profile .container .options .edit_option,
+.profile .container .options .reminder_option {
+    border: 0.5px solid gray;
+    display: flex;
+    align-items: center;
+    width: auto;
+    padding: 0px 0.8rem;
+    border-radius: 3px;
+}
+
+.option_active p,
+.profile .container .options .watch_option p,
+.profile .container .options .edit_option p,
+.profile .container .options .reminder_option p {
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+}
+
+.profile .container .options > div {
+    margin: 10px 0px;
+}
+
+.option_active .svg_icon,
+.profile .container .options .watch_option .svg_icon,
+.profile .container .options .edit_option .svg_icon,
+.profile .container .options .reminder_option .svg_icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: rgb(78, 78, 78);
+}
+
+.profile .container .selected_user h5 {
+    margin: 2rem 0px 0.8rem 0px;
+}
+
+.profile .container .info input[disabled=true],
+.profile .container .info select[disabled=true] {
+    background-color: rgb(224, 224, 224);
+    pointer-events: none;
+}
+
+.profile .container .info {
+    width: 100%;
+    padding: 0px 0px 0px 1rem;
+}
+
+.profile .container .info .profile_grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.profile .container .info .profile_grid select {
+    width: 85% !important;
+}
+
+@media screen and (max-width: 1000px) {
+    .profile .container .info .profile_grid {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .profile .container {
+        grid-template-columns: 100%;
+    }
+
+    .profile .container .info .profile_grid {
+        display: grid;
+        grid-template-columns: 100%;
+    }
+
+    .profile .container .info .profile_grid input {
+        width: 95% !important;
+    }
+    
+    .profile .container .info .profile_grid select {
+        width: 100% !important;
+    }
+
+    .profile .container .info {
+        padding: 0px 0px 0px 0rem;
+    }
+}

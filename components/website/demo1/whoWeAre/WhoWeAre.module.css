@@ -55,7 +55,7 @@
 
 .vision_container {
     display: grid;
-    margin: 10% auto;
+    margin: 15% auto;
     grid-template-columns: repeat(2, 1fr);
     background-color: var(--background-mision-vision-text);
 }
@@ -138,7 +138,7 @@
     left: 35%;
     z-index: 1;
     height: auto;
-    max-width: 40%;
+    max-width: 50%;
     min-width: auto;
     margin: 0px auto;
     object-fit: cover;

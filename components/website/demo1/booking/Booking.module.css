@@ -31,6 +31,28 @@
     font-family: 'Playfair Display';
 }
 
+.content .btn_close {
+    z-index: 1;
+    width: 2rem;
+    right: 30px;
+    height: 2rem;
+    padding: 0px;
+    border-radius: 5px;
+    position: absolute;
+    background-color: white;
+    outline-style: none;
+}
+
+.content .btn_close:hover {
+    background-color: #fffbbe;
+}
+
+.content .svg_icon {
+    width: 1rem;
+    height: 1rem;
+    color: black;
+}
+
 .content .texture_top_image {
     top: 0;
     right: 0;

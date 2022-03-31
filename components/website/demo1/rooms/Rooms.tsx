@@ -33,7 +33,7 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
                 <img
                     key={index}
                     className={styles.small_image}
-                    src={`${roomUrl}suite_room${index}.png`}
+                    src={`${roomUrl}suite_room${index}.webp`}
                     alt="Imágen de la habitación suite"
                     onMouseEnter={() => selectSuiteImage(index)}
                 />
@@ -51,7 +51,7 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
                 <img
                     key={index}
                     className={`${styles.current_image_selected} suit-images-to-show`}
-                    src={`${roomUrl}suite_room${index}.png`}
+                    src={`${roomUrl}suite_room${index}.webp`}
                     alt="Imágen de la habitación suite"
                     onClick={() => selectSuiteImage(index)}
                 />
@@ -116,13 +116,13 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
 
             <img
                 className={styles.texture_top_image}
-                src={`${endpoint}/hotels/symbols/frame_texture_top_right.png`}
+                src={`${endpoint}/hotels/symbols/frame_texture_top_right.webp`}
                 alt="texture_image"
             />
 
             <img
                 className={styles.symbol}
-                src={`${endpoint}/hotels/symbols/frame.png`}
+                src={`${endpoint}/hotels/symbols/frame.webp`}
                 alt="Símbolo"
             />
 
@@ -140,7 +140,7 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
 
                 <img
                     className={styles.simple_room_image}
-                    src={`${roomUrl}simple_room.png`}
+                    src={`${roomUrl}simple_room.webp`}
                     alt="Recepción"
                 />
             </div>
@@ -151,7 +151,7 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
                 <div />
                 <img
                     className={styles.double_room_image}
-                    src={`${roomUrl}double_room.png`}
+                    src={`${roomUrl}double_room.webp`}
                     alt="Recepción"
                 />
                 <div className={styles.text_container}>
@@ -172,7 +172,7 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
 
                 <img
                     className={styles.symbol}
-                    src={`${endpoint}/hotels/symbols/frame.png`}
+                    src={`${endpoint}/hotels/symbols/frame.webp`}
                     alt="Símbolo"
                 />
 

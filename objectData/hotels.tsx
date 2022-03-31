@@ -10,7 +10,7 @@ export const hotels = [
         facebook: '',
         whatsapp: '',
         instagram: '',
-        image: '/page/hotels/plaza_catedral/logo.png',
+        image: '/page/hotels/plaza_catedral/logo.webp',
         pathImageName: 'catedral_',
         pathDirImage: 'plaza_catedral'
     },
@@ -26,7 +26,7 @@ export const hotels = [
         facebook: '',
         whatsapp: '',
         instagram: '',
-        image: '/page/hotels/plaza_matamoros/logo.png',
+        image: '/page/hotels/plaza_matamoros/logo.webp',
         pathImageName: 'matamoros_',
         pathDirImage: 'plaza_matamoros'
     }

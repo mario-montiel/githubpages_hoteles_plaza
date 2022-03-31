@@ -1,0 +1,60 @@
+.btn_back_container {
+    margin: 20px 0px 0px 0px;
+}
+.btn_back_container>button {
+    margin: 0px;
+}
+.room_status_grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.demo {
+    text-align: center;
+}
+
+.room_demo_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.room_primary_color {
+    width: 10rem;
+    height: 7rem;
+    position: relative;
+    border-radius: 5px;
+    background-color: #B8EAFF;
+}
+
+.room_secondary_color {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    border-radius: 3px;
+    background-color: var(--white);
+    background-color: var(--black);
+}
+
+.room_text {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.room_text > p {
+    color: '#3B444B';
+}
+
+.room_text > p:first-child {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.room_text > p:last-child {
+    font-size: 12px;
+}

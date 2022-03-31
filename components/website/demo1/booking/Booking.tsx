@@ -38,17 +38,23 @@ const BookingModalCatedralDemo1 = ({ close }: any) => {
         >
             <div
                 className={styles.content}>
+                <button className={styles.btn_close} onClick={() => close()}>
+                    <svg className={styles.svg_icon} viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+                    </svg>
+                </button>
+
                 <h2>Reservaciones</h2>
 
                 <img
                     className={styles.texture_top_image}
-                    src="/hotels/symbols/frame_texture_top_right.png"
+                    src="/hotels/symbols/frame_texture_top_right.webp"
                     alt="texture_image"
                 />
 
                 <img
                     className={styles.symbol}
-                    src="/hotels/symbols/frame.png"
+                    src="/hotels/symbols/frame.webp"
                     alt="Símbolo"
                 />
 
@@ -148,7 +154,7 @@ const BookingModalCatedralDemo1 = ({ close }: any) => {
 
                 <img
                     className={styles.texture_image}
-                    src="/hotels/symbols/frame_texture_bottom_left.png"
+                    src="/hotels/symbols/frame_texture_bottom_left.webp"
                     alt=""
                 />
             </div>

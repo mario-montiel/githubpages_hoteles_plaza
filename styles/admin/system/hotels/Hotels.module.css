@@ -1,0 +1,227 @@
+.title {
+    color: #3B444B;
+}
+
+.subtitle {
+    color: #4C565F;
+    font-weight: 600;
+    margin: 30px 0px 0px 0px;
+}
+
+.data_in_subtitle {
+    font-weight: 400;
+}
+
+.hotel_grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.container {
+    display: flex;
+    position: relative;
+}
+
+.btn_container {
+    display: flex;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.svg_icon {
+    width: 1rem;
+    height: 1rem;
+    color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.range_input_container>label {
+    font-size: 0.7rem;
+    color: var(--input-text-color);
+    font-family: 'Poppins', sans-serif;
+}
+
+.range_input_data {
+    background-color: var(--white);
+    margin: 0.5rem 0rem;
+    padding: 0.5rem 0rem 0.5rem 1rem;
+}
+
+.range_input_data table {
+    width: 100%;
+}
+
+.range_input_data table thead {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+}
+
+.range_input_data table tbody tr td:first-of-type input {
+    appearance: none;
+    cursor: pointer;
+    padding: 0px;
+    width: 80%;
+    position: relative;
+    margin: auto;
+    outline-style: none;
+    border: none;
+}
+
+.range_input_data table tbody tr td:first-of-type input::-webkit-slider-thumb {
+    cursor: pointer;
+    padding: 0px;
+    width: 80%;
+    background-color: #696038;
+    height: 5px;
+    width: 100%;
+    margin: -5.5px 0px 0px;
+}
+.range_input_data table tbody tr td:first-of-type input::-webkit-slider-runnable-track {
+    width: 100%;
+    background-color: #94ebe6;
+    height: 5px;
+    margin: auto;
+    position: absolute;
+    /* margin-top: -1px; */
+}
+
+.range_input_data table tbody tr td:first-of-type input::-moz-range-progress {
+    background-color: #43e5f7;
+}
+
+.range_input_data table tbody tr td:first-of-type input::-moz-range-track {
+    background-color: #d8d8d8;
+}
+
+.range_input_data table tbody tr td:last-of-type input {
+    cursor: not-allowed;
+    border: none;
+    text-align: center;
+}
+
+.range_input_data input {
+    width: 60%;
+    margin: auto;
+    display: block;
+    border-radius: 3px;
+    outline-style: none;
+    border: 0.5px solid lightgray;
+}
+
+.range_input_grid p {
+    font-size: 0.7rem;
+    margin: 0rem 0rem 0.5rem 0px;
+}
+
+.places_of_interest_container {
+    position: relative;
+}
+
+.places_of_interest_container {
+    position: relative;
+    background-color: rgb(241, 241, 241);
+    text-align: center;
+    cursor: help;
+}
+
+.places_of_interest_container:hover .places_of_interes_data {
+    position: absolute;
+    display: block;
+    z-index: 1;
+    top: 0;
+    background-color: var(--white);
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+    padding: 0rem 1rem;
+    line-height: 1.5;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: auto;
+    min-height: 2rem;
+    max-height: 15rem;
+    cursor: default;
+}
+
+.places_of_interes_data {
+    position: absolute;
+    display: none;
+    height: auto;
+    margin-top: -5rem;
+    border-radius: 5px;
+}
+
+.table_title {
+    color: var(--table-title) !important;
+}
+
+.places_of_interes_data > p {
+    font-weight: 600;
+    color: var(--not_found)
+}
+
+.table thead tr th {
+    padding: 0.5rem 0.5rem !important;
+}
+
+.table tbody tr td {
+    padding: 0rem 0.5rem 0.5rem !important;
+}
+
+.table thead tr th {
+    font-size: 12px !important;
+}
+
+.places_of_interest_container > div {
+    padding: 1rem 0rem;
+}
+
+.hotel_section .data_table_not_found {
+    margin: 25px 0px;
+    font-size: 12px;
+}
+
+.addAnimiation {
+    animation: showElementInReferencesList 5s;
+}
+
+.error_input {
+    border: 2px solid var(--text-error) !important;
+}
+
+.error_container {
+    animation: show_errors_container 5s !important;
+}
+
+.error_table {
+    animation: show_errors 7s !important;
+}
+
+@keyframes show_errors_container {
+    0% {
+        background-color: rgb(196, 202, 221);
+    }
+    100% {
+        background-color: none;
+    }
+}
+
+@keyframes show_errors {
+    0% {
+        box-shadow: 0px 0px 10px 10px rgba(87, 2, 2, 0.3);
+    }
+    100% {
+        box-shadow: none;
+    }
+}
+
+@keyframes showElementInReferencesList {
+    0% {
+        box-shadow: 0px 0px 10px 10px rgb(13, 67, 143);
+    }
+    100% {
+        box-shadow: none
+    }
+}

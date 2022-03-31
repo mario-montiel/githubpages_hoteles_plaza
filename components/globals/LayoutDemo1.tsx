@@ -1,11 +1,13 @@
 // React
+import { NextPageContext } from "next"
 import Head from "next/head"
-import FooterDemo1 from "../website/demo1/globals/footer/Footer"
-import NavbarDemo1 from "../website/demo1/globals/navbar/Navbar"
+import { endpoint } from "../../config/endpoint"
 
 // CSS
 
 // Componets
+import FooterDemo1 from "../website/demo1/globals/footer/Footer"
+import NavbarDemo1 from "../website/demo1/globals/navbar/Navbar"
 
 // Libraries
 
@@ -13,14 +15,13 @@ import NavbarDemo1 from "../website/demo1/globals/navbar/Navbar"
 
 // Types
 
-const LayoutDemo1 = ({ children, title, description }: any) => {
-
+export default function LayoutDemo1 ({children, title, description, weather}: any) {
     return (
         <>
             <Head>
                 <title>{title}</title>
                 <meta name="description" content={description} />
-                <link rel="icon" href="/hotels/logos/matamoros_logo_white.png" />
+                <link rel="icon" href="/hotels/logos/matamoros_logo_white.webp" />
             </Head>
 
             <NavbarDemo1 />
@@ -29,9 +30,7 @@ const LayoutDemo1 = ({ children, title, description }: any) => {
                 {children}
             </main>
 
-            <FooterDemo1 />
+            <FooterDemo1 weather={weather} />
         </>
     )
 }
-
-export default LayoutDemo1

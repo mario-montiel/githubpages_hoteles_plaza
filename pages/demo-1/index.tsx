@@ -26,12 +26,12 @@ const Demo1 = () => {
             <div className={styles.image_left}>
                 <img
                     className={styles.hotel_face}
-                    src="/hotels/main/fachada-catedral-480x400.png"
+                    src="/hotels/main/fachada-catedral-480x400.webp"
                     alt="First Image"
-                    srcSet="/hotels/main/fachada-catedral-480x400.png 240w,
-                    /hotels/main/fachada-catedral-960x900.png 530w,
-                    /hotels/main/fachada-catedral-1440x1040.png 720w,
-                    /hotels/main/fachada-catedral-1920x1201.png 910w"
+                    srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
+                    /hotels/main/fachada-catedral-960x900.webp 530w,
+                    /hotels/main/fachada-catedral-1440x1040.webp 720w,
+                    /hotels/main/fachada-catedral-1920x1201.webp 910w"
                     sizes="(max-width: 480px) 120px,
                     (max-width: 960px) 240px,
                     (max-width: 1440px) 530px,
@@ -42,7 +42,7 @@ const Demo1 = () => {
                 <div className={styles.logo_container}>
                     <img
                         className={styles.logo}
-                        src="/hotels/logos/catedral_logo_white.png"
+                        src="/hotels/logos/catedral_logo_white.webp"
                         alt="Hotel Plaza Catedral"
                     />
 
@@ -60,12 +60,12 @@ const Demo1 = () => {
             <div className={styles.image_right}>
                 <img
                     className={styles.hotel_face}
-                    src="/hotels/main/fachada-matamoros-480x400.png"
+                    src="/hotels/main/fachada-matamoros-480x400.webp"
                     alt="First Image"
-                    srcSet="/hotels/main/fachada-matamoros-480x400.png 240w,
-                    /hotels/main/fachada-matamoros-960x900.png 530w,
-                    /hotels/main/fachada-matamoros-1440x1040.png 720w,
-                    /hotels/main/fachada-matamoros-1920x1600.png 910w"
+                    srcSet="/hotels/main/fachada-matamoros-480x400.webp 240w,
+                    /hotels/main/fachada-matamoros-960x900.webp 530w,
+                    /hotels/main/fachada-matamoros-1440x1040.webp 720w,
+                    /hotels/main/fachada-matamoros-1920x1600.webp 910w"
                     sizes="(max-width: 480px) 120px,
                     (max-width: 960px) 240px,
                     (max-width: 1440px) 530px,
@@ -73,17 +73,17 @@ const Demo1 = () => {
                 "
                 />
 
-                <div
-                    className={styles.logo_container}
-                    onClick={() => redirectTo('/demo-1/hotel/plaza-matamoros')}
-                >
+                <div className={styles.logo_container}>
                     <img
                         className={styles.logo}
-                        src="/hotels/logos/matamoros_logo_white.png"
+                        src="/hotels/logos/matamoros_logo_white.webp"
                         alt="Hotel Plaza Matamoros"
                     />
 
-                    <button className={styles.btn_hotel}>
+                    <button
+                        className={styles.btn_hotel}
+                        onClick={() => redirectTo('/demo-1/hotel/plaza-matamoros')}    
+                    >
                         <span>
                             ENTRAR
                         </span>

@@ -28,13 +28,13 @@ const ServicesDemo1 = () => {
 
             <img
                 className={styles.texture_top_image}
-                src={`${endpoint}/hotels/symbols/frame_texture_top_right.png`}
+                src={`${endpoint}/hotels/symbols/frame_texture_top_right.webp`}
                 alt="texture_image"
             />
 
             <img
                 className={styles.symbol}
-                src={`${endpoint}/hotels/symbols/frame.png`}
+                src={`${endpoint}/hotels/symbols/frame.webp`}
                 alt="Símbolo"
             />
 
