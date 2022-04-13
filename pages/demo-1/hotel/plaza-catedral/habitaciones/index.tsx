@@ -35,6 +35,7 @@ export default function RoomsCatedralDemo1({ weather }: any) {
             title="Habitaciones - Demostración 1"
             description="Habitaciones de los hoteles plaza"
             weather={weather}
+            currentHotel="catedral"
         >
 
             <img

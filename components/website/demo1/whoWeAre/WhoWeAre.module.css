@@ -9,7 +9,7 @@
     font-weight: 400;
     text-align: center;
     margin: 64px auto 30px;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
     font-family: 'Playfair Display';
 }
 
@@ -78,7 +78,7 @@
     font-weight: 400;
     font-size: 42.18pt;
     text-align: center;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
     font-family: 'Playfair Display';
 }
 

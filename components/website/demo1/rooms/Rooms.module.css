@@ -9,7 +9,7 @@
     font-weight: 400;
     text-align: center;
     margin: 64px auto 30px;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
     font-family: 'Playfair Display';
 }
 
@@ -83,7 +83,7 @@
     font-weight: 400;
     text-align: right;
     font-size: 42.18pt;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
     font-family: 'Playfair Display';
 }
 
@@ -93,7 +93,7 @@
 }
 
 .simple_room_container .text_container h5:last-of-type {
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
 }
 
 .simple_room_container .text_container .line,
@@ -152,7 +152,7 @@
 }
 
 .double_room_container .text_container .text_subcontainer h5:last-of-type {
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
 }
 
 .double_room_container .text_container .text {

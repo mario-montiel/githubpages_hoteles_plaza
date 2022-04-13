@@ -18,6 +18,18 @@ export default function Home() {
         </Link>
       </span>
 
+      <span>
+        <Link href={'/demo-3'}>
+          Demo 3
+        </Link>
+      </span>
+
+      <span>
+        <Link href={'/aG90ZWxlc19wbGF6YQ0K/admin'}>
+          Admin
+        </Link>
+      </span>
+
     </div>
   )
 }

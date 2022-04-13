@@ -4,7 +4,7 @@ export type RoomStatus = {
     backgroundColor: string
     textColor: string
     keyWord: string
-    border: number
+    border: boolean
 }
 
 export type RoomStatusForm = {
@@ -12,5 +12,5 @@ export type RoomStatusForm = {
     backgroundColor: string
     textColor: string
     keyWord: string
-    border: number
+    border: boolean
 }

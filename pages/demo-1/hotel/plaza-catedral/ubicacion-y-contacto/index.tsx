@@ -54,6 +54,7 @@ export default function UbicationContactCatedralDemo1({ weather }: any) {
             title="Ubicación y contacto - Demostración 1"
             description="Ubicación y contacto de los hoteles plaza"
             weather={weather}
+            currentHotel="catedral"
         >
 
             <img

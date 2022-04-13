@@ -9,7 +9,7 @@
     font-weight: 400;
     text-align: center;
     margin: 64px auto 30px;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
     font-family: 'Playfair Display';
 }
 
@@ -30,7 +30,7 @@
 
 .services .services_container {
     width: 50%;
-    margin: auto;
+    margin: auto auto 10% auto;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
 }
@@ -38,15 +38,17 @@
 .services .services_container .service_content {
     width: 100%;
     height: 100%;
+    display: flex;
+    margin: 30% auto;
     align-items: center;
+    justify-content: center;
 }
 
 .services .services_container .svg_service_icon {
     display: block;
     max-width: 50%;
     max-height: 50%;
-    margin: 30% auto;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
 }
 
 .services .services_container .service_content p {

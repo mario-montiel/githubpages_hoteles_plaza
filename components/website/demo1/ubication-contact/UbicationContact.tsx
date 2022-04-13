@@ -40,8 +40,8 @@ const UbicationContactDemo1 = ({ hotel, iFrameUrl }: any) => {
                 alt="Símbolo"
             />
 
-            <p>Estamos ubicados en {hotel == 'catedral' ? 'el entronque de la Carretera Torreón – Saltillo, en Av. Matamoros Torreón 125 Nte. Fracc. Punta Laguna, Matamoros, Coah. México.' :
-            'Av Hidalgo 520 Norte, Primero de Cobián Centro, 35000 Gómez Palacio, Dgo.'}
+            <p>Estamos ubicados en {hotel == 'catedral' ? 'Av Hidalgo 520 Norte, Primero de Cobián Centro, 35000 Gómez Palacio, Dgo.' :
+            'el entronque de la Carretera Torreón – Saltillo, en Av. Matamoros Torreón 125 Nte. Fracc. Punta Laguna, Matamoros, Coah. México.'}
                 </p>
 
             <div className={styles.ubication_container}>

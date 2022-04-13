@@ -1,0 +1,332 @@
+.sidebar {
+    width: 55px;
+}
+
+.sidebar,
+.sidebar_active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    transition: all 0.3s !important;
+    z-index: 1;
+}
+
+.elements {
+    position: absolute;
+    width: 14rem;
+}
+
+.sidebar_active {
+    width: 14rem;
+}
+
+.btn_sidebar_mobile_menu {
+    display: none !important;
+}
+
+.btn_sidebar_menu,
+.btn_sidebar_mobile_menu {
+    outline: none;
+    border: none;
+    margin-top: 20px;
+    margin-left: 10px;
+    background-color: rgb(233, 233, 233);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.hotel_title_selected {
+    font-weight: 600;
+}
+
+.hotel_title_selected,
+.hotel_title_not_selected {
+    font-size: 12px;
+    text-align: center;
+}
+
+.hotels_sidebar {
+    list-style: none;
+    padding: 0rem 1rem 0.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0px 1rem;
+}
+
+.remove {
+    display: none;
+}
+
+.hotels_sidebar .hotel_selected_sidebar {
+    margin: auto;
+    padding: 5px;
+}
+
+.hotels_sidebar .hotel_selected_sidebar:hover {
+    box-shadow: inset 0 0 0 0.5px var(--loader-color);
+    cursor: pointer;
+}
+
+.loading_data {
+    font-size: 13px;
+    padding: 0.5rem 1.5rem;
+}
+
+.ul_sidebar_home,
+.ul_sidebar_system,
+.ul_sidebar_system_dropdown_active,
+.ul_sidebar_website_dropdown,
+.ul_sidebar_website,
+.ul_sidebar_website_dropdown_active,
+.ul_sidebar_restaurant,
+.ul_sidebar_restaurant_dropdown,
+.ul_sidebar_restaurant_dropdown_active,
+.ul_sidebar_housekeeper,
+.ul_sidebar_housekeeper_dropdown,
+.ul_sidebar_housekeeper_dropdown_active {
+    list-style: none;
+    padding: 0px;
+}
+
+.svg_sidebar_icon,
+.btn_sidebar_menu .svg_sidebar_icon,
+.btn_sidebar_mobile_menu .svg_sidebar_icon,
+.ul_sidebar_home .li_sidebar_home .svg_sidebar_icon,
+.ul_sidebar_system .li_sidebar_system .svg_sidebar_icon,
+.ul_sidebar_website .li_sidebar_website .svg_sidebar_icon,
+.ul_sidebar_restaurant .li_sidebar_restaurant > .svg_sidebar_icon,
+.ul_sidebar_housekeeper .li_sidebar_housekeeper > .svg_sidebar_icon {
+    color: var(--unselected);
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: all 0.3s;
+}
+
+.svg_sidebar_icon_active {
+    color: var(--unselected);
+    width: 1.5rem;
+    height: 1.5rem;
+    transform: rotate(180deg);
+    transition: all 0.3s;
+}
+
+.ul_sidebar_home .li_sidebar_home .svg_sidebar_icon:first-of-type,
+.ul_sidebar_system .li_sidebar_system .svg_sidebar_icon:first-of-type,
+.ul_sidebar_website .li_sidebar_website .svg_sidebar_icon:first-of-type,
+.ul_sidebar_restaurant .li_sidebar_restaurant .svg_sidebar_icon:first-of-type,
+.ul_sidebar_housekeeper .li_sidebar_housekeeper .svg_sidebar_icon:first-of-type {
+    padding-left: 1rem;
+}
+
+.ul_sidebar_home .li_sidebar_home p,
+.ul_sidebar_system .li_sidebar_system p,
+.ul_sidebar_website .li_sidebar_website p,
+.ul_sidebar_restaurant .li_sidebar_restaurant p,
+.ul_sidebar_housekeeper .li_sidebar_housekeeper p {
+    margin-left: 10px;
+}
+
+.ul_sidebar_home .li_sidebar_home,
+.ul_sidebar_system .li_sidebar_system,
+.ul_sidebar_website .li_sidebar_website,
+.ul_sidebar_restaurant .li_sidebar_restaurant,
+.ul_sidebar_housekeeper .li_sidebar_housekeeper {
+    cursor: pointer;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 50px auto 20%;
+    transition: 0.3s;
+    width: 100%;
+    font-size: 0.8rem;
+    user-select: none; /* supported by Chrome and Opera */
+   -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Firefox */
+   -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.ul_sidebar_home .li_sidebar_home:hover,
+.ul_sidebar_system .li_sidebar_system:hover,
+.ul_sidebar_website .li_sidebar_website:hover,
+.ul_sidebar_restaurant .li_sidebar_restaurant:hover,
+.ul_sidebar_housekeeper .li_sidebar_housekeeper:hover {
+    font-weight: bold;
+}
+
+.ul_sidebar_home .li_sidebar_home:hover {
+    /* background-color: #DFDFDF; */
+    background-color: var(--gray-sidebar);
+}
+
+.ul_sidebar_system .li_sidebar_system:hover {
+    background-color: var(--green-sidebar);
+}
+
+.ul_sidebar_website .li_sidebar_website:hover {
+    background-color: var(--orange-sidebar);
+}
+
+.ul_sidebar_restaurant .li_sidebar_restaurant:hover {
+    background-color: var(--red-sidebar);
+}
+
+.ul_sidebar_housekeeper .li_sidebar_housekeeper:hover {
+    background-color: var(--red-sidebar);
+}
+
+.ul_sidebar_system_dropdown,
+.ul_sidebar_website_dropdown,
+.ul_sidebar_restaurant_dropdown,
+.ul_sidebar_housekeeper_dropdown {
+    transform: translateY(-220px);
+    display: none;
+}
+
+.ul_sidebar_system_dropdown_active .li_sidebar_system_dropdown,
+.ul_sidebar_website_dropdown_active .li_sidebar_website_dropdown,
+.ul_sidebar_restaurant_dropdown_active .li_sidebar_line_dropdown,
+.ul_sidebar_housekeeper_dropdown_active .li_sidebar_line_dropdown  {
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.ul_sidebar_system_dropdown_active .li_sidebar_line_dropdown:first-of-type,
+.ul_sidebar_website_dropdown_active .li_sidebar_line_dropdown:first-of-type,
+.ul_sidebar_restaurant_dropdown_active .li_sidebar_line_dropdown:first-of-type,
+.ul_sidebar_housekeeper_dropdown_active .li_sidebar_line_dropdown:first-of-type {
+    position: absolute;
+    left: 1.5rem;
+    width: 2px;
+    margin-top: 10px;
+}
+
+.ul_sidebar_system_dropdown_active .li_sidebar_line_dropdown:first-of-type {
+    height: 215px;
+}
+
+.ul_sidebar_website_dropdown_active .li_sidebar_line_dropdown:first-of-type {
+    height: 110px;
+}
+
+.ul_sidebar_restaurant_dropdown_active .li_sidebar_line_dropdown:first-of-type {
+    height: 40px;
+}
+
+.ul_sidebar_housekeeper_dropdown_active .li_sidebar_line_dropdown:first-of-type {
+    height: 40px;
+}
+
+.ul_sidebar_system_dropdown_active .li_sidebar_line_dropdown:first-of-type {
+    background-color: var(--green-sidebar);
+}
+
+.ul_sidebar_website_dropdown_active .li_sidebar_line_dropdown:first-of-type {
+    background-color: var(--orange-sidebar);
+}
+
+.ul_sidebar_restaurant_dropdown_active .li_sidebar_line_dropdown:first-of-type {
+    background-color: var(--red-sidebar);
+}
+
+.ul_sidebar_housekeeper_dropdown_active .li_sidebar_line_dropdown:first-of-type {
+    background-color: var(--red-sidebar);
+}
+
+.ul_sidebar_home_active {
+    
+    background-color: var(--gray-sidebar);
+    font-weight: bold;
+}
+
+.li_sidebar_system_selected {
+    background-color: var(--green-sidebar);
+    font-weight: bold;
+}
+
+.li_sidebar_website_selected {
+    background-color: var(--orange-sidebar);
+    font-weight: bold;
+}
+
+.li_sidebar_restaurant_selected {
+    background-color: var(--red-sidebar);
+    font-weight: bold;
+}
+
+.li_sidebar_housekeeper_selected {
+    background-color: var(--red-sidebar);
+    font-weight: bold;
+}
+
+.ul_sidebar_system_active,
+.ul_sidebar_website_dropdown_active,
+.ul_sidebar_restaurant_dropdown_active,
+.ul_sidebar_housekeeper_dropdown_active {
+    transform: translateY(0px);
+    display: block;
+}
+
+.ul_sidebar_system_dropdown_active .li_sidebar_system_dropdown:hover .chip,
+.ul_sidebar_website_dropdown_active .li_sidebar_website_dropdown:hover .chip,
+.ul_sidebar_restaurant_dropdown_active .li_sidebar_restaurant_dropdown:hover .chip,
+.ul_sidebar_housekeeper_dropdown_active .li_sidebar_housekeeper_dropdown:hover .chip {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.ul_sidebar_system_dropdown_active .li_sidebar_system_dropdown:hover .chip {
+    background-color: var(--green-sidebar-hover);
+}
+
+.ul_sidebar_website_dropdown_active .li_sidebar_website_dropdown:hover .chip {
+    background-color: var(--orange-sidebar);
+}
+
+.ul_sidebar_restaurant_dropdown_active .li_sidebar_restaurant_dropdown:hover .chip {
+    background-color: var(--red-sidebar);
+}
+
+.ul_sidebar_housekeeper_dropdown_active .li_sidebar_housekeeper_dropdown:hover .chip {
+    background-color: var(--red-sidebar);
+}
+
+.ul_sidebar_system_dropdown_active .li_sidebar_system_dropdown .chip,
+.ul_sidebar_website_dropdown_active .li_sidebar_website_dropdown .chip,
+.ul_sidebar_restaurant_dropdown_active .li_sidebar_restaurant_dropdown .chip,
+.ul_sidebar_housekeeper_dropdown_active .li_sidebar_housekeeper_dropdown .chip {
+    border-radius: 20px;
+    width: 150px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin: 0px 0px 2px 50px;
+    padding: 1px 1px 1px 10px;
+}
+
+.ul_sidebar_system_dropdown_active .li_sidebar_system_dropdown .chip > p,
+.ul_sidebar_website_dropdown_active .li_sidebar_website_dropdown .chip > p,
+.ul_sidebar_restaurant_dropdown_active .li_sidebar_restaurant_dropdown .chip > p,
+.ul_sidebar_housekeeper_dropdown_active .li_sidebar_housekeeper_dropdown .chip > p {
+    font-size: 12px;
+    user-select: none; /* supported by Chrome and Opera */
+   -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Firefox */
+   -ms-user-select: none; /* Internet Explorer/Edge */
+}

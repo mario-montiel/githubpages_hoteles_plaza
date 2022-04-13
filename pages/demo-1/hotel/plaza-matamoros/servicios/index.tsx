@@ -1,6 +1,6 @@
 // React
-import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 
 // CSS
 import styles from "../../../../../styles/Demo1CatedralHome.module.css"
@@ -12,10 +12,25 @@ import ServicesDemo1 from "../../../../../components/website/demo1/services/Serv
 // Libraries
 
 // Helpers
+import { endpoint } from "../../../../../config/endpoint"
 
 // Types
 
-const ServicesCatedralDemo1 = () => {
+ServicesCatedralDemo1.getInitialProps = async () => {
+    let weatherJson: any = []
+    weatherJson = await getFetchData(endpoint + '/api/weather')
+
+    return {
+        weather: weatherJson,
+    }
+}
+
+async function getFetchData(url: string) {
+    const resp = await fetch(url)
+    return await resp.json()
+}
+
+export default function ServicesCatedralDemo1({ weather }: any) {
 
     // Variables
     const router = useRouter()
@@ -36,6 +51,8 @@ const ServicesCatedralDemo1 = () => {
         <LayoutDemo1
             title="Servicios - Demostración 1"
             description="Servicios de los hoteles plaza"
+            weather={weather}
+            currentHotel="matamoros"
         >
 
             <img
@@ -58,5 +75,3 @@ const ServicesCatedralDemo1 = () => {
         </LayoutDemo1>
     )
 }
-
-export default ServicesCatedralDemo1

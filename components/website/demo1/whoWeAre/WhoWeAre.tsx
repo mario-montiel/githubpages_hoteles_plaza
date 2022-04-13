@@ -12,7 +12,7 @@ import styles from "./WhoWeAre.module.css"
 
 // Types
 
-const WhoWeAreDemo1 = ({ url, description }: any) => {
+const WhoWeAreDemo1 = ({ url, description, vision }: any) => {
 
     // Variables
 
@@ -69,11 +69,7 @@ const WhoWeAreDemo1 = ({ url, description }: any) => {
                     <div className={styles.text_subcontainer}>
                         <h5>Visión</h5>
                         <div className={styles.line} />
-                        <p className={styles.text}>Consolidar nuestra marca
-                            como la número uno en el país,
-                            logrando el crecimiento de la misma
-                            por medio de la expansión en nuestra zona,
-                            en el resto del país y en el extranjero.</p>
+                        <p className={styles.text}>{vision}</p>
                     </div>
                 </div>
             </div>

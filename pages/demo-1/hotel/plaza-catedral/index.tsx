@@ -36,6 +36,7 @@ export default function HotelCatedralDemo1({ weather }: any) {
             title="Home - Demostración 1"
             description="Inicio de la página principal de los hoteles plaza"
             weather={weather}
+            currentHotel="catedral"
         >
             <img
                 className={styles.hotel_face}
@@ -62,6 +63,10 @@ export default function HotelCatedralDemo1({ weather }: any) {
                     Con una excelente ubicación en Matamoros, Coah.,
                     contamos con todas las comodidades requeridas
                     para una estancia placentera."
+                vision="
+                    Consolidar nuestra marca como la número uno, logrando el crecimiento
+                    de la misma por medio de la expansión en nuestra zona, en el resto
+                    del país y en el extranjero."
             />
 
         </LayoutDemo1>

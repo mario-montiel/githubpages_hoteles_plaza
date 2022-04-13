@@ -14,12 +14,28 @@ import { endpoint } from "../../../../../config/endpoint"
 
 // Types
 
-const FacilitiesMatamorosDemo1 = () => {
+FacilitiesMatamorosDemo1.getInitialProps = async () => {
+    let weatherJson: any = []
+    weatherJson = await getFetchData(endpoint + '/api/weather')
+
+    return {
+        weather: weatherJson,
+    }
+}
+
+async function getFetchData(url: string) {
+    const resp = await fetch(url)
+    return await resp.json()
+}
+
+export default function FacilitiesMatamorosDemo1({ weather }: any) {
 
     return (
         <LayoutDemo1
             title="Habitaciones - Demostración 1"
             description="Habitaciones de los hoteles plaza"
+            weather={weather}
+            currentHotel="matamoros"
         >
 
             <img
@@ -39,11 +55,10 @@ const FacilitiesMatamorosDemo1 = () => {
 
             <FacilitiesCatedralDemo1
                 url={`${endpoint}/hotels/facilities/matamoros/facilitie`}
-                sections={2}
+                sections={3}
+                limit={12}
             />
 
         </LayoutDemo1>
     )
 }
-
-export default FacilitiesMatamorosDemo1

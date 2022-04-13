@@ -16,7 +16,21 @@ import { endpoint } from "../../../../../config/endpoint"
 
 // Types
 
-const UbicationContactCatedralDemo1 = () => {
+UbicationContactCatedralDemo1.getInitialProps = async () => {
+    let weatherJson: any = []
+    weatherJson = await getFetchData(endpoint + '/api/weather')
+
+    return {
+        weather: weatherJson,
+    }
+}
+
+async function getFetchData(url: string) {
+    const resp = await fetch(url)
+    return await resp.json()
+}
+
+export default function UbicationContactCatedralDemo1({ weather }: any) {
 
     // Variables
     const router = useRouter()
@@ -39,6 +53,8 @@ const UbicationContactCatedralDemo1 = () => {
         <LayoutDemo1
             title="Ubicación y contacto - Demostración 1"
             description="Ubicación y contacto de los hoteles plaza"
+            weather={weather}
+            currentHotel="matamoros"
         >
 
             <img
@@ -61,5 +77,3 @@ const UbicationContactCatedralDemo1 = () => {
         </LayoutDemo1>
     )
 }
-
-export default UbicationContactCatedralDemo1

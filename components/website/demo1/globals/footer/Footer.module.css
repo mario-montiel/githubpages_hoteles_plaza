@@ -57,7 +57,12 @@
 .footer .menu_container ul li .svg_weather_icon {
     width: 3rem;
     height: 3rem;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
+}
+
+.footer .menu_container ul li a {
+    text-decoration: none;
+    color: var(--black);
 }
 
 .footer .menu_container ul li .grades {
@@ -68,7 +73,7 @@
 .footer .menu_container ul li .svg_time_icon {
     width: 20px;
     height: 20px;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
 }
 
 .footer .menu_container ul li .timer_container {
@@ -84,7 +89,7 @@
     border-radius: 20px;
     letter-spacing: 2px;
     padding: 0.8rem 2.2rem;
-    background-color: var(--main-color);
+    background-color: var(--main-color-demo-1);
     font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -109,7 +114,7 @@
     width: 2rem;
     height: 2rem;
     margin: 0px 10px 0px 0px;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
 }
 
 .svg_social_media_icon:hover {

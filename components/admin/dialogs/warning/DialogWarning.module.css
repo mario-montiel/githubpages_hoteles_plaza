@@ -1,0 +1,81 @@
+.overlay_content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    width: 40%;
+    height: auto;
+    background-color: var(--white);
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image {
+    width: 4rem;
+    height: 4rem;
+    margin: auto;
+    display: block;
+}
+
+.overlay_content > p:first-of-type {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin:0.5rem 0px;
+}
+
+.overlay_content > p:last-of-type {
+    font-size: 13px;
+    margin-top: -5px;
+    line-height: 1.5;
+}
+
+.overlay_content .container {
+    display: grid;
+    grid-template-columns: auto auto 50%;
+}
+
+.overlay_content .container_alert > button {
+    margin: 1rem auto;
+}
+
+.overlay_content button {
+    margin: 1rem auto;
+    display: block;
+    border: none;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    width: 7rem;
+    height: 2.5rem;
+    cursor: pointer;
+}
+
+.overlay_content button:hover {
+    font-weight: bold;
+}
+
+.overlay_content .btn_accept {
+    background-color: var(--btn-warning);
+}
+
+.overlay_content .btn_accept > p {
+    color: var(--text-btn);
+}
+
+.overlay_content .btn_accept:hover {
+    background-color: var(--btn-warning-hover);
+}
+
+.overlay_content .btn_cancel {
+    color: var(--text);
+}
+
+@media screen and (max-width: 700px) {
+    .overlay_content {
+        width: 90%;
+    }
+}

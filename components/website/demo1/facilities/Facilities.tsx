@@ -13,7 +13,7 @@ import { endpoint } from "../../../../config/endpoint"
 
 // Types
 
-const FacilitiesDemo1 = ({ url, sections }: any) => {
+const FacilitiesDemo1 = ({ url, sections, limit }: any) => {
 
     // Variables
     const initialImageSectionValue = {
@@ -118,29 +118,29 @@ const FacilitiesDemo1 = ({ url, sections }: any) => {
                 smallImageRef.current!.children[index - 4].classList.add(styles.selected)
                 break;
             case 9:
-                currentImageRef.current!.style.transform = 'translate(-65%)' /* -145% */
-                currentImageRef.current!.children[index - 5].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 4].classList.add(styles.selected)
+                currentImageRef.current!.style.transform = 'translate(15%)' /* -145% */
+                currentImageRef.current!.children[index - 9].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 8].classList.add(styles.selected)
                 break;
             case 10:
-                currentImageRef.current!.style.transform = 'translate(15%)' /* -165% */
-                currentImageRef.current!.children[index - 10].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 9].classList.add(styles.selected)
+                currentImageRef.current!.style.transform = 'translate(-5%)' /* -165% */
+                currentImageRef.current!.children[index - 9].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 8].classList.add(styles.selected)
                 break;
             case 11:
-                currentImageRef.current!.style.transform = 'translate(-5%)' /* -185% */
-                currentImageRef.current!.children[index - 10].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 9].classList.add(styles.selected)
+                currentImageRef.current!.style.transform = 'translate(-25%)' /* -185% */
+                currentImageRef.current!.children[index - 9].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 8].classList.add(styles.selected)
                 break;
             case 12:
-                currentImageRef.current!.style.transform = 'translate(-25%)' /* -205% */
-                currentImageRef.current!.children[index - 10].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 9].classList.add(styles.selected)
+                currentImageRef.current!.style.transform = 'translate(-45%)' /* -205% */
+                currentImageRef.current!.children[index - 9].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 8].classList.add(styles.selected)
                 break;
             case 13:
-                currentImageRef.current!.style.transform = 'translate(-45%)' /* -225% */
-                currentImageRef.current!.children[index - 10].classList.add(styles.selected)
-                smallImageRef.current!.children[index - 9].classList.add(styles.selected)
+                currentImageRef.current!.style.transform = 'translate(15%)' /* -225% */
+                currentImageRef.current!.children[index - 13].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 12].classList.add(styles.selected)
                 break;
             default:
                 break;
@@ -167,7 +167,7 @@ const FacilitiesDemo1 = ({ url, sections }: any) => {
             )
         } else {
             html.push(
-                <div />
+                <div key={0} />
             )
         }
 
@@ -179,7 +179,7 @@ const FacilitiesDemo1 = ({ url, sections }: any) => {
 
         if (imageSection.section <= 1) {
             html.push(
-                <div />
+                <div key={0} />
             )
         } else {
             html.push(
@@ -220,16 +220,32 @@ const FacilitiesDemo1 = ({ url, sections }: any) => {
             case 3:
                 setImageSection({
                     ...imageSection,
-                    start: 10,
-                    end: 14
+                    start: 9,
+                    end: limit < 14 ? limit : 13
+                })
+                break;
+            case 4:
+                setImageSection({
+                    ...imageSection,
+                    start: 13,
+                    end: limit
                 })
                 break;
         }
 
+
+
         setTimeout(() => {
+            const currentImagesLength = currentImageRef.current!.children.length
+            const smallImagesLength = smallImageRef.current!.children.length
+
             currentImageRef.current!.style.transform = 'translate(-5%)'
-            currentImageRef.current!.children[1].classList.add(styles.selected)
-            smallImageRef.current!.children[2].classList.add(styles.selected)
+            currentImageRef.current!.children[currentImagesLength > 1 ? 1 : 0].classList.add(styles.selected)
+            smallImageRef.current!.children[smallImagesLength > 3 ? 2 : 1].classList.add(styles.selected)
+
+            if (currentImagesLength == 1) {
+                showFacilitiesImageSelected(1)
+            }
         }, 100);
     }
 
@@ -258,7 +274,7 @@ const FacilitiesDemo1 = ({ url, sections }: any) => {
 
     const printCircleSelected = () => {
         const aCircles = circlesContainerRef.current!.children
-        
+
         for (let index = 0; index < aCircles.length; index++) {
             const circle: HTMLDivElement = aCircles[index];
             circle.classList.remove(styles.circle_selected)

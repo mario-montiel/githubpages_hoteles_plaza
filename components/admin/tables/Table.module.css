@@ -1,0 +1,63 @@
+.table {
+    width: 99%;
+    height: auto;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+.table thead tr th {
+    text-align: left;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.35px;
+    padding: 1rem;
+    vertical-align: top;
+}
+
+.table tbody:first-of-type::before {
+  height: 0px;
+}
+
+.table tbody::before
+{
+  content: '';
+  display: block;
+  height: 1rem;
+}
+
+.table tbody {
+    height: auto;
+    padding: 3rem 0px !important;
+}
+
+.table tbody tr {
+    background-color: var(--white);
+    max-height: auto;
+}
+
+.table tr td {
+    font-size: 13px;
+    font-family: 'Noto Sans', sans-serif;
+    padding: 1rem;
+    letter-spacing: 0.35px;
+}
+
+.table .container {
+    display: flex;
+}
+
+.table .btn_action {
+    display: flex;
+    border: none;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+    background-color: transparent;
+    transition: all 0.3s;
+}
+
+.table .btn_action:hover {
+    cursor: pointer;
+    background-color: var(--main-color);
+}

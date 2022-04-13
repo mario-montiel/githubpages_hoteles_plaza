@@ -9,7 +9,7 @@
     font-weight: 400;
     text-align: center;
     margin: 64px auto 30px;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
     font-family: 'Playfair Display';
 }
 
@@ -44,7 +44,7 @@
     height: 6rem;
     margin: auto;
     display: block;
-    color: var(--main-color);
+    color: var(--main-color-demo-1);
 }
 
 .ubication_container iframe {

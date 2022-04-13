@@ -56,7 +56,7 @@
     position: absolute;
     width: 120%;
     height: 1.5px;
-    background-color: var(--main-color);
+    background-color: var(--main-color-demo-1);
 }
 
 .navbar ul button {
@@ -68,7 +68,7 @@
     color: var(--white);
     border-radius: 20px;
     padding: 0.7rem 1.5rem;
-    background-color: var(--main-color);
+    background-color: var(--main-color-demo-1);
     font-family: 'Source Sans Pro', sans-serif;
     letter-spacing: 2px;
 }

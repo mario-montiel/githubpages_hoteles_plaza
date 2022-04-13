@@ -1,22 +1,23 @@
 // React
+import Link from "next/link";
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+
+// Libraries
 
 // CSS
 import styles from "./Footer.module.css"
 
 // Componets
 import BookingModalCatedralDemo1 from "../../booking/Booking"
-import { convertKelvinToCelsius } from "../../../../../helpers/convertTemperature";
-
-// Libraries
 
 // Helpers
+import { endpoint } from "../../../../../config/endpoint";
+import { convertKelvinToCelsius } from "../../../../../helpers/convertTemperature";
 
 // Types
 
-export default function FooterDemo1 ({ weather }: any) {
-    console.log('footer: ', weather);
+export default function FooterDemo1({ weather, currentHotel }: any) {
     
     // Variables
     const router = useRouter()
@@ -25,6 +26,7 @@ export default function FooterDemo1 ({ weather }: any) {
         url: '',
         adress: ''
     }
+    const websiteUrl = `${endpoint}/demo-1/hotel`
 
     // Use State
     const [url, setUrl] = useState(initialUrlDataValues)
@@ -37,7 +39,7 @@ export default function FooterDemo1 ({ weather }: any) {
         const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
         const AMorPM = hour < 12 ? 'AM' : 'PM'
         const time = `${hour}:${minutes} ${AMorPM}`
-        
+
         return time
     }
 
@@ -72,7 +74,7 @@ export default function FooterDemo1 ({ weather }: any) {
                 <ul>
                     <li>VISÍTANOS</li>
                     <li> {url.adress} </li>
-                    <li>871 108 58 30</li>
+                    <li>{currentHotel == 'matamoros' ? '871 108 58 30' : '871 715 61 62'}</li>
                     <li>
                         <span>
                             {/* <svg className={styles.svg_weather_icon} viewBox="0 0 24 24">
@@ -92,13 +94,31 @@ export default function FooterDemo1 ({ weather }: any) {
 
                 <ul>
                     <li>NAVEGA</li>
-                    <li>QUIÉNES
-                        SOMOS</li>
-                    <li>HABITACIONES</li>
-                    <li>INSTALACIONES</li>
-                    <li>SERVICIOS</li>
-                    <li>UBICACION
-                        Y CONTACTO</li>
+                    <li>
+                        <Link href={`${websiteUrl}/plaza-${currentHotel}/`}>
+                            QUIÉNES SOMOS
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href={`${websiteUrl}/plaza-${currentHotel}/habitaciones`}>
+                            HABITACIONES
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href={`${websiteUrl}/plaza-${currentHotel}/instalaciones`}>
+                            INSTALACIONES
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href={`${websiteUrl}/plaza-${currentHotel}/servicios`}>
+                            SERVICIOS
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href={`${websiteUrl}/plaza-${currentHotel}/ubicacion-y-contacto`}>
+                            UBICACION Y CONTACTO
+                        </Link>
+                    </li>
                 </ul>
 
                 <ul>

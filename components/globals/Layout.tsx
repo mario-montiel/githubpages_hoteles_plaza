@@ -1,5 +1,6 @@
 // React
 import Head from "next/head"
+import Sidebar from "../admin/sidebar/sidebar"
 
 // CSS
 
@@ -11,27 +12,30 @@ import Head from "next/head"
 
 // Types
 
-const Layout = ({ children, title, description }: any) => {
+const Layout = ({children, title, metaName, metaContent }: any) => {
 
     return (
-        <>
+        <div className="admin_grid">
             <Head>
+                {/* <html lang="es" /> */}
                 <title>{title}</title>
-                <meta name="description" content={description} />
-                {/* <link rel="icon" href="/favicon.ico" /> */}
+                <meta
+                    name={metaName}
+                    content={metaContent}
+                />
             </Head>
-            <nav>
-                navbar
-            </nav>
+
+            <div className="column_blank" />
+
+            <Sidebar />
+        
+            {/* <UserAndSettings /> */}
 
             <main>
                 {children}
             </main>
 
-            <footer>
-                footer
-            </footer>
-        </>
+        </div>
     )
 }
 

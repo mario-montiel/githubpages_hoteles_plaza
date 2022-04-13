@@ -9,6 +9,7 @@
     height: 100%;
     filter:brightness(50%);
     object-fit: cover;
+    object-position: center;
 }
 
 .container .image_left,

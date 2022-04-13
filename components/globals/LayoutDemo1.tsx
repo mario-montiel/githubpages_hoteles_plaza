@@ -15,7 +15,8 @@ import NavbarDemo1 from "../website/demo1/globals/navbar/Navbar"
 
 // Types
 
-export default function LayoutDemo1 ({children, title, description, weather}: any) {
+export default function LayoutDemo1 ({children, title, description, weather, currentHotel}: any) {
+    
     return (
         <>
             <Head>
@@ -30,7 +31,7 @@ export default function LayoutDemo1 ({children, title, description, weather}: an
                 {children}
             </main>
 
-            <FooterDemo1 weather={weather} />
+            <FooterDemo1 weather={weather} currentHotel={currentHotel} />
         </>
     )
 }

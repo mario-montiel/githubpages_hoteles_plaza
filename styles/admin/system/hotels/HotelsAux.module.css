@@ -1,0 +1,370 @@
+.btn_back_container {
+    margin: 20px 0px 0px 0px;
+}
+
+.btn_back_container>button {
+    margin: 0px;
+}
+
+.hotel_grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.hotel_grid_col_2 {
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 15px;
+}
+
+input:checked+.slider {
+    background-color: #21f3e2;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #21f3bf;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.hotel_form {
+    margin-bottom: 5rem;
+}
+
+/* Google Maps */
+.google_maps_container_full_width {
+    display: grid;
+    grid-template-columns: 100%;
+    position: relative;
+}
+
+.google_maps_container {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    position: relative;
+}
+
+.hotel_googlemaps_grid {
+    display: flex;
+    align-items: center;
+}
+
+.hotel_googlemaps_grid>p {
+    margin: 0px 1rem;
+    font-weight: 600;
+}
+
+.map {
+    height: 20rem;
+    width: 100%;
+    margin: 1rem 0rem;
+}
+
+.custom_map {
+    height: 15rem;
+    width: 100%;
+    margin: 1rem 0rem;
+}
+
+.googlemaps_results_text {
+    font-family: 'Noto Sans', sans-serif;
+    color: rgb(95, 121, 108);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.input_google_maps_css {
+    width: 70%;
+    height: 2.4rem;
+    border: none;
+    outline-style: none;
+    top: 3.5% !important;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+    padding: 0px 0.3rem;
+}
+
+.google_maps_sites_container,
+.sidebar_googlemaps .places {
+    padding: 0.3rem 0.2rem;
+    list-style: none;
+    display: grid;
+    background-color: rgb(230, 230, 230);
+    border-radius: 5px;
+}
+
+.google_maps_sites_container {
+    grid-template-columns: 90% 10%;
+}
+
+.sidebar_googlemaps .places {
+    /* grid-template-columns: 50% 50%; */
+    height: 15rem;
+    overflow: auto;
+    position: relative;
+}
+
+.sidebar_googlemaps .places>div {
+    position: relative;
+}
+
+.sidebar_googlemaps .places>div li:hover .helper {
+    display: block !important;
+}
+
+.sidebar_googlemaps .places .helper {
+    position: absolute;
+    z-index: 100;
+    padding: 0.4rem 1rem 0.4rem 1rem;
+    top: -30px;
+    left: 0;
+    color: black;
+    background-color: rgb(211, 255, 253);
+    border: 1px solid black;
+    font-size: 12px;
+    display: none;
+}
+
+.sidebar_googlemaps .places li {
+    font-family: 'Noto Sans', sans-serif;
+    color: var(--input-text-color);
+    padding: 0.4rem 1rem 0.4rem 1rem;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.sidebar_googlemaps .places>div:hover {
+    background-color: rgb(199, 199, 199);
+    cursor: pointer;
+}
+
+.sidebar_googlemaps .places>div:hover li {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.google_map_checkbox {
+    width: 1rem;
+    height: 1rem;
+    margin: auto;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    pointer-events: none !important;
+}
+
+.sidebar_googlemaps>button {
+    border: none;
+    padding: 0.5rem 1rem;
+    background-color: rgb(91, 169, 172);
+    color: var(--white);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 15px;
+    height: 40px;
+    transition: all 0.3s;
+    margin: auto;
+    display: block;
+}
+
+.sidebar_googlemaps>button:hover {
+    cursor: pointer;
+    background-color: rgb(51, 145, 148);
+}
+
+.manual_place_data {
+    display: grid;
+    grid-template-columns: 90% 10%;
+}
+
+.manual_place_data>input,
+.manual_place_data>button {
+    margin: 0rem 1rem 1rem 0rem;
+}
+
+.manual_place_data>input {
+    width: auto;
+    height: 2.4rem;
+    border: none;
+    outline-style: none;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+}
+
+.references_title {
+    font-size: 0.7rem;
+    margin: 1rem 0rem 0.5rem 0rem;
+    color: var(--input-text-color);
+    font-family: 'Poppins', sans-serif;
+}
+
+.references_list_container {
+    width: 92%;
+    list-style: none;
+    padding: 1rem;
+    background-color: rgb(214, 214, 214);
+}
+
+.references_container table tbody tr {
+    height: auto;
+    padding: 0.5rem 0rem;
+}
+
+.references_list .references_subtitle {
+    font-size: 12px;
+    color: var(--input-text-color);
+}
+
+.references_list .references_grid {
+    display: grid;
+    grid-template-columns: 60% 10% 20% 10%;
+}
+
+.references_container table thead tr th {
+    color: var(--text);
+    font-size: 10px;
+    font-family: 'Poppins', sans-serif;
+    margin: 0.5rem 0rem 0rem 0rem;
+    min-height: 20px;
+}
+
+.references_container table button {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(174, 180, 192);
+    transition: all 0.2s;
+}
+
+.references_container table button:hover {
+    background-color: rgba(41, 41, 41, 0.3);
+    cursor: pointer;
+    color: var(--white);
+}
+
+.references_container table .svg_icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--text)
+}
+
+.references_container table button>.svg_icon,
+.svg_icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--text)
+}
+
+.references_no_selected {
+    font-size: 12px;
+    color: var(--not_found);
+}
+
+.references_select {
+    height: auto;
+    outline-style: none;
+    border: none;
+    min-width: 16rem;
+    max-width: auto;
+}
+
+.references_no_data {
+    margin: 1rem 0rem;
+}
+
+@media screen and (max-width: 1000px) {
+    .hotel_grid {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .hotel_grid {
+        grid-template-columns: 100%;
+    }
+
+    .hotel_grid_col_2 {
+        grid-template-columns: 50% 50%;
+    }
+
+    .input_google_maps_css {
+        width: 80%;
+        top: 20% !important;
+        left: 10px !important;
+    }
+
+    /* Google Maps */
+    .google_maps_container {
+        grid-template-columns: 100%;
+    }
+}
+
+.addAnimiation {
+    animation: showElementInReferencesList 3s;
+}
+
+@keyframes showElementInReferencesList {
+    0% {
+        background-color: rgb(181, 225, 228);
+    }
+    70% {
+        background-color: rgb(181, 225, 228);
+    }
+    100% {
+        background-color: var(--white);
+    }
+}

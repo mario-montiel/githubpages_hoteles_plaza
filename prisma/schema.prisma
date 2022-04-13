@@ -10,7 +10,332 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model tacos {
-  id   Int    @id @default(autoincrement())
-  name String @default("Pastor")
+model ActivityOfDeleteData {
+  id     Int      @id @default(autoincrement())
+  madeIn DateTime @default(now())
+  user   Users    @relation(fields: [userId], references: [id])
+  userId Int      @unique
+}
+
+model Departments {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updateAt    DateTime?
+  name        String
+  users       Users[]
+  registredBy String    @db.VarChar(60)
+}
+
+// model TypeUser {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   name      String   @db.VarChar(60) // Receptionist, Housekeeper and Admin
+//   users     Users?
+// }
+
+// model Privileges {
+//   id        Int       @id @default(autoincrement())
+//   createdAt DateTime  @default(now())
+//   updateAt  DateTime?
+//   name      String    @db.VarChar(60) // Receptionist, Housekeeper and Admin
+//   users     Users?
+// }
+
+// model SectionsOfSystem {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   name      String
+//   type      Int
+//   users     Users?
+// }
+
+model SuperAdmin {
+  id                 Int                  @id @default(autoincrement())
+  email              String               @unique
+  password           String               @db.VarChar(60)
+  fullName           String               @db.VarChar(50)
+  createdAt          DateTime             @default(now())
+  typeUser           String
+  updateAt           DateTime?
+  SuperAdminOnHotels SuperAdminOnHotels[]
+}
+
+model Users {
+  id                   Int                   @id @default(autoincrement())
+  email                String                @unique
+  password             String                @db.VarChar(60)
+  fullName             String                @db.VarChar(50)
+  lastName             String                @db.VarChar(50)
+  createdAt            DateTime              @default(now())
+  updateAt             DateTime?
+  registredBy          String                @db.VarChar(60)
+  status               String
+  phone                String                @db.VarChar(10)
+  typeUserId           Int
+  department           Departments           @relation(fields: [departmentId], references: [id])
+  departmentId         Int
+  preferences          Hotels?               @relation(fields: [preferencesId], references: [id])
+  preferencesId        Int?
+  // sectionsToAccess SectionsOfSystem @relation(fields: [sectionsId], references: [id])
+  // sectionsId       Int              @unique
+  // privileges   Privileges  @relation(fields: [privilegesId], references: [id])
+  // privilegesId Int         @unique
+  hotels               UsersOnHotels[]
+  activityOfDeleteData ActivityOfDeleteData?
+}
+
+model Guest {
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
+  password  String      @db.VarChar(60)
+  fullName  String      @db.VarChar(50)
+  lastName  String      @db.VarChar(50)
+  createdAt DateTime    @default(now())
+  updateAt  DateTime?
+  company   String?
+  city      String
+  comments  Comments[]
+  emailForm EmailForm[]
+}
+
+// model Categories {
+//   id          Int       @id @default(autoincrement())
+//   createdAt   DateTime  @default(now())
+//   updateAt    DateTime?
+//   name        String    @db.VarChar(60)
+//   hotels      Hotels[]
+//   registredBy String    @db.VarChar(60)
+// }
+
+model PlacesInterest {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updateAt   DateTime?
+  name       String
+  distance   String
+  duration   String
+  travelMode String
+  hoteles    Hotels    @relation(fields: [hotelId], references: [id])
+  hotelId    Int
+}
+
+model SuperAdminOnHotels {
+  hotel      Hotels     @relation(fields: [hotelId], references: [id])
+  hotelId    Int
+  user       SuperAdmin @relation(fields: [userId], references: [id])
+  userId     Int
+  assignedAt DateTime   @default(now())
+  assignedBy String     @db.VarChar(60)
+  updateAt   DateTime?  @updatedAt
+
+  @@id([hotelId, userId])
+}
+
+model UsersOnHotels {
+  hotel      Hotels    @relation(fields: [hotelId], references: [id])
+  hotelId    Int
+  user       Users     @relation(fields: [userId], references: [id])
+  userId     Int
+  assignedAt DateTime  @default(now())
+  assignedBy String    @db.VarChar(60)
+  updateAt   DateTime? @updatedAt
+
+  @@id([hotelId, userId])
+}
+
+model Hotels {
+  id                 Int                  @id
+  createdAt          DateTime             @default(now())
+  updateAt           DateTime?
+  name               String
+  ubication          String
+  phone              String               @db.VarChar(10)
+  // category           Categories           @relation(fields: [categoryId], references: [id])
+  // categoryId         Int
+  stars              Int
+  facebook           String?
+  whatsapp           String?
+  instagram          String?
+  references         String
+  googleMaps         String?
+  latitude           String?
+  longitude          String?
+  totalFloors        Int
+  totalRooms         Int
+  registredBy        String               @db.VarChar(60)
+  logoImage          String
+  imageUrl           String
+  pathDirImage       String
+  pathImageName      String
+  placeId            String
+  // smoke              Boolean
+  // facilityId       Facilities       @relation(fields: [facilitiesId], references: [id])
+  // facilitiesId     Int
+  // comment          Comments         @relation(fields: [commentId], references: [id])
+  // commentId        Int
+  placesOfInterest   PlacesInterest[]
+  usersOnHotels      UsersOnHotels[]
+  rooms              Rooms[]
+  // roomsOnHotels    RoomsOnHotels[]
+  users              Users[]
+  comments           Comments[]
+  // emailForm        EmailForm[]
+  SuperAdminOnHotels SuperAdminOnHotels[]
+  OnlyEmail          OnlyEmail[]
+  EmailForm          EmailForm[]
+}
+
+model Services {
+  id        Int       @id
+  createdAt DateTime  @default(now())
+  updateAt  DateTime?
+  name      String
+  altImage  String
+  url       String
+  text      String
+  // servicesOnRoom ServicesOnRoom[]
+  // rooms          Rooms[]
+}
+
+// model ServicesOnRoom {
+//   room       Rooms     @relation(fields: [roomId], references: [id])
+//   roomId     Int
+//   service    Services  @relation(fields: [serviceId], references: [id])
+//   serviceId  Int
+//   assignedAt DateTime  @default(now())
+//   assignedBy String    @db.VarChar(60)
+//   updateAt   DateTime? @updatedAt
+
+//   @@id([roomId, serviceId])
+// }
+
+model Benefits {
+  id        Int       @id
+  createdAt DateTime  @default(now())
+  updateAt  DateTime?
+  name      String
+  altImage  String
+  url       String
+  text      String
+}
+
+model Facilities {
+  id        Int       @id
+  createdAt DateTime  @default(now())
+  updateAt  DateTime?
+  altImage  String
+  url       String
+  // Hotels    Hotels[]
+}
+
+model Promotions {
+  id        Int       @id
+  createdAt DateTime  @default(now())
+  updateAt  DateTime?
+  name      String
+  altImage  String
+  url       String
+  text      String
+}
+
+// model RoomsOnHotels {
+//   room       Rooms     @relation(fields: [roomId], references: [id])
+//   roomId     Int
+//   hotel      Hotels    @relation(fields: [hotelId], references: [id])
+//   hotelId    Int
+//   assignedAt DateTime  @default(now())
+//   assignedBy String
+//   updateAt   DateTime? @updatedAt
+
+//   @@id([roomId, hotelId])
+// }
+
+model Rooms {
+  id               Int        @id @default(autoincrement())
+  createdAt        DateTime   @default(now())
+  updateAt         DateTime?
+  floor            Int
+  roomNumber       Int
+  roomType         RoomType   @relation(fields: [roomTypeId], references: [id])
+  roomTypeId       Int
+  registredBy      String     @db.VarChar(60)
+  observations     String
+  checkIn          DateTime?
+  checkOut         DateTime?
+  isBooking        Boolean    @default(false)
+  isBreakfast      Boolean    @default(false)
+  hotel            Hotels     @relation(fields: [hotelId], references: [id])
+  hotelId          Int
+  roomStatus       RoomStatus @relation(name: "RoomStatus", fields: [roomStatusId], references: [id])
+  roomStatusId     Int
+  lastRoomStatus   RoomStatus @relation(name: "LastRoomStatus", fields: [lastRoomStatusId], references: [id])
+  lastRoomStatusId Int
+  // servicesOnRoom   ServicesOnRoom[]
+}
+
+model RoomType {
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime  @default(now())
+  updateAt     DateTime?
+  name         String    @db.VarChar(60)
+  keyWord      String    @db.VarChar(4)
+  registredBy  String    @db.VarChar(60)
+  costPerNight Float
+  title        String
+  description  String
+  maxPeople    Int
+  smoke        Boolean
+  room         Rooms[]
+}
+
+model RoomStatus {
+  id              Int       @id @default(autoincrement())
+  name            String    @db.VarChar(30)
+  createdAt       DateTime  @default(now())
+  updateAt        DateTime?
+  registredBy     String    @db.VarChar(60)
+  backgroundColor String    @db.VarChar(7)
+  textColor       String    @db.VarChar(7)
+  border          Boolean
+  roomStatus      Rooms[]   @relation("RoomStatus")
+  lastRoomStatus  Rooms[]   @relation("LastRoomStatus")
+}
+
+model Comments {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updateAt    DateTime?
+  registredBy String    @db.VarChar(60)
+  title       String?   @db.VarChar(60)
+  description String
+  starts      Int
+  hotel       Hotels    @relation(fields: [hotelId], references: [id])
+  hotelId     Int
+  guest       Guest     @relation(fields: [guestId], references: [id])
+  guestId     Int
+}
+
+model OnlyEmail {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String
+  hotel     Hotels   @relation(fields: [hotelId], references: [id])
+  hotelId   Int
+}
+
+model EmailForm {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updateAt    DateTime?
+  name        String    @db.VarChar(25)
+  email       String
+  message     String
+  bookingType String
+  bookingDays Int
+  // hotelSelected Hotels    @relation(fields: [hotelsId], references: [id])
+  // hotelsId      Int
+  hotel       Hotels    @relation(fields: [hotelId], references: [id])
+  hotelId     Int
+  guest       Guest?    @relation(fields: [guestId], references: [id])
+  guestId     Int?
 }

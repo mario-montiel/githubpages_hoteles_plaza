@@ -186,7 +186,7 @@ template {
 /* =================== 
   * FONTS *
    ===================
-*/
+/* WEBSITE */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 /* font-family: 'Lato', sans-serif; */
 
@@ -195,6 +195,23 @@ template {
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,900;1,400;1,600;1,700;1,900&display=swap');
 /* font-family: 'Source Sans Pro', sans-serif; */
+
+/* ADMIN */
+/* Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,800&display=swap');
+/* font-family: 'Poppins', sans-serif; */
+
+/* Noto Sants */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* font-family: 'Noto Sans', sans-serif; */
+
+/* Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,800&display=swap');
+/* font-family: 'Montserrat', sans-serif; */
+
+/* Raleway */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800&display=swap');
+/* font-family: 'Raleway', sans-serif; */
 
 
 /* =================== 
@@ -205,11 +222,95 @@ template {
 
 :root {
 
+  /* ====== ADMIN ====== */
+  /* Colors */
+  --main-color: #F2F2F2;
+  --white: #FFFFFF;
+  --black: #000000;
+
+  /*  Sidebar */
+  --gray-sidebar: #b0daff;
+  --blue-sidebar: #bec5dd;
+  --green-sidebar: #99FCCC;
+  --green-sidebar-hover: #d2ffe9;
+  --orange-sidebar: #FFDF8C;
+  --red-sidebar: #FF8C8C;
+  --sidebar-btn-booking: #C8A86B;
+  --sidebar-btn-booking-hover: #ddc291;
+
+  /* Text */
+  --title: #3B444B;
+  --subtitle: #4C565F;
+  --text: #3B444B;
+  --not_found: #bd0f0f;
+  --text-error: #831414;
+  --links: #23b6ae;
+  --table-title: #0a7e78;
+  --text-btn: #3b3b3b;
+  --demo: #55707a;
+  /* # lp = Landing Page # */
+  --landing_page_text: #303030;
+  --calendar-label: #3c7bcc;
+  --lp-sidebar-text-no-selected: #B2B2B2;
+  --lp-sidebar-text-selected: #B17E1B;
+
+  /* Line Landing Page */
+  --lp-room-booking-line: #C8A86B;
+
+  /* Input */
+  --input-text-color: #788087;
+  /* --input-border-danger: #d62e2e; */
+
+  /* Select */
+  --lp-select-text: #CD9832;
+
+  /* Button */
+  --btn-warning: #ffec42;
+  --btn-warning-hover: #ffe600;
+  --btn-successful: #4dc06f;
+  --btn-successful-hover: #5ed181;
+  --btn-danger: #c05a4d;
+  --btn-danger-hover: #b33a2a;
+  --btn-submit: #252525;
+  --btn-submit-hover: #363636;
+  --btn-upload-image-hover: #e9f0f8;
+  --btn-close: #709492;
+  /* # lp = Landing Page # */
+  --btn-days: transparent;
+  --btn-day-selected: #bcd3ff;
+  --btn-admin-submit: #3a7cd3;
+  --btn-admin-submit-hover: #316ab4;
+  --btn-lp-submit: #F0C429;
+  --btn-lp-submit-hover: #e9b805;
+  --btn-room-booking: #9F9F9F;
+  --btn-room-booking-hover: #b8b8b8;
+  --btn-next: #5f6b70;
+
+  /* Notifications */
+  --notif-success: #4dce7e;
+  --notif-danger: #ff4848;
+  --notif-warning: #ffde20;
+  --notif-warning-btn: #e7c504;
+
+  /* --notif-red-hover: #ffeaea; */
+
+  /* Overlay */
+  --overlay-color: rgba(0, 0, 0, 0.4);
+
+  /* SVG */
+  --unselected: #3B444B;
+  /* # lp = Landing Page # */
+  --lp-rooms-svg: #525252;
+
+  /* Loader */
+  --loader-color: #d1d1d1;
+  --loader-data-second-color: #a8d1c4;
+  --loader-data-first-color: #4cd0e7;
+
   /* ====== DEMO 1 ====== */
   /* Colors */
   --gray: #c0c0c0;
-  --white:#fff;
-  --main-color: #C0A766;
+  --main-color-demo-1: #C0A766;
   --background-mision-vision-text: #E8E6E6;
 
   /* Text */
@@ -250,4 +351,318 @@ p {
 footer li {
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 200;
+}
+
+/* =================== 
+  * GRID LAYOUT *
+   ===================
+*/
+.admin_grid {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 14rem auto;
+  min-height: 100vh;
+  max-width: 100%;
+}
+
+.admin_grid.active {
+  grid-template-columns: 3.5rem auto;
+}
+
+.admin_grid.mobile-active {
+  /* display: block; */
+  grid-template-columns: 100% !important;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}
+
+@media screen and (max-width: 1000px) {
+  .form-grid {
+    grid-template-columns: 50% 50%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .form-grid {
+    grid-template-columns: 100%;
+  }
+}
+
+/* =================== 
+  * BODY *
+   ===================
+*/
+body {
+  background-color: var(--main-color);
+}
+
+/* =================== 
+  * HEADINGS AND TEXT *
+   ===================
+*/
+.h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+p {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text);
+}
+
+/* =================== 
+  * BUTTONS *
+   ===================
+*/
+.btn {
+  outline: none;
+  border: none;
+}
+
+/* =================== 
+  * INPUT *
+   ===================
+*/
+
+[hidden] {
+  display: none !important;
+}
+
+.input-container>small {
+  color: var(--text-error);
+  font-size: 10px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+input {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+}
+
+.input-container>label {
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+  color: var(--input-text-color);
+  font-family: 'Poppins', sans-serif;
+}
+
+.input {
+  outline: none;
+  border: none;
+  height: 2.2rem;
+  padding: 0rem 0.8rem;
+  color: var(--input-text-color);
+  width: 80%;
+  margin: 5px 0px 0px;
+  border: none;
+}
+
+.input-color {
+  width: 90%;
+  height: 2.7rem;
+  outline: none;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  cursor: pointer;
+}
+
+.input_error_text,
+.select_error_text {
+  border: 2px solid var(--not_found) !important;
+}
+
+.submit-error-text {
+  font-size: 14px;
+  text-align: center;
+  color: var(--text-error);
+  font-weight: 600;
+}
+
+.checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.5rem 0rem 0rem;
+  z-index: 2;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 700px) {
+  .input>input {
+    width: 90%;
+  }
+
+  .submit-error-text {
+    width: 90%;
+    margin: 1.5rem 0px 5rem 0px;
+  }
+}
+
+/* =================== 
+  * SELECT *
+   ===================
+*/
+.select>p {
+  margin-bottom: 0.5rem;
+  color: var(--input-text-color);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.select>option {
+  font-size: 1rem;
+  color: var(--input-text-color);
+}
+
+.select,
+.select_full_width,
+.multi-select {
+  outline: none;
+  border: none;
+  height: 2.2rem;
+  padding: 0rem 0.8rem;
+  color: var(--input-text-color);
+  cursor: pointer;
+}
+
+.select {
+  width: 85% !important;
+}
+
+.select_full_width {
+  width: 100%;
+}
+
+.multi-select {
+  height: auto !important;
+}
+
+/* =================== 
+  * OVERLAY *
+   ===================
+*/
+.overlay {
+  z-index: 1;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-color);
+  top: 0;
+  left: 0;
+  user-select: none;
+  /* supported by Chrome and Opera */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+}
+
+/* =================== 
+  * TABLE *
+   ===================
+*/
+.table {
+  width: 99%;
+  height: auto;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+.table.small thead tr th,
+.table thead tr th {
+  text-align: left;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.35px;
+  padding: 0.5rem;
+  vertical-align: top;
+}
+
+.table thead tr th {
+  font-size: 13px;
+}
+
+.table tbody:first-of-type::before {
+  height: 0px;
+}
+
+.table tbody::before {
+  content: '';
+  display: block;
+  height: 1rem;
+}
+
+.table tbody {
+  height: auto;
+  padding: 3rem 0px !important;
+}
+
+.table tbody tr {
+  background-color: var(--white);
+  max-height: auto;
+}
+
+.table tr td {
+  font-size: 13px;
+  font-family: 'Noto Sans', sans-serif;
+  padding: 1rem;
+  letter-spacing: 0.35px;
+}
+
+.table.small tbody tr td {
+  font-size: 12px;
+}
+
+.table .container {
+  display: flex;
+}
+
+.table .btn_action {
+  display: flex;
+  border: none;
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  background-color: transparent;
+  transition: all 0.3s;
+}
+
+.table .btn_action:hover {
+  cursor: pointer;
+  background-color: var(--main-color);
+}
+
+.image-table:hover {
+  cursor: pointer;
+}
+
+.table-no-data {
+  font-weight: 600;
+  color: var(--not_found)
+}
+
+/* =================== 
+  * SVG *
+   ===================
+*/
+.svg_table_icon,
+.svg_back {
+  width: 24px;
+  height: 24px;
+}
+
+.svg_sidebar_icon {
+  width: 20px;
+  height: 20px;
 }

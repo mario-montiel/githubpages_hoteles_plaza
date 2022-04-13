@@ -35,6 +35,7 @@ export default function FacilitiesCatedraDemo1({ weather }: any) {
             title="Habitaciones - Demostración 1"
             description="Habitaciones de los hoteles plaza"
             weather={weather}
+            currentHotel="catedral"
         >
 
             <img
@@ -54,7 +55,8 @@ export default function FacilitiesCatedraDemo1({ weather }: any) {
 
             <FacilitiesCatedralDemo1
                 url={`${endpoint}/hotels/facilities/catedral/facilitie`}
-                sections={3}
+                sections={4}
+                limit={14}
             />
 
         </LayoutDemo1>
