@@ -56,7 +56,7 @@ export default function FacilitiesCatedraDemo1({ weather }: any) {
             <FacilitiesCatedralDemo1
                 url={`${endpoint}/hotels/facilities/catedral/facilitie`}
                 sections={4}
-                limit={14}
+                limit={15}
             />
 
         </LayoutDemo1>

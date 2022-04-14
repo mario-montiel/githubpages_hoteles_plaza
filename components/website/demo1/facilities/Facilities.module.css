@@ -63,7 +63,9 @@
     opacity: 0.3;
     max-width: 20%;
     max-height: auto;
+    object-fit: cover;
     margin: 10px 5px 0px;
+    object-position: center;
     -webkit-touch-callout: none;
     /* iOS Safari */
     -webkit-user-select: none;
@@ -76,7 +78,7 @@
     /* Internet Explorer/Edge */
     user-select: none;
     /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+    supported by Chrome, Edge, Opera and Firefox */
 }
 
 .gallery_container .small_images_container .small_image {

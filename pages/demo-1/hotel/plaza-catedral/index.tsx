@@ -58,11 +58,9 @@ export default function HotelCatedralDemo1({ weather }: any) {
             <WhoWeAreDemo1
                 url={"/hotels/mision_vision/catedral/"}
                 description="
-                    Somos un hotel que ofrece un excelente servicio
-                    y trato cálido a todos nuestros huéspedes.
-                    Con una excelente ubicación en Matamoros, Coah.,
-                    contamos con todas las comodidades requeridas
-                    para una estancia placentera."
+                    Somos un hotel que ofrece un excelente servicio y trato cálido a todos
+                    nuestros huéspedes. Ubicado en la zona más céntrica de Gómez Palacio, Dgo.,
+                    con todas las comodidades requeridas para una estancia placentera. "
                 vision="
                     Consolidar nuestra marca como la número uno, logrando el crecimiento
                     de la misma por medio de la expansión en nuestra zona, en el resto

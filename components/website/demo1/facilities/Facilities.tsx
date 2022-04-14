@@ -76,6 +76,9 @@ const FacilitiesDemo1 = ({ url, sections, limit }: any) => {
             smallImages[i + 1].classList.remove(styles.selected)
         }
 
+        console.log(index);
+        
+
         switch (index) {
             case 1:
                 currentImageRef.current!.style.transform = 'translate(15%)'
@@ -139,6 +142,11 @@ const FacilitiesDemo1 = ({ url, sections, limit }: any) => {
                 break;
             case 13:
                 currentImageRef.current!.style.transform = 'translate(15%)' /* -225% */
+                currentImageRef.current!.children[index - 13].classList.add(styles.selected)
+                smallImageRef.current!.children[index - 12].classList.add(styles.selected)
+                break;
+            case 14:
+                currentImageRef.current!.style.transform = 'translate(-5%)' /* -225% */
                 currentImageRef.current!.children[index - 13].classList.add(styles.selected)
                 smallImageRef.current!.children[index - 12].classList.add(styles.selected)
                 break;

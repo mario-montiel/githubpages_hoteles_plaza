@@ -83,7 +83,6 @@ const Demo1 = () => {
                 <div className={styles.blur} />
 
                 <div className={styles.logo_container}>
-
                     <div className={styles.logo_content}>
                         <img
                             className={styles.logo}

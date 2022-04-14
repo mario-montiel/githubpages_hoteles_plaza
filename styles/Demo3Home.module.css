@@ -52,6 +52,10 @@
     display: block;
 }
 
+.container .image_right .logo {
+    height: 25vh;
+}
+
 .container .image_left .hotel_face {
     right: 0;
     position: absolute;
