@@ -5,3 +5,11 @@
     object-fit: cover;
     object-position: center;
 }
+
+.hotel_face_top {
+    width: 100%;
+    min-height: auto;
+    max-height: 100vh;
+    object-fit: cover;
+    object-position: top;
+}
