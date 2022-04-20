@@ -115,7 +115,7 @@ const hotelUpdate = async (response: HotelForm, urlImage: string, res: NextApiRe
             name: response.name,
             ubication: response.ubication,
             phone: response.phone,
-            categoryId: parseInt(response.category_id.toString()),
+            // categoryId: parseInt(response.category_id.toString()),
             stars: parseInt(response.stars.toString()),
             facebook: response.facebook,
             whatsapp: response.whatsapp,

@@ -11,11 +11,13 @@ export default async function getCategories(
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
 
-    const categories = await prismaDB.categories.findMany({
-        orderBy: {
-            name: 'asc'
-        }
-    })
+    res.json([])
 
-    res.json(categories)
+    // const categories = await prismaDB.categories.findMany({
+    //     orderBy: {
+    //         name: 'asc'
+    //     }
+    // })
+
+    // res.json(categories)
 }

@@ -16,7 +16,7 @@ export default Authenticated(async function ReadOrChangePreferences(
     const authorization: string = req.cookies.auth ||''
     const response = JSON.parse(req.body)
 
-    jwt.verify(authorization, secret, async (err, decoded) => {
+    jwt.verify(authorization, secret, async (err, decoded: any) => {
         if (!err && decoded) {
             const user = await prismaDB.users.update({
                 where: { email: decoded.email },

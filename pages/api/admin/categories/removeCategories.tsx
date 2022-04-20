@@ -11,10 +11,12 @@ export default Authenticated(async function RemoveCategory(
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
 
-    const response = req.body
+    res.json([])
 
-    prismaDB.categories
-    .delete({ where: { id: response.id } })
-    .then(() => { res.status(200).json({ res: true, message: 'La categoría se eliminó con éxito!' }) })
-    .catch(() => { res.status(500).json({ res: false, message: 'No se pudo eliminar la categoría!' }) })
+    // const response = req.body
+
+    // prismaDB.categories
+    // .delete({ where: { id: response.id } })
+    // .then(() => { res.status(200).json({ res: true, message: 'La categoría se eliminó con éxito!' }) })
+    // .catch(() => { res.status(500).json({ res: false, message: 'No se pudo eliminar la categoría!' }) })
 })

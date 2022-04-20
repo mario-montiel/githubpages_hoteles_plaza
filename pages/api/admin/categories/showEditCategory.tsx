@@ -12,9 +12,11 @@ export default Authenticated(async function ShowEditCategory(
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
 
-    const response = req.body
+    res.json([])
 
-    prismaDB.categories.findFirst({ where: {name: response} })
-    .then((responseDB) => { res.status(200).json({ res: true, data: responseDB }) })
-    .catch((err) => { res.status(500).json({ res: false, message: 'No existe ninguna categoría con esos datos', messageError: err }) })
+    // const response = req.body
+
+    // prismaDB.categories.findFirst({ where: {name: response} })
+    // .then((responseDB: any) => { res.status(200).json({ res: true, data: responseDB }) })
+    // .catch((err: any) => { res.status(500).json({ res: false, message: 'No existe ninguna categoría con esos datos', messageError: err }) })
 })

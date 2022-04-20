@@ -15,6 +15,6 @@ export default Authenticated(async function ShowEditDepartment(
     const response = req.body
 
     prismaDB.departments.findFirst({ where: {name: response} })
-    .then((responseDB) => { res.status(200).json({ res: true, data: responseDB }) })
-    .catch((err) => { res.status(500).json({ res: false, message: 'No se pudieron obtener los datos del departamento!', messageError: err }) })
+    .then((responseDB: any) => { res.status(200).json({ res: true, data: responseDB }) })
+    .catch((err: any) => { res.status(500).json({ res: false, message: 'No se pudieron obtener los datos del departamento!', messageError: err }) })
 })

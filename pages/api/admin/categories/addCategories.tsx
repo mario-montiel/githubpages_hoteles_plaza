@@ -10,15 +10,17 @@ export default async function AddCategory(
     if (req.method !== 'POST') {
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
-    
-    const response = req.body
-    const categoryData = {
-        name: response.name,
-        registredBy: ''
-    }
 
-    prismaDB.categories
-    .create({data: categoryData})
-    .then(() => { res.status(200).json({ res: true, message: 'La categoría se creó con éxito!' }) })
-    .catch(() => { res.status(500).json({ res: false, message: 'No se pudo crear la categoría!' }) })
+    res.json([])
+    
+    // const response = req.body
+    // const categoryData = {
+    //     name: response.name,
+    //     registredBy: ''
+    // }
+
+    // prismaDB.categories
+    // .create({data: categoryData})
+    // .then(() => { res.status(200).json({ res: true, message: 'La categoría se creó con éxito!' }) })
+    // .catch(() => { res.status(500).json({ res: false, message: 'No se pudo crear la categoría!' }) })
 }

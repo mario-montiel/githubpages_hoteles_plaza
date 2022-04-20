@@ -11,15 +11,17 @@ export default Authenticated(async function EditCategory(
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
 
-    const response = req.body
+    res.json([])
 
-    await prismaDB.categories.update({
-        where: {
-            id: response.id
-        },
-        data: {
-            name: response.name
-        }
-    }).then(() => { res.status(200).json({ res: true, message: 'Categoría actualizada con éxito!' }) })
-    .catch(() => { res.status(500).json({ res: false, message: 'No se pudo editar la categoría!' }) })
+    // const response = req.body
+
+    // await prismaDB.categories.update({
+    //     where: {
+    //         id: response.id
+    //     },
+    //     data: {
+    //         name: response.name
+    //     }
+    // }).then(() => { res.status(200).json({ res: true, message: 'Categoría actualizada con éxito!' }) })
+    // .catch(() => { res.status(500).json({ res: false, message: 'No se pudo editar la categoría!' }) })
 })

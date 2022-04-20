@@ -15,7 +15,7 @@ export default async function ShowEditHotel(
 
     prismaDB.hotels.findFirst({
         include: {
-            category: true,
+            // category: true,
             placesOfInterest: true,
             rooms: {
                 orderBy: {
