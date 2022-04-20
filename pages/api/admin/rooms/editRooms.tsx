@@ -13,8 +13,6 @@ export default Authenticated(async function EditRoom(
     }
 
     const response = req.body
-    console.log(response);
-    
 
     switch (response.type) {
         case 'status':
@@ -37,7 +35,7 @@ const editRoomStatus = async (roomData: any) => {
             roomStatusId: roomData.roomTypeId,
             lastRoomStatusId: roomData.lastRoomTypeId
         }
-    }).catch((error) => { console.log(error); })
+    }).catch((error: any) => { console.log(error); })
 }
 
 const editRoom = async (roomData: Room) => {
@@ -47,5 +45,5 @@ const editRoom = async (roomData: Room) => {
             roomTypeId: parseInt(roomData.roomTypeId.toString()),
             observations: roomData.observations
         }
-    }).catch((error) => { console.log(error); })
+    }).catch((error: any) => { console.log(error); })
 }

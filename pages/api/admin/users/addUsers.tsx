@@ -137,7 +137,7 @@ const assignHotelToUser = async (data: UsersOnHotes[]) => {
     prismaDB.usersOnHotels.createMany({
         data
     })
-    .catch((err) => {
+    .catch((err: any) => {
         console.log(err);
     })
 }

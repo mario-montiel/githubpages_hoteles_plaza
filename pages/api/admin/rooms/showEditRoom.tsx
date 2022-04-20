@@ -34,6 +34,6 @@ export default Authenticated(async function ShowEditRoom(
 
         return res.status(500).json({ res: false, data: [] })
     })
-    .catch((err) => { console.log(err);
+    .catch((err: any) => { console.log(err);
      res.status(500).json({ res: false, message: 'No existe ninguna categoría con esos datos', messageError: err }) })
 })

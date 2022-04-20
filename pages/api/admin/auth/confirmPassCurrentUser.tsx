@@ -18,13 +18,7 @@ export default async function handler(
     }
 
     const cookie = req.headers.cookie
-    console.log('cookie: ', cookie);
-    
-
-    console.log(req.body);
-    
     const resp: boolean = await verifyPassOfCurrentUser(req.body.email)
-    console.log(resp);
     
     if (resp) {
         // const token = jwt.sign({ sub: user[0].id, email: user[0].email }, secret, { expiresIn: '8h' })

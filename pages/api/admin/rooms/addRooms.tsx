@@ -13,8 +13,6 @@ export default async function AddRooms(
     }
     const authorization: string = req.cookies.auth || ''
     const response = req.body
-
-    console.log(response);
     
     if (!response.rooms) {
         return await prepareData(response.roomData, response)
@@ -67,7 +65,7 @@ const addRooms = async (roomData: Array<Room>) => {
     
     await prismaDB.rooms.createMany({
         data: roomData
-    }).catch((error) => { console.log(error); })
+    }).catch((error: any) => { console.log(error); })
 }
 
 const updateTotalRoomsOfHotel = async (response: any, currentRooms: number) => {
@@ -78,5 +76,5 @@ const updateTotalRoomsOfHotel = async (response: any, currentRooms: number) => {
         data: {
             totalRooms
         }
-    }).catch((err) => { console.log(err); })
+    }).catch((err: any) => { console.log(err); })
 }

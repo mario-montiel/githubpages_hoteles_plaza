@@ -15,6 +15,6 @@ export default Authenticated(async function RemoveRoomStatus(
 
     prismaDB.roomStatus
     .delete({ where: { id: response.id } })
-    .then((responseDB) => { res.status(200).json({ res: responseDB ? true : false, message: 'El estatus de la habitación se eliminó con éxito!' }) })
+    .then((responseDB: any) => { res.status(200).json({ res: responseDB ? true : false, message: 'El estatus de la habitación se eliminó con éxito!' }) })
     .catch(() => { res.status(500).json({ res: false, message: 'No se pudo eliminar el estatus de la habitación!' }) })
 })

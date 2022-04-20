@@ -25,8 +25,8 @@ export default async function ShowEditUser(
         }
 
     })
-        .then((responseDB) => {
+        .then((responseDB: any) => {
             res.status(200).json({ res: true, data: responseDB })
         })
-        .catch((err) => { res.status(500).json({ res: false, message: 'No existe ningun usuario con esos datos', messageError: err }) })
+        .catch((err: any) => { res.status(500).json({ res: false, message: 'No existe ningun usuario con esos datos', messageError: err }) })
 }

@@ -15,7 +15,7 @@ export default Authenticated(async function ShowEditRoomType(
     const response = JSON.parse(req.body)
 
     prismaDB.roomType.findFirst({ where: {id: response} })
-    .then((responseDB) => { res.status(200).json({ res: responseDB ? true : false, data: responseDB ? responseDB : [] }) })
-    .catch((err) => { console.log(err);
+    .then((responseDB: any) => { res.status(200).json({ res: responseDB ? true : false, data: responseDB ? responseDB : [] }) })
+    .catch((err: any) => { console.log(err);
      res.status(500).json({ res: false, message: 'No existe ninguna categoría con esos datos', messageError: err }) })
 })

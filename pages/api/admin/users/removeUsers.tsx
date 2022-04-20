@@ -19,13 +19,11 @@ export default Authenticated(async function RemoveUser(
 })
 
 const removeHotelsOfUser = async (userId: number) => {
-    console.log(userId);
-
     return await prismaDB.usersOnHotels.deleteMany({
         where: {
             userId
         }
-    }).catch((err) => {
+    }).catch((err: any) => {
         console.log(err);
     })
 }
@@ -35,7 +33,7 @@ const removeUser = async (userId: number) => {
         where: {
             id: userId
         }
-    }).catch((err) => {
+    }).catch((err: any) => {
         console.log(err);
     })
 }

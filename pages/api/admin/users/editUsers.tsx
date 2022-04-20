@@ -62,7 +62,7 @@ const removeHotelsOfUser = async (userId: number) => {
         where: {
             userId
         }
-    }).catch((err) => { console.log(err);
+    }).catch((err: any) => { console.log(err);
     })
 }
 
@@ -123,7 +123,7 @@ const prepareDataToSaveInDB = (currentUser: string, userId: number, user: User, 
 const assignHotelToUser = async (data: UsersOnHotes[]) => {
     prismaDB.usersOnHotels.createMany({
         data
-    }).catch((err) => {
+    }).catch((err: any) => {
         console.log(err);
     })
 }

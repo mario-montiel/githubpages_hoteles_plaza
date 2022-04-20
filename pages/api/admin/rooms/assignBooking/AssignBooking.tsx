@@ -13,8 +13,6 @@ export default Authenticated(async function AssignBooking(
     }
     
     const response = JSON.parse(req.body)
-    console.log('resonse: ', response);
-    
     const data = await  getDataGenerated(response)
     
     saveInDB(data)
@@ -54,5 +52,5 @@ const saveInDB = async (response: any) => {
             isBreakfast: response.isBreakfast,
             roomStatusId: response.roomStatusId.id
         }
-    }).catch((err) => console.log(err))
+    }).catch((err: any) => console.log(err))
 }
