@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { Login } from '../../../../types/Login'
 
 // Helpers
-import { endpoint } from "../../../../api/url"
+import { endpoint } from "../../../../config/endpoint";
 
 
 const LoginFunctions = () => {
