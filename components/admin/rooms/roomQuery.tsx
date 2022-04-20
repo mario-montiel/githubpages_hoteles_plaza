@@ -8,7 +8,7 @@ import styles from '../../../styles/RoomQuery.module.css'
 // Types
 import { RoomType } from '../../../types/RoomType'
 import { Room } from '../../../types/Room';
-import RoomDetails from '../../mainPage/rooms/details/RoomDetails';
+// import RoomDetails from '../../mainPage/rooms/details/RoomDetails';
 
 // Helpers
 
@@ -154,14 +154,14 @@ const RoomQuery = (props: any) => {
 
     return (
         <section className={styles.roomquery_section}>
-            {
+            {/* {
                 showRoomDetails.isShow ? (
                     <RoomDetails
                         roomDetails={showRoomDetails.roomType}
                         handleRoomDetails={(isShow: boolean) => handleRoomDetails(isShow)}
                     />
                 ) : null
-            }
+            } */}
             {
                 query.length && isQuery ? (
                     <div className={styles.card_result_text}>
