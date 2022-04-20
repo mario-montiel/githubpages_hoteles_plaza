@@ -316,7 +316,7 @@ export default function CreateUser(props: any) {
                                     const hotel: any = `hotel[${index}]`;
                                     return (
                                         <div key={index}>
-                                            <input
+                                            {/* <input
                                                 className={errors.hotel ? `${styles.checkbox_error} checkbox input_error_text` : 'checkbox'}
                                                 {...register(`${hotel}.id`, { required: false })}
                                                 id="hotel"
@@ -335,7 +335,7 @@ export default function CreateUser(props: any) {
                                                     onClick={() => checkHotelErrors()}
                                                 />
                                                 <br />
-                                            </div>
+                                            </div> */}
                                         </div>
                                     )
                                 })
