@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import styles from "../../../../../styles/admin/system/categories/CreateCategory.module.css"
 
 // Components
-import Layout from "../../../../../components/Layout"
+import Layout from "../../../../../components/globals/Layout";
 import Loading from "../../../../../components/admin/loading/Loader"
 import BtnSubmit from "../../../../../components/admin/buttons/submit/BtnSubmit"
 import BtnActions from "../../../../../components/admin/buttons/actions/BtnActions"
