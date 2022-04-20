@@ -1,10 +1,20 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
-import { endpoint } from "../../../../api/url"
-import { Category } from "../../../../types/Category";
 
-// Components and CSS
+// React
+
+// Libraries
 import { toast } from 'react-toastify';
+
+// CSS
+
+// Components
+
+//Helpers
+import { endpoint } from "../../../../config/endpoint";
+
+// Types
+import { Category } from "../../../../types/Category";
 
 const CategoriesFunctions = () => {
 

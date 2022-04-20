@@ -11,14 +11,14 @@ import { ToastContainer } from "react-toastify";
 import styles from "../../../../../../styles/admin/system/rooms/EditRoom.module.css"
 
 // Components
-import BtnSubmit from "../../../../../../components/admin/buttons/submit/BtnSubmit"
-import DialogConfirm from "../../../../../../components/admin/dialogs/confirm/DialogConfirm"
-import Layout from "../../../../../../components/Layout"
+import Layout from "../../../../../../components/globals/Layout";
 import Loading from "../../../../../../components/admin/loading/Loader"
+import BtnSubmit from "../../../../../../components/admin/buttons/submit/BtnSubmit"
 import BtnActions from "../../../../../../components/admin/buttons/actions/BtnActions"
+import DialogConfirm from "../../../../../../components/admin/dialogs/confirm/DialogConfirm"
 
 // Helpers
-import { endpoint } from "../../../../../../api/url"
+import { endpoint } from "../../../../../../config/endpoint";
 import RoomFunctions from "../../../../../../helpers/functions/admin/rooms/roomsFunctions";
 
 // Types

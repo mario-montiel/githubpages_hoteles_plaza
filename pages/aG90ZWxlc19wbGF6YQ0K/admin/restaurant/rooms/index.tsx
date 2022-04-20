@@ -1,20 +1,22 @@
 // React
 import Router from 'next/router'
 import { NextPageContext } from 'next'
+import { useEffect, useRef, useState } from 'react'
 
 // Styles
 import styles from './../../../../../styles/admin/restaurant/RoomsHasBreakfast.module.css'
 
 // Components
-import { Room } from '../../../../../types/Room'
-import { endpoint } from '../../../../../api/url'
-import { useEffect, useRef, useState } from 'react'
-import Layout from "../../../../../components/Layout"
-
-// Helpers
-import { unauthorized } from "../../../../../helpers/notification401";
+import Layout from '../../../../../components/globals/Layout'
 import ModalBeakfast from '../../../../../components/admin/modal/restaurant/breakfast/breakfast'
 import ModalBeakfastRecord from '../../../../../components/admin/modal/restaurant/record/record'
+
+// Helpers
+import { endpoint } from '../../../../../config/endpoint'
+import { unauthorized } from "../../../../../helpers/notification401";
+
+// Types
+import { Room } from '../../../../../types/Room'
 
 RoomsHasBreakfast.getInitialProps = async (ctx: NextPageContext) => {
     let roomsStatusJson: any = []

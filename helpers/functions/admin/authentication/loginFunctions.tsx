@@ -1,14 +1,17 @@
+// React
 import { useState } from "react"
 import { useRouter } from "next/router"
 
-// Components and CSS
+// Libraries
 import { toast } from 'react-toastify';
 
-// Types
-import { Login } from '../../../../types/Login'
+// Components
 
 // Helpers
 import { endpoint } from "../../../../config/endpoint";
+// Types
+import { Login } from '../../../../types/Login'
+
 
 
 const LoginFunctions = () => {

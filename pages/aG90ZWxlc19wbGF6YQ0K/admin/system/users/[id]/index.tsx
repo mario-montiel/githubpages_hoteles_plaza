@@ -12,7 +12,7 @@ import styles from "../../../../../../styles/admin/system/users/CreateUser.modul
 
 // Components
 import ChangePassword from "../changePassword";
-import Layout from "../../../../../../components/Layout"
+import Layout from "../../../../../../components/globals/Layout";
 import Loading from "../../../../../../components/admin/loading/Loader"
 import BtnSubmit from "../../../../../../components/admin/buttons/submit/BtnSubmit"
 import BtnActions from "../../../../../../components/admin/buttons/actions/BtnActions"
@@ -20,7 +20,7 @@ import DialogConfirm from "../../../../../../components/admin/dialogs/confirm/Di
 import DialogWarning from "../../../../../../components/admin/dialogs/warning/DialogWarning"
 
 // Helpers
-import { endpoint } from "../../../../../../api/url";
+import { endpoint } from "../../../../../../config/endpoint";
 import UsersFunctions from "../../../../../../helpers/functions/admin/users/usersFunctions";
 
 // Types

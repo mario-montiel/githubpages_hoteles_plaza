@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import { toast } from 'react-toastify'
 
 // Helpers
-import { endpoint } from "../../../../api/url"
+import { endpoint } from "../../../../config/endpoint"
 
 // Types
 import { RoomType } from "../../../../types/RoomType"

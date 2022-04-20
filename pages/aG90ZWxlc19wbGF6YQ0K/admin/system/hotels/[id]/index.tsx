@@ -11,7 +11,7 @@ import { toast, ToastContainer } from "react-toastify"
 import styles from "../../../../../../styles/admin/system/hotels/CreateHotels.module.css"
 
 // Components
-import Layout from "../../../../../../components/Layout"
+import Layout from "../../../../../../components/globals/Layout";
 import Loading from "../../../../../../components/admin/loading/Loader"
 import LoaderData from "../../../../../../components/globals/loaderData/loaderData"
 import BtnSubmit from "../../../../../../components/admin/buttons/submit/BtnSubmit"
@@ -20,7 +20,7 @@ import DialogConfirm from "../../../../../../components/admin/dialogs/confirm/Di
 import DialogWarning from "../../../../../../components/admin/dialogs/warning/DialogWarning"
 
 // Helpers
-import { endpoint } from "../../../../../../api/url"
+import { endpoint } from "../../../../../../config/endpoint";
 import googleMaps from "../../../../../../helpers/functions/admin/hotels/googleMapsFunctions";
 import HotelesFunctions from "../../../../../../helpers/functions/admin/hotels/hotelsFunctions";
 

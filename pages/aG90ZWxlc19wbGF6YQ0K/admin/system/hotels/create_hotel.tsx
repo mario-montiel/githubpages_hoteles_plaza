@@ -13,12 +13,12 @@ import styles from "../../../../../styles/admin/system/hotels/CreateHotels.modul
 
 // Components
 import Layout from "../../../../../components/globals/Layout";
-import BtnSubmit from "../../../../../components/admin/buttons/submit/BtnSubmit"
-import DialogConfirm from "../../../../../components/admin/dialogs/confirm/DialogConfirm"
 import Loading from "../../../../../components/admin/loading/Loader"
-import BtnActions from "../../../../../components/admin/buttons/actions/BtnActions"
-import DialogWarning from "../../../../../components/admin/dialogs/warning/DialogWarning";
 import Reviews from "../../../../../components/admin/reviews/Reviews";
+import BtnSubmit from "../../../../../components/admin/buttons/submit/BtnSubmit"
+import BtnActions from "../../../../../components/admin/buttons/actions/BtnActions"
+import DialogConfirm from "../../../../../components/admin/dialogs/confirm/DialogConfirm"
+import DialogWarning from "../../../../../components/admin/dialogs/warning/DialogWarning";
 
 // Helpers
 import { endpoint } from "../../../../../config/endpoint";
@@ -26,9 +26,9 @@ import googleMaps from "../../../../../helpers/functions/admin/hotels/googleMaps
 import HotelesFunctions from "../../../../../helpers/functions/admin/hotels/hotelsFunctions";
 
 // Types
+import { Review } from "../../../../../types/Review";
 import { HotelForm } from "../../../../../types/Hotel"
 import { Category } from "../../../../../types/Category"
-import { Review } from "../../../../../types/Review";
 
 CreateHotel.getInitialProps = async (ctx: NextPageContext) => {
     let categoriesJson: any = []

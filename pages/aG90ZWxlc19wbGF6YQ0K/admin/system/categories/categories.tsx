@@ -3,20 +3,20 @@ import { NextPageContext } from "next";
 import Router, { useRouter } from "next/router";
 
 // Libraries
+import { ToastContainer } from "react-toastify";
 
 // CSS
 import 'react-toastify/dist/ReactToastify.css';
 import styles from "../../../../../styles/admin/system/categories/Categories.module.css"
 
 // Components
-import { ToastContainer } from "react-toastify";
-import Layout from "../../../../../components/Layout"
+import Layout from "../../../../../components/globals/Layout";
 import Loading from "../../../../../components/admin/loading/Loader"
 import BtnActions from "../../../../../components/admin/buttons/actions/BtnActions";
 import DialogConfirm from "../../../../../components/admin/dialogs/confirm/DialogConfirm"
 
 // Helpers
-import { endpoint } from "../../../../../api/url";
+import { endpoint } from "../../../../../config/endpoint";
 import { unauthorized } from "../../../../../helpers/notification401";
 import CategoriesFunctions from "../../../../../helpers/functions/admin/categories/categoriesFunctions";
 

@@ -6,11 +6,11 @@ import styles from "../../../../../styles/Demo1CatedralHome.module.css"
 // Componets
 import LayoutDemo1 from "../../../../../components/globals/LayoutDemo1"
 import ServicesDemo1 from "../../../../../components/website/demo1/services/Services"
-import { endpoint } from "../../../../../config/endpoint"
 
 // Libraries
 
 // Helpers
+import { endpoint } from "../../../../../config/endpoint"
 
 // Types
 

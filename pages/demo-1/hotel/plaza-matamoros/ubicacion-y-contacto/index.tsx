@@ -6,8 +6,8 @@ import { useEffect, useState } from "react"
 import styles from "../../../../../styles/Demo1CatedralHome.module.css"
 
 // Componets
-import UbicationContactDemo1 from "../../../../../components/website/demo1/ubication-contact/UbicationContact"
 import LayoutDemo1 from "../../../../../components/globals/LayoutDemo1"
+import UbicationContactDemo1 from "../../../../../components/website/demo1/ubication-contact/UbicationContact"
 
 // Libraries
 
