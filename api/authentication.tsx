@@ -4,11 +4,8 @@ import * as jwt from 'jsonwebtoken'
 
 export const Authenticated: any = (fn: NextApiHandler) => (req: NextApiRequest, res: NextApiResponse, jwtCookie?: string) => {
     const authorization: string = req.cookies.auth
-    console.log('authorization: ', authorization);
-
-    jwt.verify(authorization, secret, async (err, decoded) => {
-        console.log(decoded);
-
+    
+    jwt.verify(authorization, secret, async (err, decoded: any) => {
         if (!err && decoded && decoded.typeUser) {
             return await fn(req, res)
         }
@@ -21,8 +18,6 @@ export const AuthenticatedAdmin = (fn: NextApiHandler) => (req: NextApiRequest, 
     const authorization: string = req.cookies.auth || ''
 
     jwt.verify(authorization, secret, async (err, decoded: any) => {
-        console.log(decoded);
-
         if (!err && decoded && decoded.typeUser === 1) {
             return await fn(req, res)
         }
@@ -33,8 +28,6 @@ export const AuthenticatedAdmin = (fn: NextApiHandler) => (req: NextApiRequest, 
 
 export const verifyIfIsAdmin = (user: any) => {
     if (user && !user.department && !user.typeUserId && user.typeUser === 'Superadmin') {
-        console.log('entro');
-
         return true
     }
 
