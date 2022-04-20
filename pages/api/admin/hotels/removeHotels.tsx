@@ -35,13 +35,13 @@ export default async function RemoveHotel(
 const removeAllPlacesOfInterest = async (id: number) => {
     await prismaDB.placesInterest
         .deleteMany({ where: { hotelId: id } })
-        .catch((err) => console.log(err))
+        .catch((err: any) => console.log(err))
 }
 
 const removeAllRooms = async (id: number) => {
     await prismaDB.rooms
         .deleteMany({ where: { hotelId: id } })
-        .catch((err) => console.log(err))
+        .catch((err: any) => console.log(err))
 }
 
 const removeUsers = async (authJwt: any, response: any) => {
@@ -50,12 +50,12 @@ const removeUsers = async (authJwt: any, response: any) => {
             userId: parseInt(authJwt.sub.toString()),
             hotelId: parseInt(response.id.toString())
         }
-    }).catch((err) => console.log('removeUsersERROR: ', err))
+    }).catch((err: any) => console.log('removeUsersERROR: ', err))
 }
 
 const removeHotel = async (hotel: HotelForm) => {
     const hotelId: number = hotel.id || 0
     await prismaDB.hotels
         .delete({ where: { id: hotelId } })
-        .catch((err) => { console.log(err); })
+        .catch((err: any) => { console.log(err); })
 }

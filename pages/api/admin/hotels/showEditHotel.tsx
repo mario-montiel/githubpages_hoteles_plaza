@@ -5,8 +5,7 @@ import { Authenticated, AuthenticatedAdmin } from '../../../../api/authenticatio
 
 export default async function ShowEditHotel(
     req: NextApiRequest,
-    res: NextApiResponse<Object>,
-    jwt?: string
+    res: NextApiResponse<Object>
 ) { 
     if (req.method !== 'POST') {
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
@@ -25,6 +24,6 @@ export default async function ShowEditHotel(
         },
         where: {name: response} 
     })
-    .then((responseDB) => { res.status(200).json({ res: true, data: responseDB }) })
-    .catch((err) => { res.status(500).json({ res: false, message: 'No se pudo!', messageError: err }) })
+    .then((responseDB: any) => { res.status(200).json({ res: true, data: responseDB }) })
+    .catch((err: any) => { res.status(500).json({ res: false, message: 'No se pudo!', messageError: err }) })
 }

@@ -12,8 +12,6 @@ export default async function EditHotel(
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
     const response = req.body
-    console.log('EditHotelRespones: ', response);
-    
 
     if (response.dataForm.placesInterest && response.dataForm.placesInterest.length) {
         await removePlacesOfInterest(response.dataForm.id)
@@ -36,7 +34,7 @@ const removeOldRoomsOfHotel = async (hotelId: number) => {
         where: {
             hotelId
         }
-    }).catch((err) => {
+    }).catch((err: any) => {
         console.log(err);
 
     })
@@ -44,7 +42,7 @@ const removeOldRoomsOfHotel = async (hotelId: number) => {
 
 const createRoomsOfHotelInDB = async (rooms: any) => {
     prismaDB.rooms.createMany({ data: rooms })
-        .catch((err) => { console.log(err); })
+        .catch((err: any) => { console.log(err); })
 }
 
 const generateRooms = async (hotel: any, roomData: any) => {
@@ -81,7 +79,7 @@ const removePlacesOfInterest = async (hotelId: number) => {
             }
         })
         .then(() => { })
-        .catch((error) => { console.log('removePlacesOfInterest: ', error); })
+        .catch((error: any) => { console.log('removePlacesOfInterest: ', error); })
 }
 
 const createPlacesOfInterest = async (places: any, hotelId: number) => {

@@ -18,9 +18,6 @@ export default async function AddHotel(
     // const currentUser: any = jwt.verify(cookie, secret);
     const response = req.body;
 
-    console.log(response);
-    
-
     if (req.body && req.body.type && res) {
         switch (req.body.type) {
             case 'verify':
@@ -92,7 +89,7 @@ const generateRooms = async (hotel: any, roomData: any) => {
 
 const createRoomsOfHotelInDB = async (rooms: any, res: NextApiResponse) => {
     prismaDB.rooms.createMany({ data: rooms })
-        .catch((err) => {
+        .catch((err: any) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({ res: false, message: 'No se pudieron crear las habitaciones!' })
@@ -127,7 +124,7 @@ const createPlacesOfInterestInDB = async (places: any) => {
     await prismaDB.placesInterest
         .createMany({
             data: places
-        }).catch((err) => console.log('createPlacesOfInterestInDB ERRR: ', err))
+        }).catch((err: any) => console.log('createPlacesOfInterestInDB ERRR: ', err))
 }
 
 const createHotelInDB = async (hotelId: number, hotelData: HotelForm, res: NextApiResponse, currentUser: any) => {
@@ -165,7 +162,7 @@ const createHotelInDB = async (hotelId: number, hotelData: HotelForm, res: NextA
                 registredBy: 'currentUser.email'
             }
         })
-        .catch((err) => { console.log(err); res.status(500).json({ res: false, message: 'No se pudo crear el hotel!' }) })
+        .catch((err: any) => { console.log(err); res.status(500).json({ res: false, message: 'No se pudo crear el hotel!' }) })
 
     return hotel
 }
