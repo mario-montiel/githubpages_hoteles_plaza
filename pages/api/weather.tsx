@@ -13,8 +13,5 @@ export default async function SendEmail(
     const weatherResp = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=25.56985&lon=-103.49588&appid=${apiKey}`)
     const weather = await weatherResp.json()
 
-    console.log('weather: ', weather);
-    
-
     res.status(200).json({ res: true, message: 'Clima actual', data: weather })
 }

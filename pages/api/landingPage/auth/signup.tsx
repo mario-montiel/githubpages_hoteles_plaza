@@ -32,5 +32,5 @@ const createGuest = async (response: Guest, hashPassword: string) => {
             company: response.company,
             city: response.city
         }
-    }).catch((err) => console.log(err))
+    }).catch((err: any) => console.log(err))
 }

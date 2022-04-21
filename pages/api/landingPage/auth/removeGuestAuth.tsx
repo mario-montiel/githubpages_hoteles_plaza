@@ -9,10 +9,7 @@ export default async function handler(
     if (req.method !== 'POST') {
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
-
-    console.log('ENTRO');
     
-
     res.setHeader("Set-Cookie",
         serialize('userAuth', '', {
             httpOnly: true, // not let use js code in the client side
