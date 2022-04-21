@@ -27,7 +27,7 @@ export default Authenticated(async function ShowEditRoom(
             }
         }
     )
-    .then((responseDB) => {
+    .then((responseDB: any) => {
         if (responseDB) {
             return res.status(200).json({ res: true, data: responseDB })
         }
