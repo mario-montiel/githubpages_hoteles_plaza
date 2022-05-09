@@ -14,14 +14,13 @@ export default async function handler(
     }
 
     res.setHeader("Set-Cookie",
-            cookie.serialize('auth', '', {
-                httpOnly: true, // not let use js code in the client side
-                secure: process.env.NODE_ENV !== 'development', // Only will work with https conections, but it will work only in production, so while we can work
-                sameSite: 'strict',
-                path: '/',
-                expires: new Date()
-            }))
+        cookie.serialize('auth', '', {
+            httpOnly: true, // not let use js code in the client side
+            secure: process.env.NODE_ENV !== 'development', // Only will work with https conections, but it will work only in production, so while we can work
+            sameSite: 'strict',
+            path: '/',
+            expires: new Date()
+        }))
 
-    res.statusCode = 200
-    return res.json({ res: true, message: 'Su sesión fue cerrada con éxito!' })
+    return res.status(200).json({ res: true, message: 'Su sesión fue cerrada con éxito!' })
 }

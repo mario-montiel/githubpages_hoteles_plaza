@@ -30,9 +30,9 @@ export default function UserAndSettings(props: any) {
         // getCurrentUser()
         if (props) {
             setUser(props.user)
-        setIsAdmin(props.admin)
+            setIsAdmin(props.admin)
         }
-    }, [props.user])
+    }, [props && props.user ? props.user : null])
 
     // Functions
     // const getCurrentUser = async () => {
@@ -46,31 +46,31 @@ export default function UserAndSettings(props: any) {
 
     const openDetails = () => {
         ulDetailsRef.current?.classList.toggle(styles.active_user_menu)
-        console.log(ulDetailsRef);
-        
     }
 
     const loggout = async () => {
         const url = isAdmin ? '/api/admin/auth/removeAuth' : '/api/landingPage/auth/removeGuestAuth'
-        await fetch(endpoint + url, {
+        const resp = await fetch(endpoint + url, {
             method: "POST"
-        }).then((responesApi) => {
-            if (responesApi.ok) {
-                setTimeout(() => {
-                    toast(`Su sesión se cerró con éxito!`, {
-                        position: "top-right",
-                        autoClose: 2000,
-                        closeOnClick: true,
-                        type: 'success'
-                    })
-                }, 300);
-
-                isAdmin ? (
-                    router.push('/aG90ZWxlc19wbGF6YQ0K/authentication/login')
-                ) : router.reload()
-                // router.replace(props.admin ? '/aG90ZWxlc19wbGF6YQ0K/authentication/login' : '/')
-            }
         })
+        const response = await resp.json()
+
+        if (response.res) {
+            setTimeout(() => {
+                toast(`Su sesión se cerró con éxito!`, {
+                    position: "top-right",
+                    autoClose: 2000,
+                    closeOnClick: true,
+                    type: 'success'
+                })
+            }, 300);
+
+            isAdmin ? (
+                router.push('/aG90ZWxlc19wbGF6YQ0K/authentication/login')
+            ) : router.reload()
+            // router.replace(props.admin ? '/aG90ZWxlc19wbGF6YQ0K/authentication/login' : '/')
+        }
+
     }
 
     return (
