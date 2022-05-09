@@ -29,17 +29,14 @@ import { TypeUser } from "../../../../../../types/TypeUser"
 import { Department } from "../../../../../../types/Department"
 
 EditUser.getInitialProps = async (ctx: NextPageContext) => {
-    let departmentsJson: any = []
-    let typeUsersJson: any = []
-    let hotelsJson: any = []
-    let userJson: any = []
+    
+    const isAdmin = await getFetchData(endpoint + '/api/admin/auth/isAdmin', ctx)
+    const  departmentsJson = await getFetchData(endpoint + '/api/admin/departments/showDepartments', ctx)
+    const typeUsersJson = await getFetchData(endpoint + '/api/admin/users/showTypeUsers', ctx)
+    const hotelsJson = await getFetchData(endpoint + '/api/admin/hotels/showHotels', ctx)
+    const userJson = await getFetchData(endpoint + '/api/admin/users/showEditUser', ctx, ctx.query)
 
-    departmentsJson = await getFetchData(endpoint + '/api/admin/departments/showDepartments', ctx)
-    typeUsersJson = await getFetchData(endpoint + '/api/admin/users/showTypeUsers', ctx)
-    hotelsJson = await getFetchData(endpoint + '/api/admin/hotels/showHotels', ctx)
-    userJson = await getFetchData(endpoint + '/api/admin/users/showEditUser', ctx, ctx.query)
-
-    return { departments: departmentsJson, typeUsers: typeUsersJson, hotels: hotelsJson, user: userJson }
+    return { isAdmin, departments: departmentsJson, typeUsers: typeUsersJson, hotels: hotelsJson, user: userJson }
 }
 
 async function getFetchData(url: string, ctx: NextPageContext, routeQuery?: any) {
@@ -100,7 +97,7 @@ export default function EditUser(props: any) {
         // handleChangeImage,
         handleChangePassword,
         showEditDialog,
-    } = UsersFunctions()
+    } = UsersFunctions(props.isAdmin.res)
     const checkBoxs = useRef<HTMLDivElement>(null)
     const btnIconBack = `<svg class="svg_back" viewBox="0 0 24 24">
         <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />

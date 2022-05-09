@@ -27,18 +27,15 @@ import { TypeUser } from "../../../../../types/TypeUser"
 import { Department } from "../../../../../types/Department"
 
 CreateUser.getInitialProps = async (ctx: NextPageContext) => {
-    let departmentsJson: any = []
-    let typeUsersJson: any = []
-    let hotelsJson: any = []
+    const isAdmin = await getFetch(endpoint + '/api/admin/auth/isAdmin', ctx)
+    const departmentsJson = await getFetch(endpoint + '/api/admin/departments/showDepartments', ctx)
+    const typeUsersJson = await getFetch(endpoint + '/api/admin/users/showTypeUsers', ctx)
+    const hotelsJson = await getFetch(endpoint + '/api/admin/hotels/showHotels', ctx)
 
-    departmentsJson = await getDepartmentAndHotels(endpoint + '/api/admin/departments/showDepartments', ctx)
-    typeUsersJson = await getDepartmentAndHotels(endpoint + '/api/admin/users/showTypeUsers', ctx)
-    hotelsJson = await getDepartmentAndHotels(endpoint + '/api/admin/hotels/showHotels', ctx)
-
-    return { departments: departmentsJson, typeUsers: typeUsersJson, hotels: hotelsJson }
+    return { isAdmin, departments: departmentsJson, typeUsers: typeUsersJson, hotels: hotelsJson }
 }
 
-async function getDepartmentAndHotels(url: string, ctx: NextPageContext) {
+async function getFetch(url: string, ctx: NextPageContext) {
     const cookie = ctx.req?.headers.cookie
     const resp = await fetch(url, {
         headers: {
@@ -72,7 +69,7 @@ export default function CreateUser(props: any) {
         showDialogWarning,
         showLoading,
         showDialog,
-    } = UsersFunctions()
+    } = UsersFunctions(props.isAdmin.res)
     const btnIconBack = `<svg class="svg_back" viewBox="0 0 24 24">
         <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
     </svg>`
