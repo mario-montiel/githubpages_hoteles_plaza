@@ -15,7 +15,10 @@ export const Authenticated: any = (fn: NextApiHandler) => (req: NextApiRequest, 
 
     jwt.verify(authorization, secret, async (err, decoded: any) => {
         console.log('DECODED: ', decoded);
-        if (!err && decoded && decoded.typeUser) {
+        const typeUser = await decoded && decoded.typeUser
+        console.log('xxxx: ', typeUser);
+        
+        if (!err && decoded && typeUser) {
             return await fn(req, res)
         }
 
