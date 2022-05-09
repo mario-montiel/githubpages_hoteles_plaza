@@ -1,7 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Authenticated } from '../../../../api/authentication'
+
+// Libraries
 import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
+import { Authenticated } from '../../../../api/authentication'
+
+// Types
 import { Room } from '../../../../types/Room'
 
 export default Authenticated(async function EditRoom(

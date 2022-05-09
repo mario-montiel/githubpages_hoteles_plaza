@@ -1,10 +1,17 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Authenticated } from '../../../../api/authentication'
+
+// Libraries
 import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
+import { Authenticated } from '../../../../api/authentication'
+
+// Types
 import { Room } from '../../../../types/Room'
 
-export default async function AddRooms(
+export default Authenticated(async function AddRooms(
     req: NextApiRequest,
     res: NextApiResponse<Object>
 ) {
@@ -21,7 +28,7 @@ export default async function AddRooms(
     await structureData(response)
 
     res.status(200).json({ res: true, message: 'Room added successful' })
-}
+})
 
 const structureData = async (response: any) => {
     let index: number = 0

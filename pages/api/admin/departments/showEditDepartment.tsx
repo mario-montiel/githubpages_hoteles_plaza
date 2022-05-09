@@ -1,6 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
+
+// Libraries
 import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
 import { Authenticated } from '../../../../api/authentication'
 
 export default Authenticated(async function ShowEditDepartment(

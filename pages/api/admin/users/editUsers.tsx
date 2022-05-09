@@ -91,7 +91,7 @@ const editUser = async (userData: any, hashPassword: string) => {
                 // image: response.status,
                 typeUserId: parseInt(userData.typeUserId),
                 departmentId: parseInt(userData.departmentId),
-                registredBy: 'x'
+                editedBy: 'x'
             },
             include: {
                 hotels: {

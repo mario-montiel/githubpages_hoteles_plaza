@@ -1,16 +1,28 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
+
+// Libraries
+import * as jwt from 'jsonwebtoken'
 import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
+import { secret } from '../../../../api/secret'
 import { Authenticated } from '../../../../api/authentication'
+
+// Types
 import { HotelForm, PlaceOfInterestElement } from '../../../../types/Hotel';
 
-export default async function EditHotel(
+export default Authenticated(async function EditHotel(
     req: NextApiRequest,
     res: NextApiResponse<Object>
 ) {
     if (req.method !== 'POST') {
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
+
+    const cookie = req.cookies.auth
+    const currentUser: any = jwt.verify(cookie, secret);
     const response = req.body
 
     if (response.dataForm.placesInterest && response.dataForm.placesInterest.length) {
@@ -24,10 +36,10 @@ export default async function EditHotel(
         await createRoomsOfHotelInDB(rooms)
     }
 
-    await hotelUpdate(response.dataForm, response.imageUrl, res)
+    await hotelUpdate(response.dataForm, response.imageUrl, res, currentUser)
 
     res.status(200).json({ res: true, message: 'Hotel actualizado con éxito!' })
-}
+})
 
 const removeOldRoomsOfHotel = async (hotelId: number) => {
     prismaDB.rooms.deleteMany({
@@ -103,7 +115,8 @@ const createPlacesOfInterest = async (places: any, hotelId: number) => {
         })
 }
 
-const hotelUpdate = async (response: HotelForm, urlImage: string, res: NextApiResponse) => {
+const hotelUpdate = async (response: HotelForm, urlImage: string, res: NextApiResponse, currentUser: any) => {
+    const email: string = currentUser.email
     await prismaDB.hotels.update({
         where: {
             id: response.id
@@ -123,7 +136,7 @@ const hotelUpdate = async (response: HotelForm, urlImage: string, res: NextApiRe
             latitude: response.latitude?.toString(),
             longitude: response.longitude?.toString(),
             // url: urlImage,
-            registredBy: 'x'
+            editedBy: email
         }
     }).catch(() => {
         res.status(500).json({ res: false, message: 'No se pudo actualizar el hotel!' })

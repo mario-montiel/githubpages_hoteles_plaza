@@ -110,7 +110,7 @@ const createUser = async (userData: any, hashPassword: string, hotels: Array<Hot
                 // image: response.status,
                 typeUserId: parseInt(userData.typeUserId),
                 departmentId: parseInt(userData.departmentId),
-                registredBy: 'x'
+                editedBy: 'x'
             }
         })
     return userId.id

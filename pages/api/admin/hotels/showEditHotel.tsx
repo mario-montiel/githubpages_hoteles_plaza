@@ -1,9 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prismaDB from '../../../../prisma/Instance'
-import { Authenticated, AuthenticatedAdmin } from '../../../../api/authentication'
 
-export default async function ShowEditHotel(
+// Libraries
+import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
+import { Authenticated } from '../../../../api/authentication'
+
+export default Authenticated(async function ShowEditHotel(
     req: NextApiRequest,
     res: NextApiResponse<Object>
 ) { 
@@ -26,4 +31,4 @@ export default async function ShowEditHotel(
     })
     .then((responseDB: any) => { res.status(200).json({ res: true, data: responseDB }) })
     .catch((err: any) => { res.status(500).json({ res: false, message: 'No se pudo!', messageError: err }) })
-}
+})

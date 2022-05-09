@@ -1,12 +1,19 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prismaDB from '../../../../prisma/Instance'
-import { secret } from '../../../../api/secret'
+
+// Libraries
 import * as jwt from 'jsonwebtoken'
+import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
+import { secret } from '../../../../api/secret'
 import { Authenticated } from '../../../../api/authentication'
+
+// Types
 import { HotelForm } from '../../../../types/Hotel'
 
-export default async function RemoveHotel(
+export default Authenticated(async function RemoveHotel(
     req: NextApiRequest,
     res: NextApiResponse<Object>
 ) {
@@ -30,7 +37,7 @@ export default async function RemoveHotel(
     await removeHotel(response)
 
     res.status(200).json({ res: true, message: 'El hotel se eliminó con éxito!' })
-}
+})
 
 const removeAllPlacesOfInterest = async (id: number) => {
     await prismaDB.placesInterest

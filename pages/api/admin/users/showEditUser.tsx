@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prismaDB from '../../../../prisma/Instance'
-import { Authenticated, AuthenticatedAdmin } from '../../../../api/authentication'
+import { Authenticated } from '../../../../api/authentication'
 
 export default async function ShowEditUser(
     req: NextApiRequest,

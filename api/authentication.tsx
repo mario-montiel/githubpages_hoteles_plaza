@@ -14,9 +14,7 @@ export const Authenticated: any = (fn: NextApiHandler) => (req: NextApiRequest, 
     const authorization: string = req.cookies.auth
 
     jwt.verify(authorization, secret, async (err, decoded: any) => {
-        console.log('DECODED: ', decoded);
         const typeUser = await decoded && decoded.typeUser
-        console.log('xxxx: ', typeUser);
         
         if (!err && decoded && typeUser) {
             return await fn(req, res)

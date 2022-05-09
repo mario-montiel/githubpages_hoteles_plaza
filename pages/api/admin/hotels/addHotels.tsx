@@ -1,12 +1,19 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prismaDB from '../../../../prisma/Instance'
-import { Authenticated } from '../../../../api/authentication'
+
+// Libraries
 import * as jwt from 'jsonwebtoken'
+import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
 import { secret } from '../../../../api/secret'
+import { Authenticated } from '../../../../api/authentication'
+
+// Types
 import { Hotel, HotelForm, PlaceOfInterestElement } from '../../../../types/Hotel'
 
-export default async function AddHotel(
+export default Authenticated(async function AddHotel(
     req: NextApiRequest,
     res: NextApiResponse<Object>
 ) {
@@ -32,7 +39,7 @@ export default async function AddHotel(
                 break;
         }
     }
-}
+})
 
 const registerPlacesAndRooms = async (response: HotelForm, places: Array<PlaceOfInterestElement>, roomData: any, res: NextApiResponse, currentUser: any) => {
     let placesOfInterest: any = []
