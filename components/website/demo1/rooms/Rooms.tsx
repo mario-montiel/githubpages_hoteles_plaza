@@ -13,7 +13,7 @@ import { endpoint } from "../../../../config/endpoint"
 
 // Types
 
-const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
+const RoomsCatedralDemo1 = ({ roomUrl, width }: any) => {
 
     // Variables
 
@@ -64,7 +64,7 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
     const showSuiteImageSelected = (index: number) => {
         const images = currentImageRef.current?.children as NodeListOf<HTMLImageElement>
         const smallImages = smallImageRef.current?.children as NodeListOf<HTMLImageElement>
-        
+
         for (let i = 0; i < images.length; i++) {
             images[i].classList.remove(styles.selected)
             smallImages[i].classList.remove(styles.selected)
@@ -72,27 +72,27 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
 
         switch (index) {
             case 1:
-                currentImageRef.current!.style.transform = 'translate(15%)'
+                currentImageRef.current!.style.transform = width > 800 ? 'translate(15%)' : 'translate(0%)'
                 currentImageRef.current!.children[index - 1].classList.add(styles.selected)
                 smallImageRef.current!.children[index - 1].classList.add(styles.selected)
                 break;
             case 2:
-                currentImageRef.current!.style.transform = 'translate(-5%)'
+                currentImageRef.current!.style.transform = width > 800 ? 'translate(-5%)' : 'translate(0%)'
                 currentImageRef.current!.children[index - 1].classList.add(styles.selected)
                 smallImageRef.current!.children[index - 1].classList.add(styles.selected)
                 break;
             case 3:
-                currentImageRef.current!.style.transform = 'translate(-25%)'
+                currentImageRef.current!.style.transform = width > 800 ? 'translate(-25%)' : 'translate(0%)'
                 currentImageRef.current!.children[index - 1].classList.add(styles.selected)
                 smallImageRef.current!.children[index - 1].classList.add(styles.selected)
                 break;
             case 4:
-                currentImageRef.current!.style.transform = 'translate(-45%)'
+                currentImageRef.current!.style.transform = width > 800 ? 'translate(-45%)' : 'translate(0%)'
                 currentImageRef.current!.children[index - 1].classList.add(styles.selected)
                 smallImageRef.current!.children[index - 1].classList.add(styles.selected)
                 break;
             case 5:
-                currentImageRef.current!.style.transform = 'translate(-65%)'
+                currentImageRef.current!.style.transform = width > 800 ? 'translate(-65%)' : 'translate(0%)'
                 currentImageRef.current!.children[index - 1].classList.add(styles.selected)
                 smallImageRef.current!.children[index - 1].classList.add(styles.selected)
                 break;
@@ -111,7 +111,7 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
     }, [])
 
     return (
-        <section className={styles.who_we_are}>
+        <section className={styles.rooms}>
             <h2>Habitaciones</h2>
 
             <img
@@ -167,7 +167,7 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
 
             {/* SUITE ROOM */}
 
-            <div className={styles.suite_room_container}>
+            <div>
                 <h2>Suite</h2>
 
                 <img
@@ -175,17 +175,20 @@ const RoomsCatedralDemo1 = ({ roomUrl }: any) => {
                     src={`${endpoint}/hotels/symbols/frame.webp`}
                     alt="Símbolo"
                 />
+                <div className={styles.suite_room_container}>
 
-                <div
-                    ref={currentImageRef}
-                    className={styles.current_image_container}>
-                    {generateCurrentSuiteImageSelected()}
-                </div>
 
-                <div
-                    ref={smallImageRef}
-                    className={styles.small_images}>
-                    {generateSuiteRooms()}
+                    <div
+                        ref={currentImageRef}
+                        className={styles.current_image_container}>
+                        {generateCurrentSuiteImageSelected()}
+                    </div>
+
+                    <div
+                        ref={smallImageRef}
+                        className={styles.small_images}>
+                        {generateSuiteRooms()}
+                    </div>
                 </div>
             </div>
 

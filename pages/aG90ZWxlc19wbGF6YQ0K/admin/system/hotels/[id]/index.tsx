@@ -29,18 +29,13 @@ import { HotelForm } from "../../../../../../types/Hotel"
 import { Category } from "../../../../../../types/Category"
 
 EditHotel.getInitialProps = async (ctx: NextPageContext) => {
-    let categoriesJson: any = []
-    let roomsTypeJson: any = []
-    let roomsStatusJson: any = []
-    let HotelJson: any = []
-
-    categoriesJson = await getFetchData(endpoint + '/api/admin/categories/showCategories', ctx)
-    roomsTypeJson = await getFetchData(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
-    roomsStatusJson = await getFetchData(endpoint + '/api/admin/rooms/roomsStatus/showRoomsStatus', ctx)
-    HotelJson = await getFetchData(endpoint + '/api/admin/hotels/showEditHotel', ctx, ctx.query.id)
+    // const categoriesJson = await getFetchData(endpoint + '/api/admin/categories/showCategories', ctx)
+    const roomsTypeJson = await getFetchData(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
+    const roomsStatusJson = await getFetchData(endpoint + '/api/admin/rooms/roomsStatus/showRoomsStatus', ctx)
+    const HotelJson = await getFetchData(endpoint + '/api/admin/hotels/showEditHotel', ctx, ctx.query.id)
 
     return {
-        categories: categoriesJson,
+        // categories: categoriesJson,
         hotel: HotelJson,
         roomsType: roomsTypeJson,
         roomsStatus: roomsStatusJson
@@ -94,7 +89,8 @@ const validations = (resp: any, ctx: NextPageContext) => {
 }
 
 export default function EditHotel(props: any) {
-
+    console.log(props);
+    
     // Variables
     const router = useRouter()
     const {
@@ -212,7 +208,7 @@ export default function EditHotel(props: any) {
         setValue('instagram', props.hotel.data.instagram || '')
         setValue('totalFloors', props.hotel.data.totalFloors)
         // loadEditImage(props.hotel.data.url)
-        // activeCustomMap()
+        activeCustomMap()
 
         // if (props.hotel.data.url) {
         //     setValue('image', props.hotel.data.image)
@@ -371,52 +367,52 @@ export default function EditHotel(props: any) {
                                                     const placesInterest: any = `placesInterest[${index}]`;
                                                     return (
                                                         <tr key={index}>
-                                                            {/* <td>
+                                                            <td>
                                                                 {data.name}
-                                                                <input
+                                                                {/* <input
                                                                     className={errors.placesInterest ? 'input input_error_text' : 'input'}
                                                                     {...register(`${placesInterest}.name`, { required: true })}
                                                                     id="placesInterest"
                                                                     type="text"
                                                                     value={data.name}
                                                                     hidden
-                                                                />
+                                                                /> */}
                                                             </td>
                                                             <td>
                                                                 {data.distance != 0 ? data.distance : 'No data'}
-                                                                <input
+                                                                {/* <input
                                                                     className={errors.placesInterest ? 'input input_error_text' : 'input'}
                                                                     {...register(`${placesInterest}.distance`, { required: true })}
                                                                     id="placesInterest"
                                                                     type="text"
                                                                     value={data.distance}
                                                                     hidden
-                                                                />
+                                                                /> */}
                                                             </td>
                                                             <td>
                                                                 {data.duration != 0 ? data.duration : 'No data'}
-                                                                <input
+                                                                {/* <input
                                                                     className={errors.placesInterest ? 'input input_error_text' : 'input'}
                                                                     {...register(`${placesInterest}.duration`, { required: true })}
                                                                     id="placesInterest"
                                                                     type="text"
                                                                     value={data.duration}
                                                                     hidden
-                                                                />
+                                                                /> */}
                                                             </td>
                                                             <td>
                                                                 <svg className={styles.svg_icon} viewBox="0 0 24 24">
                                                                     <path fill="currentColor" d="M5,11L6.5,6.5H17.5L19,11M17.5,16A1.5,1.5 0 0,1 16,14.5A1.5,1.5 0 0,1 17.5,13A1.5,1.5 0 0,1 19,14.5A1.5,1.5 0 0,1 17.5,16M6.5,16A1.5,1.5 0 0,1 5,14.5A1.5,1.5 0 0,1 6.5,13A1.5,1.5 0 0,1 8,14.5A1.5,1.5 0 0,1 6.5,16M18.92,6C18.72,5.42 18.16,5 17.5,5H6.5C5.84,5 5.28,5.42 5.08,6L3,12V20A1,1 0 0,0 4,21H5A1,1 0 0,0 6,20V19H18V20A1,1 0 0,0 19,21H20A1,1 0 0,0 21,20V12L18.92,6Z" />
                                                                 </svg>
-                                                                <input
+                                                                {/* <input
                                                                     className={errors.placesInterest ? 'input input_error_text' : 'input'}
                                                                     {...register(`${placesInterest}.travelMode`, { required: true })}
                                                                     id="placesInterest"
                                                                     type="text"
                                                                     value={data.travelMode}
                                                                     hidden
-                                                                />
-                                                            </td> */}
+                                                                /> */}
+                                                            </td>
                                                             <td>
                                                                 <button type="button" onClick={() => removeElList(data)}>
                                                                     <svg className={styles.svg_icon} viewBox="0 0 24 24">
@@ -491,7 +487,7 @@ export default function EditHotel(props: any) {
                             <br />
                             {errors.phone && <small>El campo Teléfono está vacio!</small>}
                         </div>
-                        <div className="input-container">
+                        {/* <div className="input-container">
                             <label htmlFor="category_select">Categoria</label>
                             <br />
                             <select
@@ -508,7 +504,7 @@ export default function EditHotel(props: any) {
                             </select>
                             <br />
                             {errors.category_id && <small>El campo Categoria está vacio!</small>}
-                        </div>
+                        </div> */}
                         <div className="input-container">
                             <label htmlFor="stars_select">Estrellas</label>
                             <br />

@@ -91,3 +91,8 @@
     margin: 0px 0px 0px -10px;
     color: rgb(90, 90, 90);
 }
+
+.active_user_menu {
+    display: block !important;
+    z-index: 10;
+}

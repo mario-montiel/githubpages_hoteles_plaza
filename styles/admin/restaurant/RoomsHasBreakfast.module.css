@@ -50,6 +50,7 @@
     padding: 0.5rem;
     cursor: pointer;
     position: relative;
+    border: 0.05px solid #CBCBCB;
 }
 
 .room_card:hover {

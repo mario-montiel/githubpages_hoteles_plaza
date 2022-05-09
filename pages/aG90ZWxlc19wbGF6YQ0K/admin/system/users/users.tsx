@@ -24,17 +24,14 @@ import UsersFunctions from "../../../../../helpers/functions/admin/users/usersFu
 // Types
 
 Users.getInitialProps = async (ctx: NextPageContext) => {
-    let departmentsData: any = []
-    let hotelData: any = []
-    let userData: any = []
-    let currentUser: any = []
-
-    departmentsData = await getUsers(endpoint + '/api/admin/departments/showDepartments', ctx)
-    hotelData = await getUsers(endpoint + '/api/admin/hotels/showHotels', ctx)
-    userData = await getUsers(endpoint + '/api/admin/users/showUsers', ctx)
-    // currentUser = await getUsers(endpoint + '/api/admin/users/currentUserData', ctx)
+    const isAdmin = await getUsers(endpoint + '/api/admin/auth/isAdmin', ctx)
+    const departmentsData = await getUsers(endpoint + '/api/admin/departments/showDepartments', ctx)
+    const hotelData = await getUsers(endpoint + '/api/admin/hotels/showHotels', ctx)
+    const userData = await getUsers(endpoint + '/api/admin/users/showUsers', ctx)
+    const currentUser = await getUsers(endpoint + '/api/admin/users/currentUserData', ctx)
 
     return {
+        isAdmin,
         departments: departmentsData,
         hotels: hotelData,
         users: userData,
@@ -76,7 +73,7 @@ export default function Users(props: any) {
         showLoading,
         loadData,
         generateAreaHTML,
-    } = UsersFunctions()
+    } = UsersFunctions(props.isAdmin.res)
     const addButton = `<svg  viewBox="0 0 24 24">
         <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
     </svg>`
@@ -134,11 +131,15 @@ export default function Users(props: any) {
                         ) : null
                     } */}
 
-                    <div className={styles.btn_container}>
-                        <BtnActions
-                            icon={addButton}
-                            onClick={() => router.push('/aG90ZWxlc19wbGF6YQ0K/admin/system/users/create_user')} />
-                    </div>
+                    {
+                        props.isAdmin.res ? (
+                            <div className={styles.btn_container}>
+                                <BtnActions
+                                    icon={addButton}
+                                    onClick={() => router.push('/aG90ZWxlc19wbGF6YQ0K/admin/system/users/create_user')} />
+                            </div>
+                        ) : null
+                    }
 
                 </div>
 

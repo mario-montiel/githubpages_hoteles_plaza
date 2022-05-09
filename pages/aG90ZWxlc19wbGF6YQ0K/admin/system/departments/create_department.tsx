@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router"
 
 // Libraries
+
+// CSS
 import styles from "../../../../../styles/admin/system/departments/CreateDepartment.module.css"
 
-// Components and CSS
+// Components
 import { btnBack } from "../../../../../helpers/svg/btnBack";
 import Layout from "../../../../../components/globals/Layout";
 import Loading from "../../../../../components/admin/loading/Loader"
@@ -56,7 +58,7 @@ export default function Department() {
             {showDialogConfirm.show ? (
                 <DialogConfirm
                     // title="Crear departamento"
-                    image="/dialog/data.svg"
+                    image="/hotels/dialog/data.svg"
                     description={`Para poder registrar el departamento ${department.name} debe ingresar su contraseña`}
                     btnConfirm="Registrar"
                     btnCancel="Cancelar"

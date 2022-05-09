@@ -23,9 +23,13 @@ import HotelesFunctions from "../../../../../helpers/functions/admin/hotels/hote
 // Types
 
 Hotels.getInitialProps = async (ctx: NextPageContext) => {
-    let hotelsJson: any = []
-    hotelsJson = await getHotels(endpoint + '/api/admin/hotels/showHotels', ctx)
-    return { hotels: hotelsJson }
+    const hotelsJson = await getHotels(endpoint + '/api/admin/hotels/showHotels', ctx)
+    const isAdmin = await getHotels(endpoint + '/api/admin/auth/isAdmin', ctx)
+
+    return {
+        hotels: hotelsJson,
+        isAdmin
+    }
 }
 
 async function getHotels(url: string, ctx: NextPageContext) {
@@ -53,8 +57,7 @@ async function getHotels(url: string, ctx: NextPageContext) {
 }
 
 export default function Hotels(props: any) {
-    console.log(props);
-    
+
     //Variables
     const router = useRouter()
     const {
@@ -64,7 +67,7 @@ export default function Hotels(props: any) {
         showData,
         handleDialogConfirm,
         deleteHotel
-    } = HotelesFunctions()
+    } = HotelesFunctions(props.isAdmin.res)
     const addButton = `<svg  viewBox="0 0 24 24">
         <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
     </svg>`
@@ -103,15 +106,20 @@ export default function Hotels(props: any) {
                 <div className={styles.container}>
                     <h5 className={styles.data_in_subtitle}>Total de hoteles: <b>{props.hotels.length ? props.hotels.length : 'No hay hoteles registrados!'}</b></h5>
 
-                    <div className={styles.btn_container}>
-                        {/* <BtnFilter
+                    {
+                        props.isAdmin.res ? (
+                            <div className={styles.btn_container}>
+                                {/* <BtnFilter
                             filterData={filterButton}
                             onClick={showFilterData} /> */}
 
-                        <BtnActions
-                            icon={addButton}
-                            onClick={() => router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/hotels/create_hotel`)} />
-                    </div>
+                                <BtnActions
+                                    icon={addButton}
+                                    onClick={() => router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/hotels/create_hotel`)}
+                                />
+                            </div>
+                        ) : null
+                    }
                 </div>
 
                 {
@@ -134,7 +142,11 @@ export default function Hotels(props: any) {
                                     <th>Facebook</th>
                                     <th>Whatsapp</th>
                                     <th>Instagram</th>
-                                    <th>Acciones</th>
+                                    {
+                                        props.isAdmin.res ? (
+                                            <th>Acciones</th>
+                                        ) : null
+                                    }
                                 </tr>
                             </thead>
                             <tbody>

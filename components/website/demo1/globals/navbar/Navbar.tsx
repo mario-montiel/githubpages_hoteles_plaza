@@ -1,6 +1,6 @@
 // React
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
 
 // CSS
@@ -25,11 +25,27 @@ const NavbarDemo1 = () => {
         url: ''
     }
 
+    // Use Ref
+    const hamburgerRef = useRef<HTMLDivElement>(null)
+    const menuMobileRef = useRef<HTMLUListElement>(null)
+
     // Use State
     const [url, setUrl] = useState(initialUrlDataValues)
     const [bookingModal, setBookingModal] = useState<boolean>(false)
 
     // Functions
+    const handleHamburgerStyles = () => {
+        const lines = hamburgerRef.current?.childNodes as NodeListOf<HTMLDivElement>
+
+        hamburgerRef.current?.classList.toggle(styles.menu_active)
+        menuMobileRef.current?.classList.toggle(styles.active)
+        lines.forEach((line: HTMLDivElement) => {
+            if (hamburgerRef.current?.classList.contains(styles.menu_active)) {
+                line.classList.add(styles.line_active)
+            }
+            else { line.classList.remove(styles.line_active) }
+        });
+    }
 
     // Use Effect
     useEffect(() => {
@@ -43,41 +59,49 @@ const NavbarDemo1 = () => {
     return (
         <nav className={styles.navbar}>
             <ul>
-                <li onClick={() => router.push('/')}>
+                <li onClick={() => router.push('/')} className={styles.li_logo}>
                     <img
                         style={{ width: url.logo === 'catedral_logo' ? '130px' : '80px', height: url.logo === 'catedral_logo' ? '65px' : '65px' }}
                         src={`/hotels/logos/${url.logo}.webp`}
                         alt="Logo"
                     />
                 </li>
-                <li className={router.asPath == url.url ? styles.selected : ""}>
-                    <Link href={`${url.url}/`}>
-                        QUIÉNES SOMOS
-                    </Link>
-                </li>
-                <li className={router.asPath == `${`${url.url}/habitaciones`}` ? styles.selected : ""}>
-                    <Link href={`${url.url}/habitaciones`}>
-                        HABITACIONES
-                    </Link>
-                </li>
-                <li className={router.asPath == `${`${url.url}/instalaciones`}` ? styles.selected : ""}>
-                    <Link href={`${url.url}/instalaciones`}>
-                        INSTALACIONES
-                    </Link>
-                </li>
-                <li className={router.asPath == `${`${url.url}/servicios`}` ? styles.selected : ""}>
-                    <Link href={`${url.url}/servicios`}>
-                        SERVICIOS
-                    </Link>
-                </li>
-                <li className={router.asPath == `${url.url}/ubicacion-y-contacto` ? styles.selected : ""}>
-                    <Link href={`${url.url}/ubicacion-y-contacto`}>
-                        UBICACIÓN Y CONTACTO
-                    </Link>
-                </li>
-                <button onClick={() => setBookingModal(true)}>
-                    RESERVAR
-                </button>
+                <ul ref={menuMobileRef}>
+                    <li className={router.asPath == url.url ? styles.selected : ""}>
+                        <Link href={`${url.url}/`}>
+                            QUIÉNES SOMOS
+                        </Link>
+                    </li>
+                    <li className={router.asPath == `${`${url.url}/habitaciones`}` ? styles.selected : ""}>
+                        <Link href={`${url.url}/habitaciones`}>
+                            HABITACIONES
+                        </Link>
+                    </li>
+                    <li className={router.asPath == `${`${url.url}/instalaciones`}` ? styles.selected : ""}>
+                        <Link href={`${url.url}/instalaciones`}>
+                            INSTALACIONES
+                        </Link>
+                    </li>
+                    <li className={router.asPath == `${`${url.url}/servicios`}` ? styles.selected : ""}>
+                        <Link href={`${url.url}/servicios`}>
+                            SERVICIOS
+                        </Link>
+                    </li>
+                    <li className={router.asPath == `${url.url}/ubicacion-y-contacto` ? styles.selected : ""}>
+                        <Link href={`${url.url}/ubicacion-y-contacto`}>
+                            UBICACIÓN Y CONTACTO
+                        </Link>
+                    </li>
+                    <button onClick={() => setBookingModal(true)}>
+                        RESERVAR
+                    </button>
+                </ul>
+
+                <div ref={hamburgerRef} className={styles.hamburger} onClick={handleHamburgerStyles}>
+                    <div className={styles.line} />
+                    <div className={styles.line} />
+                    <div className={styles.line} />
+                </div>
 
                 {
                     bookingModal ? (
@@ -85,6 +109,7 @@ const NavbarDemo1 = () => {
                     ) : null
                 }
             </ul>
+
         </nav>
     )
 }

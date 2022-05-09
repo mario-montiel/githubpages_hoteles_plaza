@@ -160,3 +160,19 @@
     height: auto;
     position: absolute;
 }
+
+@media screen and (max-width: 800px) {
+    .content > p {
+        display: none;
+    }
+
+    .content form {
+        overflow: hidden;
+    }
+
+    .content form button  {
+        background-color: transparent !important;
+        color: var(--black) !important;
+        border: 0.5px solid var(--black) !important;
+    }
+}

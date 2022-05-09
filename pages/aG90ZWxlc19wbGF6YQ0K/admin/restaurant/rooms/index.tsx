@@ -58,6 +58,8 @@ async function getFetchData(url: string, ctx: NextPageContext) {
 }
 
 export default function RoomsHasBreakfast(props: any) {
+    console.log(props);
+
 
     // Variables
     const initialRoomModalValues = {
@@ -71,7 +73,8 @@ export default function RoomsHasBreakfast(props: any) {
 
     // Use State
     const [roomText, setRoomText] = useState<any>()
-    const [rooms, setRooms] = useState<any>([])
+    const [roomsWithBreakfast, setRoomsWithBreakfast] = useState<any>([])
+    const [roomsWithoutBreakfast, setRoomsWithoutBreakfast] = useState<any>([])
     const [roomModal, setRoomModal] = useState(initialRoomModalValues)
     const [recordModal, setRecordModal] = useState(initialRecordModalValues)
 
@@ -139,14 +142,14 @@ export default function RoomsHasBreakfast(props: any) {
     const generateRoomCards = () => {
         const roomsLength: number = props.user.preferences.rooms.length;
 
-        setRooms([])
+        setRoomsWithBreakfast([])
 
         for (let roomIndex = 0; roomIndex < roomsLength; roomIndex++) {
             const room = props.user.preferences.rooms[roomIndex];
 
-            setRooms((oldValue: any) => [...oldValue,
+            setRoomsWithBreakfast((oldValue: any) => [...oldValue,
             <div
-                className={room.roomStatus.border ? `${styles.room_card} ${styles.room_card_border}` : styles.room_card}
+                className={styles.room_card}
                 onClick={() => handleRoomCard(roomIndex)}
                 key={roomIndex}
                 tabIndex={0}
@@ -182,24 +185,26 @@ export default function RoomsHasBreakfast(props: any) {
     }
 
     useEffect(() => {
-        if (props.user && props.user.length && props.user.preferences.rooms.length) {
+        if (props.user && props.user.preferences.rooms.length) {
+            console.log(props.user.preferences.rooms);
+            
             generateRoomCards()
         }
     }, [props.user])
 
     useEffect(() => {
-        setRoomText(rooms.length ?
+        setRoomText(roomsWithBreakfast.length ?
             <h5
                 className={styles.data_in_subtitle}
             >
-                Total de Habitaciones con desayuno <b>{
-                    rooms.length ? rooms.length
+                Total de habitaciones con desayuno de este día: <b>{
+                    roomsWithBreakfast.length ? roomsWithBreakfast.length
                         : 'No hay ninguna habitación con desayuno'
                 }</b>
             </h5>
             : 'Cargando...')
 
-    }, [rooms])
+    }, [roomsWithBreakfast])
 
     return (
         <Layout
@@ -225,11 +230,19 @@ export default function RoomsHasBreakfast(props: any) {
                 hotel={roomModal.room.hotelId}
             />
 
-            <section>
-                {roomText}
+            {roomText}
 
+            <section>
+                <h5>Pendientes: </h5>
                 <div className={styles.room_cards_container}>
-                    {rooms}
+                    {roomsWithBreakfast}
+                </div>
+            </section>
+
+            <section>
+                <h5>Consumidos: </h5>
+                <div className={styles.room_cards_container}>
+                    {/* {rooms} */}
                 </div>
             </section>
         </Layout>

@@ -202,7 +202,6 @@
 .ul_sidebar_restaurant_dropdown_active .li_sidebar_line_dropdown,
 .ul_sidebar_housekeeper_dropdown_active .li_sidebar_line_dropdown  {
     transition: all 0.3s;
-    cursor: pointer;
 }
 
 .ul_sidebar_system_dropdown_active .li_sidebar_line_dropdown:first-of-type,
@@ -317,6 +316,7 @@
     align-items: center;
     margin: 0px 0px 2px 50px;
     padding: 1px 1px 1px 10px;
+    cursor: pointer;
 }
 
 .ul_sidebar_system_dropdown_active .li_sidebar_system_dropdown .chip > p,

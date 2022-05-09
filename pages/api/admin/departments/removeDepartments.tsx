@@ -1,7 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
+
+// Libraries
 import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
 import { Authenticated } from '../../../../api/authentication'
+import { RegisterDataRemoved } from '../../../../api/registerDataRemoved'
 
 export default Authenticated(async function RemoveDepartment(
     req: NextApiRequest,
@@ -12,9 +18,16 @@ export default Authenticated(async function RemoveDepartment(
     }
 
     const response = req.body
+    
+    try {
+        await RegisterDataRemoved(req.cookies.auth, response.reasonToDelete)
 
-    prismaDB.departments
-    .delete({ where: { id: response.id } })
-    .then(() => { res.status(200).json({ res: true, message: 'El usuario se creó con éxito!' }) })
-    .catch(() => { res.status(500).json({ res: false, message: 'No se pudo crear el usuario!' }) })
+        await prismaDB.departments
+            .delete({ where: { id: response.department.id } })
+            .then(() => { res.status(200).json({ res: true, message: 'El usuario se creó con éxito!' }) })
+            .catch(() => { res.status(500).json({ res: false, message: 'No se pudo crear el usuario!' }) })
+    } catch (error) {
+        console.log(error);
+        
+    }
 })

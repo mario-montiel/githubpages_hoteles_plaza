@@ -17,8 +17,7 @@ import { endpoint } from "../../../../../config/endpoint"
 // Types
 
 UbicationContactCatedralDemo1.getInitialProps = async () => {
-    let weatherJson: any = []
-    weatherJson = await getFetchData(endpoint + '/api/weather')
+    const weatherJson = await getFetchData(endpoint + '/api/weather')
 
     return {
         weather: weatherJson,

@@ -9,7 +9,7 @@ import { endpoint } from "../../../../config/endpoint";
 import { Department } from "../../../../types/Department"
 
 // Components and CSS
-import { toast } from 'react-toastify';
+import { toast, TypeOptions } from 'react-toastify';
 
 const DepartmentsFunctions = () => {
 
@@ -19,14 +19,15 @@ const DepartmentsFunctions = () => {
         oldValue: router.query.id + "" || "",
         id: '',
         name: '',
-        type: ''
+        password: ''
     }
     const initialDialogValues = {
-        show: false,
         title: '',
-        description: '',
+        show: false,
+        btnCancel: "",
         btnConfirm: "",
-        btnCancel: ""
+        isDelete: false,
+        description: '',
     }
     const initialLoadingValues = {
         show: false,
@@ -40,6 +41,15 @@ const DepartmentsFunctions = () => {
     const [showLoading, setShowLoading] = useState(initialLoadingValues)
 
     // Functions
+    const showMessage = (message: string, typeMessage: TypeOptions) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 2000,
+            closeOnClick: true,
+            type: typeMessage
+        })
+    }
+
     const handleDialogConfirm = () => {
         setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
     }
@@ -49,16 +59,14 @@ const DepartmentsFunctions = () => {
         setDepartment({
             ...department,
             id: e.id || '',
-            name: e.name,
-            type: e.type ? e.type : ''
+            name: e.name
         })
     }
 
     const successConfirm = async () => {
         setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
         setShowLoading({ ...showLoading, show: true })
-        console.log(department);
-        
+
         try {
             await fetch(endpoint + '/api/admin/departments/addDepartments', {
                 headers: {
@@ -67,55 +75,43 @@ const DepartmentsFunctions = () => {
                 method: 'POST',
                 body: JSON.stringify(department),
             })
-                .then((res) => {
-                    console.log(res);
-                    
+                .then(() => {
                     router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/departments/departments')
                     setTimeout(() => {
-                        toast('Departamento creado con éxito!', {
-                            position: "top-right",
-                            autoClose: 2000,
-                            closeOnClick: true,
-                            type: 'success'
-                        })
+                        showMessage('Departamento creado con éxito!', 'success')
                     }, 300);
-                }).catch((err) => {
-                    console.log(err);
-                })
-        } catch (error) {
-            console.log(error);
-        }
+                }).catch((err) => { console.log(err); })
+        } catch (error) { console.log(error); }
 
         setShowLoading({ ...showLoading, show: false })
     }
 
     const askIfItShouldRemove = (data: any) => {
         setDepartment(data)
-        setShowDialogConfirm({ ...showDialogConfirm, show: true, title: '¿Desea eliminar el departamento ' + data.name + '?', description: 'Se eliminará el departamento de forma permanente' })
+        setShowDialogConfirm({ 
+            ...showDialogConfirm,
+            show: true,
+            title: '¿Desea eliminar el departamento ' + data.name + '?',
+            description: 'Se eliminará el departamento de forma permanente'
+        })
     }
 
-    const deleteDepartment = async () => {
+    const deleteDepartment = async (reasonToDelete: string) => {
         setShowDialogConfirm({ ...showDialogConfirm, show: false })
-        setShowLoading({ ...showLoading, show: true, title: 'Eliminando categoría' })
+        setShowLoading({ ...showLoading, show: true, title: 'Eliminando departamento' })
 
         await fetch(endpoint + '/api/admin/departments/removeDepartments', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(department)
+            body: JSON.stringify({department, reasonToDelete})
         }).then(() => {
-            toast('Categoria eliminada con éxito!', {
-                position: "top-right",
-                autoClose: 5000,
-                closeOnClick: true,
-                type: 'success'
-            })
-            setShowLoading({ ...showLoading, show: false, title: 'Eliminando categoría' })
+            showMessage('Departamento eliminada con éxito!', 'success')
+            setShowLoading({ ...showLoading, show: false, title: 'Eliminando departamento' })
             router.replace(router.asPath);
         }).catch(error => {
-            console.log(error);
-            setShowLoading({ ...showLoading, show: false, title: 'Eliminando categoría' })
+            setShowLoading({ ...showLoading, show: false, title: 'Ocurrió un problema' })
         })
 
     }
@@ -125,8 +121,7 @@ const DepartmentsFunctions = () => {
         setEditDepartment({
             ...editDepartment,
             id: e.id ? e.id : '',
-            name: e.name,
-            type: e.type ? e.type : ''
+            name: e.name
         })
     }
 
@@ -151,19 +146,10 @@ const DepartmentsFunctions = () => {
                 .then(() => {
                     router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/departments/departments')
                     setTimeout(() => {
-                        toast('Departamento editado con éxito!', {
-                            position: "top-right",
-                            autoClose: 2000,
-                            closeOnClick: true,
-                            type: 'success'
-                        })
+                        showMessage('Departamento editado con éxito!', 'success')
                     }, 300);
-                }).catch((err) => {
-                    console.log(err);
-                })
-        } catch (error) {
-            console.log(error);
-        }
+                }).catch((err) => { console.log(err); })
+        } catch (error) { console.log(error); }
 
         setShowLoading({ ...showLoading, show: false })
     }
@@ -180,7 +166,8 @@ const DepartmentsFunctions = () => {
         askIfItShouldRemove,
         deleteDepartment,
         showEditDialog,
-        loadingData
+        loadingData,
+        showMessage
     }
 }
 

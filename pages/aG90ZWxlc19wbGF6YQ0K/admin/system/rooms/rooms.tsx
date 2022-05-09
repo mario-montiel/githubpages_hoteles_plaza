@@ -28,15 +28,13 @@ import { RoomType } from "../../../../../types/RoomType";
 import RoomFunctions from "../../../../../helpers/functions/admin/rooms/roomsFunctions";
 
 Rooms.getInitialProps = async (ctx: NextPageContext) => {
-    let userJson: any = []
-    let roomsTypeJson: any = []
-    let roomsStatusJson: any = []
-
-    // userJson = await getFetchData(endpoint + '/api/admin/users/showCurrentUserData', ctx)
-    // roomsTypeJson = await getFetchData(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
-    // roomsStatusJson = await getFetchData(endpoint + '/api/admin/rooms/roomsStatus/showRoomsStatus', ctx)
+    const isAdmin = await getFetchData(endpoint + '/api/admin/auth/isAdmin', ctx)
+    const userJson = await getFetchData(endpoint + '/api/admin/users/showCurrentUserData', ctx)
+    const roomsTypeJson = await getFetchData(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
+    const roomsStatusJson = await getFetchData(endpoint + '/api/admin/rooms/roomsStatus/showRoomsStatus', ctx)
 
     return {
+        isAdmin,
         user: userJson,
         roomsType: roomsTypeJson,
         roomsStatus: roomsStatusJson
@@ -70,7 +68,7 @@ async function getFetchData(url: string, ctx: NextPageContext) {
 }
 
 export default function Rooms(props: any) {
-
+    
     // Variables
     const router = useRouter()
     const {
@@ -262,17 +260,21 @@ export default function Rooms(props: any) {
                 <div className={styles.container}>
                     {/* <h5 className={styles.data_in_subtitle}>Total de habitaciones: <b>{props.user.preferences.totalRooms ? props.user.preferences.totalRooms : 'No se pudieron cargar los datos!'}</b></h5> */}
 
-                    <div className={styles.btn_container}>
-                        {/* <BtnFilter
+                    {
+                        props.isAdmin.res ? (
+                            <div className={styles.btn_container}>
+                                {/* <BtnFilter
                             filterData={filterButton}
                             onClick={showFilterData} /> */}
 
-                        <BtnActions
-                            icon={addButton}
-                            onClick={() => setShowModalCreate(!showModalCreate)}
-                        />
+                                <BtnActions
+                                    icon={addButton}
+                                    onClick={() => setShowModalCreate(!showModalCreate)}
+                                />
 
-                    </div>
+                            </div>
+                        ) : null
+                    }
                 </div>
 
                 {

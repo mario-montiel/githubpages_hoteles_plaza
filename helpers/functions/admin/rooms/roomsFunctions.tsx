@@ -82,7 +82,7 @@ const RoomFunctions = () => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Type room image',
             description: `¿Desea crear el estatus ${dataForm.name} para las habitaciones?`,
             btnConfirm: 'Crear',
@@ -130,7 +130,7 @@ const RoomFunctions = () => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Status room image',
             description: `¿Desea eliminar el estatus ${dataForm.name} de las habitaciones?`,
             btnConfirm: 'Eliminar',
@@ -171,7 +171,7 @@ const RoomFunctions = () => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Type room image',
             description: `¿Desea editar el estatus ${dataForm.name} para las habitación?`,
             btnConfirm: 'Editar',
@@ -235,7 +235,7 @@ const RoomFunctions = () => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Type room image',
             description: `¿Desea agregar ${text1} ${text2} ${text3} al hotel?`,
             btnConfirm: 'Agregar',
@@ -277,7 +277,7 @@ const RoomFunctions = () => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Type room image',
             description: `¿Desea editar la habitación ${room.name}?`,
             btnConfirm: 'Editar',

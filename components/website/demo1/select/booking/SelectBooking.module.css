@@ -1,0 +1,183 @@
+.select_date_container {
+    height: auto;
+    position: relative;
+    z-index: 1;
+    background-color: white;
+}
+
+.select_date {
+    padding: 1.5rem 0px;
+}
+
+.select_date .text_data {
+    width: 80%;
+    margin: auto;
+    position: relative;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.select_date .text_data p {
+    text-align: center;
+    color: #dda900;
+    font-weight: bold;
+}
+
+/* */
+.select_date_content {
+    border-radius: 5px;
+    margin: 10px auto;
+    position: relative;
+}
+
+/* */
+.date_content {
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0px 50px;
+    border-radius: 10px;
+}
+
+.date_content p {
+    text-align: center;
+    margin: 0px;
+}
+
+.days_content,
+.days_of_month_content {
+    width: 250px;
+    margin: auto;
+}
+
+.days_content .btn_add,
+.days_content .btn_rest {
+    position: absolute;
+    border: 0.5px solid #c5c5c5;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    background-color: var(--white);
+    cursor: pointer;
+    top: 15px;
+}
+
+.days_content .btn_add {
+    left: 7%;
+}
+
+.days_content .btn_add:hover {
+    background-color: aliceblue;
+}
+
+.days_content .btn_rest {
+    right: 7%;
+}
+
+.days_content .btn_rest:hover {
+    background-color: aliceblue;
+}
+
+.days_content ul {
+    width: 250px;
+    list-style: none;
+    padding: 0px 15px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.days_content ul li {
+    color: #b8b8b8;
+    font-size: 12px;
+    font-weight: lighter;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.days_of_month_content {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0px 15px;
+}
+
+.date_content .days_of_month_content .btn_date {
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    text-align: center;
+    background-color: transparent;
+    margin: auto;
+    border-radius: 5px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.date_content .days_of_month_content .btn_date:hover {
+    background-color: #f7eaa2;
+    border-radius: 5px;
+}
+
+.date_content .days_of_month_content .btn_disabled {
+    border: none;
+    background-color: transparent;
+}
+
+.selected {
+    background-color: #ecca08 !important;
+}
+
+.selected p {
+    color: white !important;
+}
+
+.booking_text {
+    width: 80%;
+    font-size: 12px;
+    text-align: center;
+    margin: 20px auto 10px;
+}
+
+.booking_text strong {
+    font-size: 13px;
+    font-style: italic;
+}
+
+.btn_booking {
+    border: none;
+    display: block;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.7rem 2rem;
+    margin: 20px auto 10px;
+    background-color: #F9C81A;
+    font-family: 'Poppins', sans-serif;
+}
+
+.breakfast_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.breakfast_container label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    margin: 5px 0px;
+    color: var(--input-text);
+}
+
+.breakfast_container input {
+    margin: 0px 10px 0px 0px;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 850px) {
+    .select_date_container {
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        border: none;
+    }
+}

@@ -1,10 +1,10 @@
-.who_we_are {
+.rooms {
     margin: -5px auto 64px auto;
     padding-top: 64px;
     position: relative;
 }
 
-.who_we_are h2 {
+.rooms h2 {
     font-size: 42.50pt;
     font-weight: 400;
     text-align: center;
@@ -13,7 +13,7 @@
     font-family: 'Playfair Display';
 }
 
-.who_we_are .texture_top_image {
+.rooms .texture_top_image {
     top: 0;
     right: 0;
     width: 30%;
@@ -21,14 +21,14 @@
     position: absolute;
 }
 
-.who_we_are .symbol {
+.rooms .symbol {
     width: 90px;
     height: 30px;
     margin: auto;
     display: block;
 }
 
-.who_we_are p {
+.rooms p {
     width: 50%;
     font-weight: 100;
     line-height: 1.5;
@@ -183,6 +183,10 @@
     transform: translate(-50%, -50%);
 }
 
+/* ==== SUITE ==== */
+
+/* Galery */
+
 .suite_room_container {
     overflow: hidden;
 }
@@ -196,10 +200,9 @@
 
 .suite_room_container .current_image_container {
     width: 200%;
-    /* opacity: 0.3; */
     display: flex;
     transition: all 0.3s;
-    transform: translateX(-5%);
+    transform: translateX(-5%) !important;
 }
 
 .suite_room_container .current_image_selected {
@@ -215,8 +218,104 @@
     height: 5rem;
     opacity: 0.3;
     cursor: pointer;
+    display: block !important;
 }
 
 .selected {
     opacity: 1 !important;
+}
+
+@media screen and (max-width: 1200px) {
+    /* ==== ROOMS MOBILE ==== */
+
+    /* SIMPLE, DOUBLE AND SUIT ROOMS */
+    .rooms {
+        overflow: hidden;
+    }
+
+    .simple_room_container {
+        margin: 15% auto 20%;
+    }
+
+    .simple_room_image {
+        width: 100% !important;
+    }
+
+    .simple_room_container .text_container {
+        left: 0%;
+        top: 80%;
+        width: 100%;
+        transform: none;
+        box-shadow: none;
+        margin: 120px 0px 0px;
+        min-width: 90% !important;
+        background-color: var(--white);
+    }
+
+    .double_room_container {
+        display: block;
+        position: static;
+        margin: 15% auto 0px;
+    }
+
+    .double_room_image {
+        margin: auto;
+        min-width: 100% !important;
+        transform: none !important;
+        position: static !important;
+    }
+
+    .double_room_container .text_container {
+        width: 100%;
+        box-shadow: none;
+        margin: -5% auto 0px !important;
+        background-color: var(--background-mision-vision-text);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    /* ==== ROOMS MOBILE ==== */
+
+    /* SIMPLE, DOUBLE AND SUIT ROOMS */
+    .simple_room_container {
+        margin: 15% auto 30%;
+    }
+
+    .simple_room_container .text_container {
+        top: 60%;
+    }
+
+    /* ==== SUITE ==== */
+
+    /* Galery */
+    .suite_room_container {
+        width: auto !important;
+        overflow: auto;
+    }
+
+    .current_image_container {
+        width: 200% !important;
+        transform: translate(0px) !important;
+    }
+
+    .current_image_container .current_image_selected {
+        /* IMAGES */
+        min-width: 50% !important;
+    }
+
+    .suite_room_container .small_images {
+        display: none !important;
+    }
+
+    .suite_room_container .current_image_selected {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .simple_room_container .text_container .text h5,
+    .double_room_container .text_container .text h5 {
+        font-size: 12vw !important;
+    }
 }

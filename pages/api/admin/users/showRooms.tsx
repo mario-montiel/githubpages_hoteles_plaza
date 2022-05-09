@@ -26,7 +26,7 @@ export default async function ShowCurrentUser(
                     rooms: {
                         where: {
                             isBooking: true,
-                            isBreakfast: true,
+                            // isBreakfast: true
                         },
                         orderBy: {
                             roomNumber: 'asc'

@@ -1,54 +1,67 @@
 // React
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 // Libraries
+import { ToastContainer } from "react-toastify";
 
 // CSS
+import 'react-toastify/dist/ReactToastify.css'
 import styles from "./DialogConfirm.module.css"
 
 // Components
 
 // Helpers
 import { endpoint } from "../../../../config/endpoint";
+import DepartmentsFunctions from "../../../../helpers/functions/admin/departments/departmentsFunctions";
 
 // Types
 type DialogConfirm = {
-    image?: string,
     alt?: string,
     title?: string,
-    description?: string,
-    btnConfirm: string,
+    image?: string,
     btnCancel: string,
-    onConfirm: () => void,
-    onClose: () => void
+    isDelete?: boolean,
+    btnConfirm: string,
+    onClose: () => void,
+    description?: string,
+    onConfirm: (reasonToDelete: string) => void,
 }
 
 type PasswordConfirm = {
-    password: string
+    password: string,
+    reasonToDelete: string
 }
 
 export default function DialogConfirm(props: DialogConfirm) {
-    // console.log(props);
-    // // Variables
-    // const { register, setValue, clearErrors, handleSubmit, formState: { errors } } = useForm<PasswordConfirm>();
-    // const onSubmit = (data: any) => {
-    //     console.log(data);
-    //     confirmPasswordOfCurrentUser(data.password)
-    // }
-    // // onClick={props.onConfirm}
-    // // Use State
+    
+    // Variables
+    const {
+        showMessage
+    } = DepartmentsFunctions()
+    const { register, handleSubmit, formState: { errors } } = useForm<PasswordConfirm>();
+    const onSubmit = (data: any) => { confirmPasswordOfCurrentUser(data) }
 
-    // // Functions
-    // const confirmPasswordOfCurrentUser = async (password: string) => {
-    //     console.log(password);
+    // Use State
+    const [isDisabled, setIsDisabled] = useState<boolean>(false)
 
-    //     const resp = await fetch(endpoint + '/api/admin/auth/confirmPassCurrentUser', {
-    //         method:"POST",
-    //         body: JSON.stringify(password)
-    //     })
+    // Functions
 
-    //     console.log(resp.json());
 
-    // }
+    const confirmPasswordOfCurrentUser = async (dataForm: PasswordConfirm) => {
+        setIsDisabled(true)
+
+        const resp = await fetch(endpoint + '/api/admin/auth/confirmPassCurrentUser', {
+            method: "POST",
+            body: JSON.stringify(dataForm)
+        })
+        const response = await resp.json()
+
+        if (response.res) { return props.onConfirm(dataForm.reasonToDelete) }
+
+        showMessage(response.message, 'error')
+        setIsDisabled(false)
+    }
 
     const changeButtonColor = () => {
         switch (props.btnConfirm) {
@@ -69,6 +82,9 @@ export default function DialogConfirm(props: DialogConfirm) {
 
     return (
         <div className="overlay">
+
+            <ToastContainer />
+
             <div className={styles.overlay_content}>
                 {
                     props.image ? (
@@ -81,22 +97,38 @@ export default function DialogConfirm(props: DialogConfirm) {
                 <p>{props.title}</p>
                 <br />
                 <p>{props.description}</p>
-                <form /* </div>className={styles.hotel_form} onSubmit={handleSubmit(onSubmit)} */>
-                    {/* <div className="input-container">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="input-container">
                         <input
                             className={errors.password ? 'input input_error_text' : 'input'}
                             {...register("password", { required: true })}
                             id="password"
-                            autoComplete="off"
-                            autoFocus={true}
-                            placeholder="Ingrese su contraseña"
                             type="password"
+                            autoFocus={true}
+                            autoComplete="off"
+                            placeholder="Ingrese su contraseña"
                         />
                         <br />
                         {errors.password && <small>El campo Contraseña está vacio!</small>}
-                    </div> */}
+                    </div>
+                    {
+                        props.isDelete ? (
+                            <div className="input-container">
+                                <input
+                                    className={errors.reasonToDelete ? 'input input_error_text' : 'input'}
+                                    {...register("reasonToDelete", { required: true })}
+                                    id="reason"
+                                    type="text"
+                                    autoComplete="off"
+                                    placeholder="Ingrese el motivo por el cual borrará éste dato"
+                                />
+                                <br />
+                                {errors.reasonToDelete && <small>El campo motivo está vacio!</small>}
+                            </div>
+                        ) : null
+                    }
                     <div className={styles.container}>
-                        <button type="button" className={changeButtonColor()} onClick={props.onConfirm}>
+                        <button type="submit" className={changeButtonColor()}>
                             <p>{props.btnConfirm}</p>
                         </button>
                         <button type="button" className={styles.btn_cancel} onClick={props.onClose}>

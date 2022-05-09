@@ -1,9 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-// import { Authenticated } from '../../../../../api/authentication'
+import { Authenticated } from '../../../../../api/authentication'
 import prismaDB from '../../../../../prisma/Instance'
 
-export default async function getUsers(
+export default Authenticated(async function getUsers(
     req: NextApiRequest,
     res: NextApiResponse<Object>
 ) {
@@ -20,4 +20,4 @@ export default async function getUsers(
     })
 
     res.json(roomStatus)
-}
+})

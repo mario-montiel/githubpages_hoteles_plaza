@@ -38,18 +38,18 @@ export default async function handler(
         }
     })
 
-    if (!user.length) {
-        return res.status(401).json({ res: false, message: 'El correo electrónico que ingresó no está registrado en el sistema' })
+    if (user.length) {
+        verifyUser(response, user, res)
     }
 
-    verifyUser(response, user, res)
+    return res.status(401).json({ res: false, message: 'El correo electrónico que ingresó no está registrado en el sistema' })
 }
 
 const verifyUser = async (response: any, user: any, res: NextApiResponse<Object>) => {
     bcrypt.compare(response.password, user[0].password, function (err, result) {
         if (!err && result) {
-            const token = jwt.sign({ sub: user[0].id, email: user[0].email, typeUser: user[0].typeUserId }, secret, { expiresIn: '8h' })
-
+            const token = jwt.sign({ sub: user[0].id, email: user[0].email, typeUser: user[0].typeUserId ? user[0].typeUserId : user[0].typeUser }, secret, { expiresIn: '8h' })
+            
             res.setHeader("Set-Cookie",
                 cookie.serialize('auth', token, {
                     httpOnly: true, // not let use js code in the client side

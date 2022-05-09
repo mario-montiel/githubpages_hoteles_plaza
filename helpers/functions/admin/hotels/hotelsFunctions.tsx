@@ -19,7 +19,7 @@ import { RoomType } from "../../../../types/RoomType"
 import { RoomStatus } from "../../../../types/RoomStatus"
 import { Hotel, HotelForm, PlaceOfInterestElement } from "../../../../types/Hotel"
 
-const HotelesFunctions = () => {
+const HotelesFunctions = (isAdmin?: any) => {
 
     // Variables
     const router = useRouter()
@@ -66,27 +66,21 @@ const HotelesFunctions = () => {
     }
 
     // Use States
-    const [hotel, setHotel] = useState(initialValues)
-    const [editHotel, setEditHotel] = useState(initialValues)
-    const [hotelsLoaded, setHotelsLoaded] = useState<any>([])
     const [rooms, setRooms] = useState<any>([])
+    const [hotel, setHotel] = useState(initialValues)
     const [roomsType, setRoomsType] = useState<any>([])
     const [roomsStatus, setRoomsStatus] = useState<any>([])
+    const [newImage, setNewImage] = useState<boolean>(false)
+    const [editHotel, setEditHotel] = useState(initialValues)
+    const [hotelsLoaded, setHotelsLoaded] = useState<any>([])
+    const [roomsError, setRoomsError] = useState<boolean>(false)
+    const [removeHotel, setRemoveHotel] = useState(initialValues)
+    const [showLoading, setShowLoading] = useState(initialLoadingValues)
+    const [totalRoomsInFloor, setTotalRoomsInFloor] = useState<any>([])
     const [showDialogConfirm, setShowDialogConfirm] = useState(initialDialogValues)
     const [showDialogWarning, setShowDialogWarning] = useState(initialDialogValues)
-    const [showLoading, setShowLoading] = useState(initialLoadingValues)
-    const [roomsError, setRoomsError] = useState<boolean>(false)
-    const [newImage, setNewImage] = useState<boolean>(false)
-    const [removeHotel, setRemoveHotel] = useState(initialValues)
 
     // Use Effect
-    // useEffect(() => {
-    //     if (hotel.url) {
-    //         saveDataInDB()
-    //     }
-
-    //     // fillDataOfDBOfHotel(roomsType, 1)
-    // }, [hotelsLoaded, hotel.url, editHotel])
 
     // Functions
     const handleDialogConfirm = () => {
@@ -97,7 +91,7 @@ const HotelesFunctions = () => {
         setShowDialogWarning({
             ...showDialogWarning,
             show: !showDialogWarning.show,
-            image: '/dialog/map.svg',
+            image: '/hotels/dialog/map.svg',
             alt: 'Warning Dialog Image',
             description: 'El hotel no tiene latitud ni longitud necesarios para poder saber su ubicación en Google Maps, para poder continuar debe seleccionar el lugar del hotel en Google Maps para que la gente que visite la página web sepa su ubicación y se le pueda dar indicaciones de como llegar al lugar',
             btnConfirm: 'Seleccionar',
@@ -109,8 +103,6 @@ const HotelesFunctions = () => {
         setShowLoading({ ...showLoading, show: true, title: 'Validando información!' })
         const direction = hotelData.type === 'create' ? 'addHotels' : 'editHotels'
         const url = endpoint + `/api/admin/hotels/${direction}`
-        console.log(url);
-
         const data = {
             dataForm: hotelData,
             rooms: roomData,
@@ -163,6 +155,7 @@ const HotelesFunctions = () => {
     const createFloors = () => {
         let html: any = []
         const floors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
         floors.map((floor, index: number) => {
             html.push(<option defaultValue={floor} key={index}>{floor}</option>)
         })
@@ -176,7 +169,7 @@ const HotelesFunctions = () => {
         let array: any = []
         let totalRooms: number = 0
         const roomsTypeInput = document.querySelectorAll('.room-type-input-container') as any
-        
+
         for (let rowIndex = 0; rowIndex < roomsTypeInput.length; rowIndex++) {
             const rowRoomType = roomsTypeInput[rowIndex];
             array = []
@@ -185,32 +178,21 @@ const HotelesFunctions = () => {
             for (let colIndex = 0; colIndex < rowRoomType.children.length; colIndex++) {
                 const roomElement = rowRoomType.children[colIndex] as any;
 
-                if (colIndex > 0 && colIndex < (rowRoomType.children.length - 1)) {
-
-                    if (!parseInt(rowRoomType.children[colIndex].children[0].value)) {
-                        handleStylesRoomDiv(roomsTypeInput[rowIndex]);
-                        return false
-                    }
-
-                    total += parseInt(rowRoomType.children[colIndex].children[0].value)
-                    
+                if (colIndex < (rowRoomType.children.length - 1)) {
                     const data = {
                         uid: colIndex,
                         name: roomElement.parentNode?.parentNode?.parentNode?.children[0].children[0].children[colIndex].innerText,
                         floor: (rowIndex + 1),
-                        roomTypeId: roomsType[(colIndex - 1)].id,
+                        roomTypeId: roomsType[(colIndex)].id,
                         roomStatusId: roomsStatus[0].id,
                         quantity: parseInt(rowRoomType.children[colIndex].children[0].value),
                         totalRooms: parseInt(rowRoomType.children[rowRoomType.children.length - 1].children[0].value)
                     }
-                    
+
                     totalRooms += parseInt(rowRoomType.children[colIndex].children[0].value)
                     array.push(data)
                 }
             }
-
-            const totalInput = parseInt(roomsTypeInput[rowIndex].children[rowRoomType.children.length - 1].children[0].value)
-            await checkTotalOfRooms(total, totalInput, roomsTypeInput[rowIndex], '<')
 
             roomData.push(array);
         }
@@ -257,16 +239,7 @@ const HotelesFunctions = () => {
         setRoomsStatus(roomsStatus)
         setRooms([])
 
-        console.log('generateFloorsroomsType: ', roomsType);
-        console.log('generateFloorsroomsStatus: ', roomsStatus);
-        console.log('hotelsLoaded: ', hotelsLoaded);
-        console.log('rooms: ', rooms);
-        console.log('editHotel: ', editHotel);
-        console.log(hotel);
-        console.log(e);
-        
-
-        const length = e > 0 ? e : e.target.value
+        const length = e > 0 ? e : e.target.value;
 
         for (let index = 0; index < length; index++) {
             setRooms((oldValue: any) => [...oldValue,
@@ -276,7 +249,6 @@ const HotelesFunctions = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>Cantidad de habitaciones</th>
                                 {roomsType.map((roomType: RoomType, index: number) =>
                                     <th key={index + 100}>{roomType.name}</th>
                                 )}
@@ -285,32 +257,23 @@ const HotelesFunctions = () => {
                         </thead>
                         <tbody>
                             <tr className="room-type-input-container">
-                                <td>
-                                    <input
-                                        className='input input-range'
-                                        id="roomsRange"
-                                        type="range"
-                                        min="1"
-                                        max="50"
-                                        defaultValue="1"
-                                        onChange={() => generateRooms(index)}
-                                    />
-                                </td>
                                 {
                                     roomsType.map((roomType: RoomType, i: number) => {
+                                        // console.log(roomType);
+
                                         return (
                                             <td key={i + 100}>
                                                 <input
-                                                    type="text"
+                                                    type="number"
                                                     id="rooms"
-                                                    onChange={() => checkValuesLimit(index, i)}
+                                                    onChange={() => countRoomRows(index)}
                                                 />
                                             </td>
                                         )
                                     })
                                 }
                                 <td>
-                                    <input id="totalRooms" className="total-rooms" type="text" disabled value="1" />
+                                    <input id="totalRooms" className="total-rooms" type="text" disabled value="0" />
                                 </td>
                             </tr>
                         </tbody>
@@ -319,12 +282,19 @@ const HotelesFunctions = () => {
             </div>
             ])
         }
+
+        length > 0 ? (
+            setTimeout(() => {
+                countRoomRows(length - 1)
+            }, 200)
+        ) : null
     }
 
     const generateRoomDataInInputs = (roomsData: Array<any>, roomsType: Array<RoomType>, floors: number) => {
         const inputRange: any = document.querySelectorAll('.input-range') as NodeListOf<HTMLInputElement>
         const inputs: any = document.querySelectorAll('.room-type-input-container') as NodeListOf<HTMLInputElement>
         const totalInputs: any = document.querySelectorAll('.total-rooms')
+        
         // GET INPUTS AND PRINT THE QUANTITIES ROOMS
         for (let index = 0; index < floors; index++) {
             roomsType.forEach((roomType, i) => {
@@ -340,8 +310,9 @@ const HotelesFunctions = () => {
 
                     }
                 });
-                inputRange[index].value = floorQuantities
-                inputs[index].children[i + 1].children[0].value = roomQuantities
+                
+                // inputRange[index].value = floorQuantities
+                inputs[index].children[i].children[0].value = roomQuantities
                 totalInputs[index].value = floorQuantities
             });
         }
@@ -353,41 +324,33 @@ const HotelesFunctions = () => {
         totalRooms[index].value = rangeInput[index].value
     }
 
-    const checkValuesLimit = async (rowIndex: number, colIndex: number) => {
-        let total = 0
-        const rooms_type_input = document.querySelectorAll('.room-type-input-container') as any
-        const length = rooms_type_input[rowIndex].children.length
+    const countRoomRows = async (rowIndex: number) => {
+        const total_rooms = document.querySelectorAll('.total-rooms') as NodeListOf<HTMLInputElement>
+        const rooms_type_input = document.querySelectorAll('.room-type-input-container') as NodeListOf<HTMLElement>
+        const length = rooms_type_input[rowIndex].children.length as number
 
-        for (let index = 0; index < length; index++) {
-            const input = rooms_type_input[rowIndex].children[index];
-            rooms_type_input[rowIndex].children[colIndex + 1].children[0].classList.remove(styles.error_input)
-
-            if (index > 0 && index < (length - 1)) {
-                const value = parseInt(input.children[0].value)
-
-                if (value) { total += value }
-                if (!rooms_type_input[rowIndex].children[colIndex + 1].children[0].value) {
-                    rooms_type_input[rowIndex].children[colIndex + 1].children[0].classList.add(styles.error_input)
-                    return handleRoomsErrorVaues(true, 'Ningún campo de la cantidad de habitaciones puede estar vacío')
+        for (let i = 0; i < rowIndex + 1; i++) {
+            let total = 0
+            for (let j = 0; j < length - 1; j++) {
+                const input = rooms_type_input[i].children[j].children[0] as HTMLInputElement
+                if (input.value) {
+                    total += parseInt(input.value)
                 }
             }
+            total_rooms[i].value = `${total}`
         }
-
-        handleRoomsErrorVaues(false, '')
-
-        const  totalInput = parseInt(rooms_type_input[rowIndex].children[length - 1].children[0].value)
-        const input = rooms_type_input[rowIndex].children[colIndex + 1].children[0]
-        await checkTotalOfRooms(total, totalInput, input, '>')
     }
 
-    const showDialog = async (dataForm: HotelForm, roomData: any) => {
+    const showDialog = async (dataForm: HotelForm, roomData: any, placesOfInterestList: any) => {
+        console.log('placesOfInterestListplacesOfInterestList: ', placesOfInterestList);
+        
         const hotelExist = await verifiedIfTheHotelIsRepeat(dataForm, roomData)
 
         if (!hotelExist.res) {
             return setShowDialogWarning({
                 ...showDialogWarning,
                 show: true,
-                image: '/dialog/map.svg',
+                image: '/hotels/dialog/map.svg',
                 alt: 'Warning Dialog Image',
                 description: 'Ya existe un hotel con el mismo nombre!',
                 btnConfirm: 'Confirmar',
@@ -415,7 +378,7 @@ const HotelesFunctions = () => {
                 longitude: dataForm.longitude || '',
                 placeId: dataForm.placeId,
                 reviews: dataForm.reviews,
-                placesInterest: dataForm.placesInterest,
+                placesInterest: placesOfInterestList,
                 totalFloors: dataForm.totalFloors,
                 rooms: roomData.roomData,
                 totalRooms: roomData.totalRooms,
@@ -423,7 +386,7 @@ const HotelesFunctions = () => {
             setShowDialogConfirm({
                 ...showDialogConfirm,
                 show: true,
-                image: '/dialog/hotel1.svg',
+                image: '/hotels/dialog/hotel1.svg',
                 alt: 'Creación del hotel',
                 description: `Para poder crear el hotel ${dataForm.name} debe ingresar su contraseña`,
                 btnConfirm: 'Crear',
@@ -447,27 +410,15 @@ const HotelesFunctions = () => {
         return resp.json()
     }
 
-    // const verifyPassOfCurrentUser = async (password: string) => {
-    //     return await fetch('/api/admin/auth/confirmPassCurrentUser', {
-    //         method: "POST",
-    //         body: JSON.stringify(password)
-    //     })
-    // }
-
     async function successConfirm() {
         setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
         setShowLoading({ ...showLoading, show: true, title: 'Guardando datos!' })
-
         saveDataInDB()
-        // try {
-        //     const urlImage = await uploadImage()
-        //     setHotel({ ...hotel, url: urlImage.url })
-        // }
-        // catch (error) { console.log(error) }
-
     }
 
     const saveDataInDB = async (dataForm?: Hotel, imageUrl?: string, roomsData?: any) => {
+        console.log('SAVEDATAhotel: ', hotel);
+        
         const direction = dataForm ? 'editHotels' : 'addHotels'
         const url = endpoint + `/api/admin/hotels/${direction}`
         const actionToast = dataForm ? 'actualizado' : 'creado'
@@ -477,38 +428,43 @@ const HotelesFunctions = () => {
             roomData: roomsData ? roomsData : hotel.rooms,
             type: dataForm ? '' : 'veryfied'
         }
-
-        console.log(hotelData);
+        console.log('hotelData:hotelData: ', hotelData);
         
-
-        await fetch(url, {
-            headers: {
-                'Content-type': 'application/json'
-            },
+        const response = await fetch(url, {
+            headers: { 'Content-type': 'application/json' },
             method: 'POST',
             body: JSON.stringify(hotelData),
-        }).then((response: any) => {
-            if (response.ok) {
-                router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/hotels/hotels`)
-                setTimeout(() => {
-                    toast(`Hotel ${actionToast} con éxito!`, {
-                        position: "top-right",
-                        autoClose: 2000,
-                        closeOnClick: true,
-                        type: 'success'
-                    })
-                }, 300);
-            }
-        }).catch(error => {
-            console.log(error);
         })
+        const jsonResponse = await response.json()
+        console.log(jsonResponse);
+        
+
+        if (!jsonResponse.res) {
+            setShowLoading({ ...showLoading, show: false })
+            return toast(`No se pudo agregar el hotel, asegurece de ingresar un nombre válido como "Hotel Plaza Catedral"`, {
+                position: "top-right",
+                autoClose: 10000,
+                closeOnClick: true,
+                type: 'error'
+            })
+        }
+
+        router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/hotels/hotels`)
+        setTimeout(() => {
+            toast(`Hotel ${actionToast} con éxito!`, {
+                position: "top-right",
+                autoClose: 2000,
+                closeOnClick: true,
+                type: 'success'
+            })
+        }, 300);
+
         setShowLoading({ ...showLoading, show: false })
     }
 
     const showData = (hotels: Hotel[]) => {
         hotels.forEach((hotel: any, index: number) => {
-            console.log(hotel);
-            
+
             setHotelsLoaded((oldValue: any) => [...oldValue,
             <tr key={index}>
                 <td>{(index + 1)}</td>
@@ -573,28 +529,28 @@ const HotelesFunctions = () => {
                 <td>{hotel.facebook ? (hotel.facebook) : (<div className="table-no-data">No Data</div>)}</td>
                 <td>{hotel.instagram ? (hotel.instagram) : (<div className="table-no-data">No Data</div>)}</td>
                 <td>{hotel.whatsapp ? (hotel.whatsapp) : (<div className="table-no-data">No Data</div>)}</td>
-                <td>
-                    <div className="container">
-                        <button type="button" className="btn_action" onClick={() => router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/hotels/${hotel.name}`)}>
-                            <svg className="svg_table_icon" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
-                            </svg>
-                        </button>
-                        <button type="button" className="btn_action" onClick={() => askIfItShouldRemove(hotel)}>
-                            <svg className="svg_table_icon" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
-                            </svg>
-                        </button>
-                    </div>
-                </td>
+                {
+                    isAdmin ? (
+                        <td>
+                            <div className="container">
+                                <button type="button" className="btn_action" onClick={() => router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/hotels/${hotel.name}`)}>
+                                    <svg className="svg_table_icon" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
+                                    </svg>
+                                </button>
+                                <button type="button" className="btn_action" onClick={() => askIfItShouldRemove(hotel)}>
+                                    <svg className="svg_table_icon" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    ) : null
+                }
             </tr>
             ])
         })
     }
-
-    // const loadEditImage = (url: string) => {
-    //     setEditHotel({ ...editHotel, image: url })
-    // }
 
     const VerifyIfImageWasChanged = () => {
         setNewImage(!newImage)
@@ -604,7 +560,7 @@ const HotelesFunctions = () => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: "/dialog/hotel.svg",
+            image: "/hotels/dialog/hotel.svg",
             alt: "Editar hotel",
             title: 'Editr hotel',
             description: `¿Desea editar el ${dataForm.name}?`,

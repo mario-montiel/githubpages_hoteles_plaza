@@ -51,3 +51,18 @@
     width: 100%;
     margin: 5% auto;
 }
+
+@media screen and (max-width: 800px) {
+    .ubication_contact h2 {
+        width: 80%;
+    }
+
+    .ubication_contact p {
+        width: 80%;
+        line-height: 1.8;
+    }
+
+    .ubication_container iframe {
+        margin: 20% auto 10%;
+    }
+}

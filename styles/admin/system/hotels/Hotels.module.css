@@ -60,15 +60,13 @@
   font-size: 12px;
 }
 
-.range_input_data table tbody tr td:first-of-type input {
+/* .range_input_data table tbody tr td:first-of-type input {
     appearance: none;
     cursor: pointer;
     padding: 0px;
-    width: 80%;
     position: relative;
     margin: auto;
     outline-style: none;
-    border: none;
 }
 
 .range_input_data table tbody tr td:first-of-type input::-webkit-slider-thumb {
@@ -86,7 +84,6 @@
     height: 5px;
     margin: auto;
     position: absolute;
-    /* margin-top: -1px; */
 }
 
 .range_input_data table tbody tr td:first-of-type input::-moz-range-progress {
@@ -95,18 +92,20 @@
 
 .range_input_data table tbody tr td:first-of-type input::-moz-range-track {
     background-color: #d8d8d8;
-}
+} */
 
 .range_input_data table tbody tr td:last-of-type input {
     cursor: not-allowed;
     border: none;
     text-align: center;
-}
+} 
 
 .range_input_data input {
     width: 60%;
     margin: auto;
     display: block;
+    height: 1.2rem;
+    font-size: 14px;
     border-radius: 3px;
     outline-style: none;
     border: 0.5px solid lightgray;

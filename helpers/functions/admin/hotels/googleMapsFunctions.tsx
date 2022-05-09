@@ -95,6 +95,7 @@ const googleMaps = () => {
     }
 
     const fillDataOfPlacesOfInterest = (places: Array<PlaceOfInterestElement>) => {
+        console.log('fillDataOfPlacesOfInterest');
         setPlacesOfInterestList(places)
     }
 

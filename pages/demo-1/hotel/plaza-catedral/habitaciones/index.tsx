@@ -15,8 +15,7 @@ import { endpoint } from "../../../../../config/endpoint"
 // Types
 
 RoomsCatedralDemo1.getInitialProps = async () => {
-    let weatherJson: any = []
-    weatherJson = await getFetchData(endpoint + '/api/weather')
+    const weatherJson = await getFetchData(endpoint + '/api/weather')
   
     return {
       weather: weatherJson,
@@ -52,9 +51,6 @@ export default function RoomsCatedralDemo1({ weather }: any) {
             //     910px
             // "
             />
-
-
-
 
             <RoomsCatedral
                 roomUrl={`${endpoint}/hotels/rooms/catedral/`}

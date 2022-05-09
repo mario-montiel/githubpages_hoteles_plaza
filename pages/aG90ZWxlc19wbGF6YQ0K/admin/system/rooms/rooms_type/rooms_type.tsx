@@ -24,8 +24,13 @@ import TypeRoomsFunctions from "../../../../../../helpers/functions/admin/roomsT
 import { RoomType } from "../../../../../../types/RoomType"
 
 RoomsType.getInitialProps = async (ctx: NextPageContext) => {
+    const isAdmin = await getFetch(endpoint + '/api/admin/auth/isAdmin', ctx)
     const json = await getFetch(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
-    return { roomsType: json }
+
+    return {
+        isAdmin,
+        roomsType: json
+    }
 }
 
 async function getFetch(url: string, ctx: NextPageContext) {
@@ -101,15 +106,19 @@ export default function RoomsType(props: any) {
                 <div className={styles.container}>
                     <h5 className={styles.data_in_subtitle}>Total de tipos de habitaciones: <b>{props.roomsType.length ? props.roomsType.length : 'No se pudieron cargar los datos!'}</b></h5>
 
-                    <div className={styles.btn_container}>
-                        {/* <BtnFilter
+                    {
+                        props.isAdmin.res ? (
+                            <div className={styles.btn_container}>
+                                {/* <BtnFilter
                             filterData={filterButton}
                             onClick={showFilterData} /> */}
 
-                        <BtnActions
-                            icon={addButton}
-                            onClick={() => router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/create_rooms_type`)} />
-                    </div>
+                                <BtnActions
+                                    icon={addButton}
+                                    onClick={() => router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/create_rooms_type`)} />
+                            </div>
+                        ) : null
+                    }
                 </div>
 
                 <table className="table">
@@ -123,6 +132,11 @@ export default function RoomsType(props: any) {
                             <th>Descripción</th>
                             <th>Personas máximas</th>
                             <th>Fumar</th>
+                            {
+                                props.isAdmin.res ? (
+                                    <th>Acciones</th>
+                                ) : null
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -136,21 +150,25 @@ export default function RoomsType(props: any) {
                                     <td>{roomType.title}</td>
                                     <td>{roomType.description}</td>
                                     <td>{roomType.maxPeople}</td>
-                                    <td>{roomType.smoke}</td>
-                                    <td>
-                                        <div className="container">
-                                            <button className="btn_action" onClick={() => router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/${roomType.id}`)}>
-                                                <svg className="svg_table_icon" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
-                                                </svg>
-                                            </button>
-                                            <button className="btn_action" onClick={() => askIfItShouldRemove(roomType)}>
-                                                <svg className="svg_table_icon" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </td>
+                                    <td>{roomType.smoke ? 'Si' : 'No'}</td>
+                                    {
+                                        props.isAdmin.res ? (
+                                            <td>
+                                                <div className="container">
+                                                    <button className="btn_action" onClick={() => router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/${roomType.id}`)}>
+                                                        <svg className="svg_table_icon" viewBox="0 0 24 24">
+                                                            <path fill="currentColor" d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
+                                                        </svg>
+                                                    </button>
+                                                    <button className="btn_action" onClick={() => askIfItShouldRemove(roomType)}>
+                                                        <svg className="svg_table_icon" viewBox="0 0 24 24">
+                                                            <path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        ) : null
+                                    }
                                 </tr>
                             )
                         }

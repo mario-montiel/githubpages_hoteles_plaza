@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { verifyIfIsAdmin } from "../../../../api/authentication"
 
-const UsersFunctions = () => {
+const UsersFunctions = (isAdmin: boolean) => {
 
     // Variables
     const router = useRouter()
@@ -61,7 +61,7 @@ const UsersFunctions = () => {
         setShowDialogWarning({
             ...showDialogWarning,
             show: true,
-            image: '/dialog/map.svg',
+            image: '/hotels/dialog/map.svg',
             alt: 'Warning Dialog Image',
             description: 'El correo electrónico del usuario que está registrado ya se encuentra en el sistema, por favor verifique los datos.',
             btnConfirm: 'Cerrar',
@@ -72,7 +72,7 @@ const UsersFunctions = () => {
     const showDialog = (dataForm: User) => {
         handleDialogConfirm(
             true,           // Show
-            '/dialog/user.svg', // Image
+            '/hotels/dialog/user.svg', // Image
             'User image',   // Alt
             'Crear usuario',    // Title
             `¿Desea crear al usuario ${dataForm.fullName}?`,    // Description
@@ -94,7 +94,7 @@ const UsersFunctions = () => {
     const askIfItShouldRemove = (dataForm: any) => {
         handleDialogConfirm(
             true,           // Show
-            '/dialog/user.svg', // Image
+            '/hotels/dialog/user.svg', // Image
             'User image',   // Alt
             'Crear usuario',    // Title
             `¿Desea eliminar al usuario ${dataForm.fullName}?`,    // Description
@@ -186,7 +186,7 @@ const UsersFunctions = () => {
                                                     ) : null
                                                 }
                                                 {
-                                                    verifyIfIsAdmin(currentUser) || user?.typeUserId === 1 ? (
+                                                    /* verifyIfIsAdmin(currentUser) || user?.typeUserId === 1 */ isAdmin ? (
                                                         <button className="btn_action" onClick={() => askIfItShouldRemove(user)}>
                                                             <svg className="svg_table_icon" viewBox="0 0 24 24">
                                                                 <path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
@@ -248,7 +248,7 @@ const UsersFunctions = () => {
     const showEditDialog = (dataForm: User) => {
         handleDialogConfirm(
             true,           // Show
-            '/dialog/user.svg', // Image
+            '/hotels/dialog/user.svg', // Image
             'User image',   // Alt
             'Editar usuario',    // Title
             `¿Desea editar al usuario ${dataForm.fullName}?`,    // Description

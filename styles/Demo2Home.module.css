@@ -92,3 +92,23 @@
     color: #ffffff;
     transition: all 0.5s;
 }
+
+@media screen and (max-width: 800px) {
+    .container .image_left {
+        width: 85%;
+        clip-path: polygon(calc(0%) 0%, 100% 0%, 20% 100%, 0% 100%);
+    }
+    
+    .container .image_right {
+        width: 85%;
+        clip-path: polygon(calc(80%) 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+
+    .container .image_left img {
+        object-position: 60%;
+    }
+
+    .container .image_right img {
+        object-position: 20%;
+    }
+}

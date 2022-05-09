@@ -37,38 +37,11 @@ const TypeRoomsFunctions = () => {
     // Use Effect
 
     // Functions
-    // const errorsMessages = (errors: string, type?: string, quantity?: number) => {
-    //     let errorText: string = ''
-    //     switch (errors) {
-    //         case 'maxLength':
-    //             errorText = `El campo ${type} solo puede tener ${quantity} caracteres como máximo!`
-    //             return (
-    //                 <small>{errorText}</small>
-    //             )
-    //         case 'required':
-    //             errorText = `El campo ${type} esta vacio!`
-    //             return (
-    //                 <small>{errorText}</small>
-    //             )
-    //             break;
-
-    //         case 'required':
-    //             errorText = `Solo puede que ingresar números!`
-    //             return (
-    //                 <small>{errorText}</small>
-    //             )
-    //             break;
-
-    //         default:
-    //             break;
-    //     }
-    // }
-
     const showDialog = (dataForm: RoomType) => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Type room image',
             description: `¿Desea crear el tipo de habitación ${dataForm.name}?`,
             btnConfirm: 'Crear',
@@ -120,7 +93,7 @@ const TypeRoomsFunctions = () => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Type room image',
             description: `¿Desea eliminar el tipo de habitación ${dataForm.name}?`,
             btnConfirm: 'Eliminar',
@@ -161,7 +134,7 @@ const TypeRoomsFunctions = () => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Type room image',
             description: `¿Desea editar el tipo de habitación ${dataForm.name}?`,
             btnConfirm: 'Editar',

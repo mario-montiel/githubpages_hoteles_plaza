@@ -139,3 +139,36 @@
     width: 10rem;
     height: auto;
 }
+
+@media screen and (max-width: 800px) {
+    .facilities {
+        overflow: hidden;
+    }
+
+    .facilities h2 {
+        width: 80%;
+    }
+
+    .facilities p {
+        width: 80%;
+        line-height: 1.8;
+    }
+
+    .gallery_container {
+        overflow-x: auto;
+        width: 200% !important;
+    }
+
+    .gallery_container .current_image_container {
+        width: 250% !important;
+        transform: none !important;
+    }
+
+    .small_images_container {
+        display: none !important;
+    }
+
+    .circles_container {
+        margin: 5% auto 2%;
+    }
+}

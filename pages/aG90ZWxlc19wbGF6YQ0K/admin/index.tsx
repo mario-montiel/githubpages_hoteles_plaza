@@ -27,7 +27,7 @@ Home.getInitialProps = async (ctx: NextPageContext) => {
 
     roomsStatusJson = await getFetchData(endpoint + '/api/admin/rooms/roomsStatus/showRoomsStatus', ctx)
     roomsTypeJson = await getFetchData(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
-    // userJson = await getFetchData(endpoint + '/api/admin/users/showCurrentUserData', ctx)
+    userJson = await getFetchData(endpoint + '/api/admin/users/showCurrentUserData', ctx)
 
     return {
         roomsStatus: roomsStatusJson,
@@ -61,7 +61,7 @@ async function getFetchData(url: string, ctx: NextPageContext) {
 }
 
 export default function Home(props: any) {
-    console.log('Home: ', props);
+    // console.log('Home: ', props);
 
     // Variables
 
@@ -79,9 +79,9 @@ export default function Home(props: any) {
         >
             <ToastContainer />
 
-            <UserAndSettings url="/api/admin/users/showCurrentUserData" admin={true} user={props.user ? props.user.fullName : ''} />
+            {/* <UserAndSettings url="/api/admin/users/showCurrentUserData" admin={true} user={props.user ? props.user.fullName : ''} /> */}
 
-            <h2 className={styles.title}>{props.user.preferences ? (props.user.preferences.name) : 'No hay hoteles registrados'}</h2>
+            <h2 className={styles.title}>{props.user && props.user.preferences ? (props.user.preferences.name) : 'No hay hoteles registrados'}</h2>
 
             <section className={styles.home_section}>
                 {/* <h5 className={styles.total_section}>Total de habitaciones: <b>{rooms.length ? rooms.length : 'No hay habitaciones registradas'}</b></h5> */}
@@ -92,7 +92,7 @@ export default function Home(props: any) {
                 {/* <div className={styles.user_data_container} /> */}
                 
                 {
-                    props.user.length ? (
+                    props.user && props.user.length ? (
                         <Rooms user={props.user} roomsStatus={props.roomsStatus} />
                     ) : <p>No hay habitaciones registradas</p>
                 }

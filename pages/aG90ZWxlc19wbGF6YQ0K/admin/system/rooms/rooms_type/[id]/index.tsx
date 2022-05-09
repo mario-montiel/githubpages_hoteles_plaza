@@ -88,6 +88,11 @@ export default function EditCategory(props: any) {
         setValue('id', props.roomType.data.id)
         setValue('name', props.roomType.data.name)
         setValue('keyWord', props.roomType.data.keyWord)
+        setValue('costPerNight', props.roomType.data.costPerNight)
+        setValue('title', props.roomType.data.title)
+        setValue('description', props.roomType.data.description)
+        setValue('maxPeople', props.roomType.data.maxPeople)
+        setValue('smoke', props.roomType.data.smoke)
     }
 
     return (

@@ -6,26 +6,27 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider          = "mysql"
   // url      = env("DATABASE_URL")
-  url = env("DATABASE_URL")
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model ActivityOfDeleteData {
-  id     Int      @id @default(autoincrement())
-  madeIn DateTime @default(now())
-  user   Users    @relation(fields: [userId], references: [id])
-  userId Int      @unique
+  id         Int      @id @default(autoincrement())
+  user       String   @db.VarChar(60)
+  reason     String   @db.VarChar(60)
+  createdAt  DateTime @default(now())
+  typeUserId String   @db.VarChar(60)
 }
 
 model Departments {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  updateAt    DateTime?
-  name        String
-  users       Users[]
-  registredBy String    @db.VarChar(60)
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updateAt  DateTime?
+  editedBy  String?   @db.VarChar(60)
+  name      String    @db.VarChar(60)
+  users     Users[]
 }
 
 // model TypeUser {
@@ -57,33 +58,34 @@ model SuperAdmin {
   password           String               @db.VarChar(60)
   fullName           String               @db.VarChar(50)
   createdAt          DateTime             @default(now())
-  typeUser           String
+  typeUser           String               @db.VarChar(20)
   updateAt           DateTime?
   SuperAdminOnHotels SuperAdminOnHotels[]
 }
 
 model Users {
-  id                   Int                   @id @default(autoincrement())
-  email                String                @unique
-  password             String                @db.VarChar(60)
-  fullName             String                @db.VarChar(50)
-  lastName             String                @db.VarChar(50)
-  createdAt            DateTime              @default(now())
-  updateAt             DateTime?
-  registredBy          String                @db.VarChar(60)
-  status               String
-  phone                String                @db.VarChar(10)
-  typeUserId           Int
-  department           Departments           @relation(fields: [departmentId], references: [id])
-  departmentId         Int
-  preferences          Hotels?               @relation(fields: [preferencesId], references: [id])
-  preferencesId        Int?
+  id                     Int             @id @default(autoincrement())
+  email                  String          @unique
+  password               String          @db.VarChar(60)
+  fullName               String          @db.VarChar(50)
+  lastName               String          @db.VarChar(50)
+  createdAt              DateTime        @default(now())
+  updateAt               DateTime?
+  editedBy               String?         @db.VarChar(60)
+  status                 String          @db.VarChar(50)
+  phone                  String          @db.VarChar(10)
+  typeUserId             Int
+  department             Departments     @relation(fields: [departmentId], references: [id])
+  departmentId           Int
+  preferences            Hotels?         @relation(fields: [preferencesId], references: [id])
+  preferencesId          Int?
   // sectionsToAccess SectionsOfSystem @relation(fields: [sectionsId], references: [id])
   // sectionsId       Int              @unique
   // privileges   Privileges  @relation(fields: [privilegesId], references: [id])
   // privilegesId Int         @unique
-  hotels               UsersOnHotels[]
-  activityOfDeleteData ActivityOfDeleteData?
+  hotels                 UsersOnHotels[]
+  // activityOfDeleteData   ActivityOfDeleteData? @relation(fields: [activityOfDeleteDataId], references: [id])
+  activityOfDeleteDataId Int?
 }
 
 model Guest {
@@ -94,7 +96,7 @@ model Guest {
   lastName  String      @db.VarChar(50)
   createdAt DateTime    @default(now())
   updateAt  DateTime?
-  company   String?
+  company   String?     @db.VarChar(60)
   city      String
   comments  Comments[]
   emailForm EmailForm[]
@@ -106,7 +108,7 @@ model Guest {
 //   updateAt    DateTime?
 //   name        String    @db.VarChar(60)
 //   hotels      Hotels[]
-//   registredBy String    @db.VarChar(60)
+//   editedBy String    @db.VarChar(60)
 // }
 
 model PlacesInterest {
@@ -146,7 +148,7 @@ model UsersOnHotels {
 }
 
 model Hotels {
-  id                 Int                  @id
+  id                 Int                  @id @default(autoincrement())
   createdAt          DateTime             @default(now())
   updateAt           DateTime?
   name               String
@@ -164,7 +166,7 @@ model Hotels {
   longitude          String?
   totalFloors        Int
   totalRooms         Int
-  registredBy        String               @db.VarChar(60)
+  editedBy           String?              @db.VarChar(60)
   logoImage          String
   imageUrl           String
   pathDirImage       String
@@ -192,9 +194,10 @@ model Services {
   createdAt DateTime  @default(now())
   updateAt  DateTime?
   name      String
-  altImage  String
-  url       String
-  text      String
+  altImage  String?
+  url       String?
+  title     String
+  editedBy  String?
   // servicesOnRoom ServicesOnRoom[]
   // rooms          Rooms[]
 }
@@ -219,6 +222,7 @@ model Benefits {
   altImage  String
   url       String
   text      String
+  editedBy  String?
 }
 
 model Facilities {
@@ -227,6 +231,7 @@ model Facilities {
   updateAt  DateTime?
   altImage  String
   url       String
+  editedBy  String?
   // Hotels    Hotels[]
 }
 
@@ -238,6 +243,7 @@ model Promotions {
   altImage  String
   url       String
   text      String
+  editedBy  String?
 }
 
 // model RoomsOnHotels {
@@ -260,12 +266,12 @@ model Rooms {
   roomNumber       Int
   roomType         RoomType   @relation(fields: [roomTypeId], references: [id])
   roomTypeId       Int
-  registredBy      String     @db.VarChar(60)
+  editedBy         String?    @db.VarChar(60)
   observations     String
   checkIn          DateTime?
   checkOut         DateTime?
   isBooking        Boolean    @default(false)
-  isBreakfast      Boolean    @default(false)
+  isBreakfast      Int        @default(0)
   hotel            Hotels     @relation(fields: [hotelId], references: [id])
   hotelId          Int
   roomStatus       RoomStatus @relation(name: "RoomStatus", fields: [roomStatusId], references: [id])
@@ -281,7 +287,7 @@ model RoomType {
   updateAt     DateTime?
   name         String    @db.VarChar(60)
   keyWord      String    @db.VarChar(4)
-  registredBy  String    @db.VarChar(60)
+  editedBy     String?   @db.VarChar(60)
   costPerNight Float
   title        String
   description  String
@@ -295,7 +301,7 @@ model RoomStatus {
   name            String    @db.VarChar(30)
   createdAt       DateTime  @default(now())
   updateAt        DateTime?
-  registredBy     String    @db.VarChar(60)
+  editedBy        String?   @db.VarChar(60)
   backgroundColor String    @db.VarChar(7)
   textColor       String    @db.VarChar(7)
   border          Boolean
@@ -307,7 +313,7 @@ model Comments {
   id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
   updateAt    DateTime?
-  registredBy String    @db.VarChar(60)
+  editedBy    String?   @db.VarChar(60)
   title       String?   @db.VarChar(60)
   description String
   starts      Int

@@ -45,7 +45,9 @@ export default function UserAndSettings(props: any) {
     // }
 
     const openDetails = () => {
-        ulDetailsRef.current?.classList.toggle('active-user-menu')
+        ulDetailsRef.current?.classList.toggle(styles.active_user_menu)
+        console.log(ulDetailsRef);
+        
     }
 
     const loggout = async () => {
@@ -76,7 +78,7 @@ export default function UserAndSettings(props: any) {
             <ul onClick={openDetails}>
                 <li>{user ? user : 'Cargando'}</li>
                 <li>
-                    <Image src={'/profile/profile.png'} width={45} height={45} />
+                    <Image src={'/hotels/profile/profile.webp'} width={45} height={45} />
                     <svg className={styles.svg_menu_icon} viewBox="0 0 24 24">
                         <path fill="currentColor" d="M7,10L12,15L17,10H7Z" />
                     </svg>

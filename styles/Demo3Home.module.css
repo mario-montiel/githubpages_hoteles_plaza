@@ -148,3 +148,33 @@
     transition: all 0.5s;
     font-weight: bold;
 }
+
+@media screen and (max-width: 800px) {
+    .container .image_left .logo {
+        height: 16vh;
+        object-fit: cover;
+    }
+
+    .container .image_left .blur {
+        left: 13%;
+        box-shadow: 70px 0px 100px 100px #ffffff;
+    }
+
+    .container .image_left .logo_container {
+        width: 60%;
+        background-color: transparent;
+    }
+
+    .container .image_right .logo {
+        height: 20vh;
+    }
+
+    .container .image_right .blur {
+        width: 20%;
+        box-shadow: 50px 0px 100px 100px #ffffff;
+    }
+
+    .container .image_right .logo_container {
+        width: 42%;
+    }
+}

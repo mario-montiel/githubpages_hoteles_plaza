@@ -1,6 +1,6 @@
 // React
 import { NextPageContext } from "next"
-import { useForm } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
 import { useEffect, useState } from "react"
 import Router, { useRouter } from "next/router"
 
@@ -31,16 +31,10 @@ import { HotelForm } from "../../../../../types/Hotel"
 import { Category } from "../../../../../types/Category"
 
 CreateHotel.getInitialProps = async (ctx: NextPageContext) => {
-    let categoriesJson: any = []
-    let roomsTypeJson: any = []
-    let roomsStatusJson: any = []
-
-    // categoriesJson = await getFetch(endpoint + '/api/admin/categories/showCategories', ctx)
-    roomsTypeJson = await getFetch(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
-    roomsStatusJson = await getFetch(endpoint + '/api/admin/rooms/roomsStatus/showRoomsStatus', ctx)
+    const roomsTypeJson = await getFetch(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
+    const roomsStatusJson = await getFetch(endpoint + '/api/admin/rooms/roomsStatus/showRoomsStatus', ctx)
     
     return {
-        categories: categoriesJson,
         roomsType: roomsTypeJson,
         roomsStatus: roomsStatusJson
     }
@@ -102,24 +96,15 @@ export default function CreateHotel(props: any) {
     const btnIconBack = `<svg class="svg_back" viewBox="0 0 24 24">
         <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
     </svg>`
-    const { register, setValue, clearErrors, handleSubmit, formState: { errors } } = useForm<HotelForm>();
+    const { control, register, setValue, clearErrors, handleSubmit, formState: { errors } } = useForm<any>();
+    const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+        control, // control props comes from useForm (optional: if you are using FormContext)
+        name: "placesInterest", // unique name for your Field Array
+      });
     const onSubmit = async (data: any) => {
-        console.log(data);
-        
+        console.log('DATAAAAAAA: ', data, placesOfInterestList);
         const roomData = await generateStructureRoomData()
-        const roomsDiv = document.querySelector('.rooms-table') as HTMLElement
-
-        if (roomsError || !roomData) {
-            toast('Asegurece de llenar todos los campos de las habitacones', {
-                position: "top-right",
-                autoClose: 5000,
-                closeOnClick: true,
-                type: "error"
-            });
-            handleStylesRoomDiv()
-            roomsDiv.scrollIntoView({ block: 'start', behavior: 'smooth' });
-            return false
-        } else { showDialog(data, roomData) }
+        showDialog(data, roomData, placesOfInterestList)
     }
     const initialDialogValues = {
         show: false,
@@ -334,18 +319,17 @@ export default function CreateHotel(props: any) {
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         {
                                             placesOfInterestList.length > 0 ? (
                                                 placesOfInterestList.map((data: any, index: number) => {
-                                                    const placesInterest: any = `placesInterest[${index}]`;
+                                                    // const placesInterest: any = `placesInterest[${index}]`;
                                                     return (
                                                         <tr key={index}>
                                                             <td>
                                                                 {data.name}
+                                                                {console.log(data)}
                                                                 {/* <input
                                                                     className={errors.placesInterest ? 'input input_error_text' : 'input'}
-                                                                    {...register(`${placesInterest}.name`, { required: true })}
                                                                     id="placesInterest"
                                                                     type="text"
                                                                     value={data.name}
@@ -356,7 +340,6 @@ export default function CreateHotel(props: any) {
                                                                 {data.distance != 0 ? data.distance : 'No data'}
                                                                 {/* <input
                                                                     className={errors.placesInterest ? 'input input_error_text' : 'input'}
-                                                                    {...register(`${placesInterest}.distance`, { required: true })}
                                                                     id="placesInterest"
                                                                     type="text"
                                                                     value={data.distance}
@@ -367,7 +350,7 @@ export default function CreateHotel(props: any) {
                                                                 {data.duration != 0 ? data.duration : 'No data'}
                                                                 {/* <input
                                                                     className={errors.placesInterest ? 'input input_error_text' : 'input'}
-                                                                    {...register(`${placesInterest}.duration`, { required: true })}
+                                                                    {...register(`placesInterest${i}.duration` as const, { required: true })}
                                                                     id="placesInterest"
                                                                     type="text"
                                                                     value={data.duration}
@@ -380,7 +363,7 @@ export default function CreateHotel(props: any) {
                                                                 </svg>
                                                                 {/* <input
                                                                     className={errors.placesInterest ? 'input input_error_text' : 'input'}
-                                                                    {...register(`${placesInterest}.travelMode`, { required: true })}
+                                                                    {...register(`placesInterest${i}.travelMode` as const, { required: true })}
                                                                     id="placesInterest"
                                                                     type="text"
                                                                     value={data.travelMode}
@@ -627,7 +610,7 @@ export default function CreateHotel(props: any) {
 
                     <div className={styles.hotel_grid}>
                         <div className="input-container">
-                            <label htmlFor="total_floors_select">Pisos</label>
+                            <label htmlFor="total_floors_select">Cantidad de pisos</label>
                             <br />
                             <select
                                 className={errors.totalFloors ? 'input_error_text select' : 'select'}
@@ -660,7 +643,9 @@ export default function CreateHotel(props: any) {
                     </div> */}
 
                     {!Object.values(errors).length ? (
-                        <BtnSubmit title="Registrar" loading={showLoading.show} />
+                        <>
+                            <BtnSubmit title="Registrar" loading={showLoading.show} />
+                        </>
                     ) : (
                         <p className="submit-error-text mt-3">Se encontraron algunos errores!.</p>
                     )}

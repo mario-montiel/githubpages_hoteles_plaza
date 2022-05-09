@@ -29,12 +29,21 @@ const RoomStatusFunction = () => {
         onConfirm: () => { },
         onClose: () => { }
     }
+    const initialValues = {
+        id: '',
+        name: '',
+        backgroundColor: '',
+        textColor: '',
+        keyWord: '',
+        border: ''
+    }
     const initialLoadingValues = {
         show: false,
         title: 'Eliminando estatus de habitación',
     }
 
     // Use State
+    const [roomStatus, setRoomStatus] = useState(initialValues)
     const [checkBoxRef, setCheckBoxRef] = useState<any>()
     const [roomContainerRef, setRoomContainer] = useState<any>()
     const [showDialogConfirm, setShowDialogConfirm] = useState(initialDialogValues)
@@ -51,7 +60,7 @@ const RoomStatusFunction = () => {
     const changeCheckBox = () => {
         const checkBoxInput: any = checkBoxRef.current?.children[2].checked as HTMLInputElement
         const input: any = roomContainerRef.current as HTMLInputElement
-        
+
         if (checkBoxInput) {
             return input.style.border = '0.05px solid #CBCBCB'
         }
@@ -78,12 +87,12 @@ const RoomStatusFunction = () => {
                 break;
         }
     }
-    
+
     const showDialog = (dataForm: RoomStatus) => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Type room image',
             description: `¿Desea crear el estatus ${dataForm.name} para las habitaciones?`,
             btnConfirm: 'Crear',
@@ -128,22 +137,21 @@ const RoomStatusFunction = () => {
     }
 
     const askIfItShouldRemove = (dataForm: any) => {
+        setRoomStatus(dataForm)
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Status room image',
             description: `¿Desea eliminar el estatus ${dataForm.name} de las habitaciones?`,
             btnConfirm: 'Eliminar',
             btnCancel: 'Cancelar',
-            onConfirm: () => deleteRoomStatus(dataForm),
-            onClose: () => setShowDialogConfirm({ ...showDialogConfirm, show: false })
+            // onConfirm: () => deleteRoomStatus(dataForm),
+            // onClose: () => setShowDialogConfirm({ ...showDialogConfirm, show: false })
         })
     }
 
-    const deleteRoomStatus = async (dataForm: RoomStatus) => {
-        console.log(dataForm);
-
+    const deleteRoomStatus = async (reasonToDelete: string) => {
         setShowDialogConfirm({ ...showDialogConfirm, show: false })
         setShowLoading({ ...showLoading, show: true, title: 'Eliminando tipo de habitación' })
 
@@ -152,7 +160,7 @@ const RoomStatusFunction = () => {
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(dataForm)
+            body: JSON.stringify({roomStatus, reasonToDelete})
         }).then(() => {
             setTimeout(() => {
                 toast('El estatus de la habitación se eliminó con éxito!', {
@@ -174,7 +182,7 @@ const RoomStatusFunction = () => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/roomType.svg',
+            image: '/hotels/dialog/roomType.svg',
             alt: 'Type room image',
             description: `¿Desea editar el estatus ${dataForm.name} para las habitación?`,
             btnConfirm: 'Editar',
@@ -199,7 +207,7 @@ const RoomStatusFunction = () => {
 
     const successEditConfirm = async (dataForm: RoomStatus) => {
         console.log('successEditConfirm: ', dataForm);
-        
+
         // selectToastText()
         setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
         setShowLoading({ ...showLoading, show: true })
@@ -242,7 +250,8 @@ const RoomStatusFunction = () => {
         showDialog,
         askIfItShouldRemove,
         showEditDialog,
-        loadingData
+        loadingData,
+        deleteRoomStatus
     }
 }
 

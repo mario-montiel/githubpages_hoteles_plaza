@@ -190,7 +190,7 @@ const Rooms = (props: any) => {
             setShowDialogConfirm({
                 ...showDialogConfirm,
                 show: true,
-                image: '/dialog/booking.svg',
+                image: '/hotels/dialog/booking.svg',
                 alt: 'Agregar reservación',
                 title: '¿Desea agregar la reservación?',
                 description: `El periodo de reservacion es del ${initialDateText} al ${endDateText}, siendo un total de ${totalDays} ${totalDays === 0 ? 'día' : 'días'}`,
@@ -358,7 +358,7 @@ const Rooms = (props: any) => {
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/dialog/room.svg',
+            image: '/hotels/dialog/room.svg',
             alt: 'Editar habitación',
             description: `¿Desea cambiar el estatus de habitación de la habitación ${(room.floor)}${room.roomNumber < 10 ? '0' + room.roomNumber : room.roomNumber}? Si la habitación tiene reservación esta será borrada.`,
             btnConfirm: 'Editar',

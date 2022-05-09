@@ -8,6 +8,7 @@ import LayoutDemo1 from "../../../../components/globals/LayoutDemo1"
 import WhoWeAreDemo1 from "../../../../components/website/demo1/whoWeAre/WhoWeAre"
 import { NextPageContext } from "next"
 import { endpoint } from "../../../../config/endpoint"
+import { useEffect, useState } from "react"
 
 // Libraries
 
@@ -30,6 +31,25 @@ async function getFetchData(url: string, ctx: NextPageContext) {
 }
 
 export default function HotelCatedralDemo1({ weather }: any) {
+
+    // Variables
+
+    // Use Staet
+    const [width, setWidth] = useState<any>()
+
+    // Functions
+    const getCurrentSize = () => { setWidth(window.innerWidth) }
+
+    // Use Effect
+    useEffect(() => {
+        setWidth(window.innerWidth)
+    }, [])
+    
+    useEffect(() => {
+        window.addEventListener('resize', getCurrentSize)
+        return () => { window.removeEventListener('resize', getCurrentSize) }
+        
+    })
 
     return (
         <LayoutDemo1
@@ -56,6 +76,7 @@ export default function HotelCatedralDemo1({ weather }: any) {
             {/* ¿Quienes Somos? */}
 
             <WhoWeAreDemo1
+                width={width}
                 url={"/hotels/mision_vision/catedral/"}
                 description="
                     Somos un hotel que ofrece un excelente servicio y trato cálido a todos

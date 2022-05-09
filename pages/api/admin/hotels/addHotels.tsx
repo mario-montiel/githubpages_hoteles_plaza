@@ -14,8 +14,8 @@ export default async function AddHotel(
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
 
-    // const cookie = req.cookies.auth
-    // const currentUser: any = jwt.verify(cookie, secret);
+    const cookie = req.cookies.auth
+    const currentUser: any = jwt.verify(cookie, secret);
     const response = req.body;
 
     if (req.body && req.body.type && res) {
@@ -24,7 +24,7 @@ export default async function AddHotel(
                 await verifyIfHotelExist(response.dataForm, res)
                 break;
             case 'veryfied':
-                await register(response.dataForm, response.roomData, res, 'currentUser')
+                await createHotelInDB(response.dataForm, response.roomData, res, currentUser)
                 break;
 
             default:
@@ -34,46 +34,45 @@ export default async function AddHotel(
     }
 }
 
-const register = async (response: HotelForm, roomData: any, res: NextApiResponse, currentUser: any) => {
+const registerPlacesAndRooms = async (response: HotelForm, places: Array<PlaceOfInterestElement>, roomData: any, res: NextApiResponse, currentUser: any) => {
     let placesOfInterest: any = []
-    const hotelId = await getLengthOfHotelsOfDB()
-    const hotelData = await createHotelInDB(hotelId, response, res, currentUser)
 
-    if (response.placesInterest) {
-        response.placesInterest.forEach((place: PlaceOfInterestElement) => {
+    if (places) {
+        places.forEach((place: PlaceOfInterestElement) => {
             const data = {
                 name: place.name,
                 distance: place.distance,
                 duration: place.duration,
                 travelMode: place.travelMode,
-                hotelId: (hotelId + 1)
+                hotelId: (response.id)
             }
 
             placesOfInterest.push(data)
         });
     }
 
-    await createPlacesOfInterestInDB(placesOfInterest)
-    const rooms = await generateRooms(hotelData, roomData)
-    await createRoomsOfHotelInDB(rooms, res)
+    const rooms = await generateRooms(response, roomData, currentUser)
+    const placesRegistre = await createPlacesOfInterestInDB(placesOfInterest)
+    const roomsRegistre = await createRoomsOfHotelInDB(rooms, res)
 
-    res.status(200).json({ res: true, message: 'El hotel se creó con éxito!' })
+    if (placesRegistre && roomsRegistre) {
+        res.status(200).json({ res: true, message: 'El hotel se creó con éxito!' })
+    }
 }
 
-const generateRooms = async (hotel: any, roomData: any) => {
+const generateRooms = async (hotel: any, roomData: any, currenUser: any) => {
     let emptyArray: any = []
     for (let index = 0; index < roomData.length; index++) {
         let roomNumber = 1
         const room = roomData[index];
         for (let i = 0; i < room.length; i++) {
             const roomElement = room[i];
-
             for (let j = 0; j < roomElement.quantity; j++) {
                 const data = {
                     floor: roomElement.floor,
                     roomNumber: roomNumber,
                     roomTypeId: roomElement.roomTypeId,
-                    registredBy: '',
+                    editedBy: currenUser.email,
                     hotelId: hotel.id,
                     roomStatusId: roomElement.roomStatusId,
                     observations: '',
@@ -88,13 +87,19 @@ const generateRooms = async (hotel: any, roomData: any) => {
 }
 
 const createRoomsOfHotelInDB = async (rooms: any, res: NextApiResponse) => {
-    prismaDB.rooms.createMany({ data: rooms })
+    const roomsRegistre = prismaDB.rooms.createMany({ data: rooms })
         .catch((err: any) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({ res: false, message: 'No se pudieron crear las habitaciones!' })
             }
         })
+
+    if (!roomsRegistre) {
+        return false
+    }
+
+    return true
 }
 
 const verifyIfHotelExist = async (hotel: Hotel, res: NextApiResponse) => {
@@ -110,34 +115,33 @@ const verifyIfHotelExist = async (hotel: Hotel, res: NextApiResponse) => {
     return res.status(200).json({ res: true, message: 'Hotel disponible para registrar', })
 }
 
-const getLengthOfHotelsOfDB = async () => {
-    const response = await prismaDB.hotels
-        .findFirst({
-            orderBy: { id: 'desc' }
-        })
-    const data = response ? response.id : 1
-
-    return data
-}
-
 const createPlacesOfInterestInDB = async (places: any) => {
-    await prismaDB.placesInterest
+    const placesRegistre = await prismaDB.placesInterest
         .createMany({
             data: places
         }).catch((err: any) => console.log('createPlacesOfInterestInDB ERRR: ', err))
+
+    if (!placesRegistre) {
+         return false
+    }
+
+    return true
 }
 
-const createHotelInDB = async (hotelId: number, hotelData: HotelForm, res: NextApiResponse, currentUser: any) => {
+const createHotelInDB = async (hotelData: HotelForm, roomData: any, res: NextApiResponse, currentUser: any) => {
     // const categoryId: any = parseInt(hotelData.category_id.toString())
+    const email: string = currentUser.email
     const hotelName = hotelData.name.substring(6, hotelData.name.length)
+    if (!hotelName.length) { return errorHoteName(res) }
     const hotelSplitName = hotelName.split(' ')
-    const pathDirImage = hotelSplitName[0].toLocaleLowerCase() + '_' + hotelSplitName[1].toLocaleLowerCase()
+    if (!hotelSplitName.length) { return errorHoteName(res) }
+    const pathDirImage = hotelSplitName.length > 1 ? hotelSplitName[0].toLocaleLowerCase() + '_' + hotelSplitName[1].toLocaleLowerCase() : ''
+    if (!pathDirImage) { return errorHoteName(res) }
     const pathImageName = hotelSplitName[1].toLocaleLowerCase() + '_'
-    
     const hotel: any = await prismaDB.hotels
         .create({
             data: {
-                id: (hotelId + 1),
+                // id: (hotelId),
                 name: hotelData.name,
                 ubication: hotelData.ubication,
                 phone: hotelData.phone,
@@ -159,10 +163,16 @@ const createHotelInDB = async (hotelId: number, hotelData: HotelForm, res: NextA
                 imageUrl: hotelData.url,
                 pathDirImage,
                 pathImageName,
-                registredBy: 'currentUser.email'
+                editedBy: email
             }
         })
-        .catch((err: any) => { console.log(err); res.status(500).json({ res: false, message: 'No se pudo crear el hotel!' }) })
+        .catch((err: any) => { console.log('errerrerrerr: ', err); res.status(500).json({ res: false, message: 'No se pudo crear el hotel!' }) })
 
-    return hotel
+        if (hotel) {
+            await registerPlacesAndRooms(hotel, hotelData.placesInterest, roomData, res, currentUser)
+        }
+}
+
+const errorHoteName = (res: NextApiResponse) => {
+    return res.json({ res: false, message: 'El nombre del hotel es incorrecto' })
 }

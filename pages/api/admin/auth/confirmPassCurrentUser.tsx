@@ -1,9 +1,16 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React or Next
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prismaDB from '../../../../prisma/Instance'
-import * as cookie from 'cookie'
+
+// Libraries
+import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
+import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
 import { secret } from '../../../../api/secret'
+
+// Types
 
 export default async function handler(
     req: NextApiRequest,
@@ -17,30 +24,39 @@ export default async function handler(
         return res.status(500).json({ message: "Los campos no pueden estar vacíos" })
     }
 
-    const cookie = req.headers.cookie
-    const resp: boolean = await verifyPassOfCurrentUser(req.body.email)
+    const cookie = req.cookies.auth
+    const response = JSON.parse(req.body)
+    const currentUser: any = jwt.verify(cookie, secret);
+    const user = await checkUserInDB(currentUser, response.password)
     
-    if (resp) {
-        // const token = jwt.sign({ sub: user[0].id, email: user[0].email }, secret, { expiresIn: '8h' })
-        // res.status(200).json({ res: true })
-    }
+    if (user) { return verifyPassword(user, response.password, res) }
 
-    res.status(401).json({ res: false })
+    return res.status(401).json({ res: false, message: 'No se encontró ningún usuario con el correo' + currentUser.email }) 
 }
 
-const verifyPassOfCurrentUser = async (pass: string) => {
-    const user = await prismaDB.users.findFirst({
-        where: {
-            password: JSON.stringify(pass)
-        }
+const checkUserInDB = async (currentUser: any, password: string) => {
+    const admin = await prismaDB.superAdmin.findUnique({
+        where: { email: currentUser.email }
     })
 
-    console.log(user);
+    if (admin) { return admin }
     
+    const user = await prismaDB.users.findFirst({
+        where: { email: currentUser.email }
+    })
 
-    if (user) {
-        return true
-    }
+    if (user) { return user }
 
     return false
+}
+
+const verifyPassword = (currentUser: any, password: string, res: NextApiResponse<Object>) => {
+    bcrypt.compare(password, currentUser.password, function (err, result) {
+        
+        if (result) {
+            return res.status(200).json({ res: true, message: 'La contraseña coincide con el usuario actual' })
+        }
+
+        return res.status(401).json({ res: false, message: 'La contraseña que ingresaste no coincide con el usuario actual' })
+    });
 }

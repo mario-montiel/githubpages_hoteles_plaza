@@ -1,12 +1,12 @@
 .who_we_are {
-    margin: -5px auto 64px auto;
-    padding-top: 64px;
     position: relative;
+    padding: 64px 0px 0px;
+    margin: -5px auto 64px auto;
 }
 
 .who_we_are h2 {
-    font-size: 42.50pt;
     font-weight: 400;
+    font-size: 42.50pt;
     text-align: center;
     margin: 64px auto 30px;
     color: var(--main-color-demo-1);
@@ -66,7 +66,7 @@
     z-index: 1;
     min-width: auto;
     max-width: 40%;
-    max-height: 80%;
+    /* max-height: 80%; */
     min-height: auto;
     position: absolute;
     transform: translate(-50%, -50%);
@@ -145,4 +145,72 @@
     position: absolute;
     object-position: 0px;
     transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 1020px) {
+    .mision_container {
+        margin: 15% auto 30%;
+    }
+
+    .mision_container .lobby {
+        width: 100%;
+    }
+
+    .mision_container .text_container {
+        left: 50%;
+        top: 100%;
+        margin: 120px 0px 0px;
+        min-width: 90% !important;
+        box-shadow: 0px 0px 40px -10px rgb(95, 95, 95);
+    }
+
+    .vision_container {
+        display: block;
+        position: static;
+        margin: 30% auto 15%;
+    }
+
+    .vision_container .lobby {
+        min-width: 100%;
+        transform: none;
+        position: static;
+    }
+
+    .vision_container .text_container {
+        width: 50%;
+        min-width: 90%;
+        position: sticky;
+        margin: -5% auto 0px !important;
+        box-shadow: 0px 0px 40px -10px rgb(95, 95, 95);
+        background-color: var(--background-mision-vision-text);
+    }
+}
+
+/* @media screen and (max-width: 1000px) {
+    .mision_container {
+        margin: 15% auto 100px;
+    }
+} */
+
+@media screen and (max-width: 800px) {
+    .who_we_are h2 {
+        width: 80%;
+    }
+
+    .who_we_are p {
+        width: 80%;
+        line-height: 1.8;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .mision_container {
+        margin: 15% auto 40%;
+    }
+
+    .vision_container {
+        display: block;
+        position: static;
+        margin: 50% auto 15%;
+    }
 }

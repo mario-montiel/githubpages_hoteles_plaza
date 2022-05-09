@@ -13,8 +13,8 @@ import { endpoint } from "../../../../config/endpoint"
 
 // Types
 
-const FacilitiesDemo1 = ({ url, sections, limit }: any) => {
-
+const FacilitiesDemo1 = ({ width, url, sections, limit }: any) => {
+    
     // Variables
     const initialImageSectionValue = {
         section: 1,
@@ -77,7 +77,7 @@ const FacilitiesDemo1 = ({ url, sections, limit }: any) => {
         }
 
         console.log(index);
-        
+
 
         switch (index) {
             case 1:
@@ -314,25 +314,29 @@ const FacilitiesDemo1 = ({ url, sections, limit }: any) => {
             <p>Cómodas instalaciones para hacer de su estancia
                 una experiencia única.</p>
 
-            <div className={styles.gallery_container}>
+            <div>
                 <h2>Galeria</h2>
 
-                <div
-                    ref={currentImageRef}
-                    className={styles.current_image_container}
-                >
-                    {generateCurrentFacilityImageSelected()}
-                </div>
+                <div className={styles.gallery_container}>
 
-                <div
-                    ref={smallImageRef}
-                    className={styles.small_images_container}>
 
-                    {btnLeftIcon()}
+                    <div
+                        ref={currentImageRef}
+                        className={styles.current_image_container}
+                    >
+                        {generateCurrentFacilityImageSelected()}
+                    </div>
 
-                    {generateFacilitiesRooms()}
+                    <div
+                        ref={smallImageRef}
+                        className={styles.small_images_container}>
 
-                    {btnRightIcon()}
+                        {btnLeftIcon()}
+
+                        {generateFacilitiesRooms()}
+
+                        {btnRightIcon()}
+                    </div>
                 </div>
 
                 <div
