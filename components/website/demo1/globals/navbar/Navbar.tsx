@@ -12,7 +12,6 @@ import BookingModalCatedralDemo1 from "../../booking/Booking"
 // Libraries
 
 // Helpers
-import { hotels } from "../../../../../objectData/hotels"
 
 // Types
 
@@ -80,7 +79,7 @@ const NavbarDemo1 = () => {
                 <ul ref={menuMobileRef}>
                     <li className={router.asPath == url.url ? styles.selected : ""}>
                         <Link href={`${url.url}/`}>
-                            QUIÉNES SOMOS
+                            QUIÉNES SOMOSx
                         </Link>
                     </li>
                     <li className={router.asPath == `${`${url.url}/habitaciones`}` ? styles.selected : ""}>

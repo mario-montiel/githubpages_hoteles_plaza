@@ -51,14 +51,14 @@ export default function FooterDemo1({ weather, currentHotel }: any) {
             setUrl({
                 ...url,
                 logo: "catedral_logo",
-                url: "/demo-1/hotel/plaza-catedral",
+                url: endpoint + "/demo-1/hotel/plaza-catedral",
                 adress: "Av Hidalgo 520 Norte, Primero de Cobián Centro, 35000 Gómez Palacio, Dgo."
             })
         } else {
             setUrl({
                 ...url,
                 logo: 'matamoros_logo',
-                url: "/demo-1/hotel/plaza-matamoros",
+                url: endpoint +  "/demo-1/hotel/plaza-matamoros",
                 adress: "Blvd. Matamoros Torreón 125 Nte. Fracc. Punta Laguna, C.P. 27448 Matamoros, Coah. México."
             })
         }
@@ -100,27 +100,27 @@ export default function FooterDemo1({ weather, currentHotel }: any) {
                 <ul>
                     <li>NAVEGA</li>
                     <li>
-                        <Link href={`${url.url}/plaza-${currentHotel}/`}>
+                        <Link href={`${url.url}/`}>
                             QUIÉNES SOMOS
                         </Link>
                     </li>
                     <li>
-                        <Link href={`${url.url}/plaza-${currentHotel}/habitaciones`}>
+                        <Link href={`${url.url}/habitaciones`}>
                             HABITACIONES
                         </Link>
                     </li>
                     <li>
-                        <Link href={`${url.url}/plaza-${currentHotel}/instalaciones`}>
+                        <Link href={`${url.url}/instalaciones`}>
                             INSTALACIONES
                         </Link>
                     </li>
                     <li>
-                        <Link href={`${url.url}/plaza-${currentHotel}/servicios`}>
+                        <Link href={`${url.url}/servicios`}>
                             SERVICIOS
                         </Link>
                     </li>
                     <li>
-                        <Link href={`${url.url}/plaza-${currentHotel}/ubicacion-y-contacto`}>
+                        <Link href={`${url.url}/ubicacion-y-contacto`}>
                             UBICACION Y CONTACTO
                         </Link>
                     </li>
