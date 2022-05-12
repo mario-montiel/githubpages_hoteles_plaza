@@ -29,9 +29,8 @@ import { TypeUser } from "../../../../../../types/TypeUser"
 import { Department } from "../../../../../../types/Department"
 
 EditUser.getInitialProps = async (ctx: NextPageContext) => {
-    
     const isAdmin = await getFetchData(endpoint + '/api/admin/auth/isAdmin', ctx)
-    const  departmentsJson = await getFetchData(endpoint + '/api/admin/departments/showDepartments', ctx)
+    const departmentsJson = await getFetchData(endpoint + '/api/admin/departments/showDepartments', ctx)
     const typeUsersJson = await getFetchData(endpoint + '/api/admin/users/showTypeUsers', ctx)
     const hotelsJson = await getFetchData(endpoint + '/api/admin/hotels/showHotels', ctx)
     const userJson = await getFetchData(endpoint + '/api/admin/users/showEditUser', ctx, ctx.query)
@@ -102,20 +101,30 @@ export default function EditUser(props: any) {
     const btnIconBack = `<svg class="svg_back" viewBox="0 0 24 24">
         <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
     </svg>`
-    const { register, setValue, clearErrors, handleSubmit, formState: { errors } } = useForm<UserForm>();
+    const { register, setValue, setError, clearErrors, handleSubmit, formState: { errors } } = useForm<UserForm>();
     const onSubmit = (data: any) => {
+        console.log(hotelSelected)
         console.log(data);
-        // showEditDialog(data)
+        showEditDialog(data)
     }
 
     // States
-    const [hotels, setHotels] = useState<any>([])
+    const [hotelSelected, setHotelSelected] = useState<any>([])
 
     // Use Effect
     useEffect(() => {
+        checkboxHotelForm()
+        loadHotelData()
         fillDataOfUser()
-        hotelsChecked()
     }, [])
+
+    useEffect(() => {
+        if (!hotelSelected.length) {
+            setError("hotel", { type: 'custom', message: 'Seleccione un hotel para poder continuar!' })
+        }
+        
+        if (hotelSelected.length) { clearErrors('hotel'); setValue('hotel', hotelSelected) }
+    }, [hotelSelected])
 
     // Functions
     const fillDataOfUser = () => {
@@ -127,44 +136,28 @@ export default function EditUser(props: any) {
         setValue('phone', props.user.data.phone)
         setValue('departmentId', props.user.data.departmentId)
         setValue('typeUserId', props.user.data.typeUserId)
-        setValue("status", "active")
+        // setError("hotel", { type: 'custom', message: 'Seleccione un hotel para poder continuar!' })
     }
 
-    const hotelsChecked = () => {
-        const checkBox = document.querySelectorAll('.checkbox-container')
-        const hotels = props.user.data.hotels
-
-        checkBox?.forEach((element: any) => {
-            hotels.forEach((hotel: any, index: number) => {
-                if (element && element.children[1] && element.children[1].children[2] && hotel.hotel.id == parseInt(element.children[0].value)) {
-                    element.children[1].children[2].checked = true
-                }
-            });
+    const loadHotelData = () => {
+        let aHotels: any = []
+        props.user.data.hotels.forEach((hotel: any) => {
+            aHotels.push(hotel.hotel)
+            setHotelSelected((oldValue: any) => [...oldValue, hotel.hotel])
         });
 
-        checkHotelErrors()
+        clearErrors('hotel')
+        setHotelSelected(aHotels);
     }
 
-    const checkHotelErrors = () => {
-        let validate = false
-        const checkbox = document.querySelectorAll('.checkbox-user')
-        const checkbox_validate = document.querySelector('.checkbox-validate') as HTMLInputElement
-        console.log(checkbox);
-        console.log(checkbox_validate);
-        
-        checkbox.forEach((checkbox: any) => {
-            if (checkbox.checked) {
-                validate = true
-                clearErrors('hotel')
-                return checkbox_validate.checked = true
-            }
-        });
-
-        if (!validate) {
-            checkbox_validate.checked = false
-        }
-
-        return validate
+    const checkHotelErrors = (index: number) => {
+        !index ? (
+            setError("hotel", { type: 'custom', message: 'Seleccione un hotel para poder continuar!' })
+        ) : (
+            <>
+                {clearErrors('hotel')}
+            </>
+        )
     }
 
     const passwordChanged = () => {
@@ -177,40 +170,52 @@ export default function EditUser(props: any) {
         handleChangePassword()
     }
 
-    const hotelCheckbox = () => {
-        setHotels([])
+    const addHotelToDataForm = async (hotel: any) => {
+        const index = hotelSelected.findIndex((hotelFilter: any) => { console.log(hotelFilter); return hotelFilter.name == hotel.name })
+        
+        if (index > -1) {
+            return setHotelSelected(hotelSelected.filter((hotelFilter: any) => hotelFilter.name != hotel.name))
+        }
 
-        props.hotels.forEach((hotelEl: any, index: number) => {
-            const hotel: any = `hotel[${index}]`;
+        setHotelSelected((oldValue: any) => [...oldValue, hotel])
+        checkHotelErrors(index)
+    }
 
-            setHotels((oldValue: any) => [...oldValue,
-            <div key={index}>
-                {/* <input
-                    className={errors.hotel ? `${styles.checkbox_error} checkbox input_error_text` : 'checkbox checkbox-read-only'}
-                    {...register(`${hotel}.id`, { required: false })}
-                    value={hotelEl.id}
-                    hidden
-                    readOnly
-                /> */}
-                <div className="input-container">
-                    <label htmlFor="hotel">{hotelEl.name}</label>
-                    <br />
-                    {/* <input
-                        className={errors.hotel ? `${styles.checkbox_error} checkbox input_error_text checkbox-user` : 'checkbox checkbox-user'}
-                        {...register(`${hotel}.checked`, { required: false })}
-                        type="checkbox"
-                        onClick={checkHotelErrors}
-                    /> */}
-                    <br />
+    const getCheckboxHotels = () => {
+        let html: any = []
+
+        props.hotels.map((hotelEl: any, index: number) =>
+            html.push(
+                <div key={index}>
+                    <input
+                        className={errors.hotel ? `${styles.checkbox_error} checkbox input_error_text` : 'checkbox checkbox-read-only'}
+                        // {...register(`${hotel}.id`, { required: false })}
+                        value={hotelEl.id}
+                        hidden
+                        readOnly
+                    />
+                    <div className="input-container">
+                        <label htmlFor="hotel">{hotelEl.name}</label>
+                        <br />
+                        <input
+                            className={errors.hotel ? `${styles.checkbox_error} checkbox input_error_text checkbox-user` : 'checkbox checkbox-user'}
+                            // {...register(`${hotel}.checked`, { required: false })}
+                            type="checkbox"
+                            onClick={() => addHotelToDataForm(hotelEl)}
+                        />
+                        <br />
+                    </div>
                 </div>
-            </div>
-            ])
-        });
+            )
+        )
+
+        return html
     }
 
     const checkboxHotelForm = () => {
         const checkbox_validate = document.querySelector('.checkbox-validate') as HTMLInputElement
         const checkboxs = document.querySelectorAll('.checkbox-user') as NodeListOf<HTMLInputElement>
+
         checkboxs[0].checked = true
         checkbox_validate.checked = true
 
@@ -218,16 +223,6 @@ export default function EditUser(props: any) {
             checkboxs[index].checked = true
         });
     }
-
-    useEffect(() => {
-        if (hotels.length) {
-            checkboxHotelForm()
-        }
-
-        if (props.hotels.length && !hotels.length) {
-            hotelCheckbox()
-        }
-    }, [hotels])
 
     return (
         <Layout
@@ -398,16 +393,21 @@ export default function EditUser(props: any) {
                             <br />
                             {errors.typeUserId && <small>El campo Tipo de usuario está vacio!</small>}
                         </div>
-                    </div>
-
-                    <div className={styles.user_grid}>
-                        <input
-                            className="input"
-                            {...register("status", { required: true })}
-                            id="status"
-                            autoComplete="off"
-                            hidden
-                        />
+                        <div className="input-container">
+                            <label htmlFor="status_select">Estado del usuario</label>
+                            <br />
+                            <select
+                                className={errors.typeUserId ? 'input_error_text select' : 'select'}
+                                {...register("status", { required: true })}
+                                id="status_select"
+                                defaultValue={props.user.data.status}
+                            >
+                                <option value="active">Activo</option>
+                                <option value="inactive">Inactivo</option>
+                            </select>
+                            <br />
+                            {errors.status && <small>El campo Estado del usuario está vacio!</small>}
+                        </div>
                     </div>
 
                     <input
@@ -428,9 +428,22 @@ export default function EditUser(props: any) {
                     <h5 className={styles.subtitle}>Selecione los hoteles al que pertenecerá el usuario</h5>
 
                     <div className={styles.user_grid_checkbox}>
-                        {
+                        {/* {
                             hotels.length ? (
                                 hotels
+                            ) : null
+                        } */}
+                        {/* {
+                            props.hotels.forEach((hotelEl: any, index: number) => {
+                                return (
+                                    
+                                )
+                            })
+                        } */}
+
+                        {
+                            props.hotels && props.hotels.length ? (
+                                getCheckboxHotels()
                             ) : null
                         }
                     </div>

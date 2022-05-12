@@ -1,13 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
+
+// Libraries
+import { hash } from 'bcrypt'
+import { verify } from 'jsonwebtoken'
 import prismaDB from '../../../../prisma/Instance'
-import * as bcrypt from 'bcrypt'
-import * as jwt from 'jsonwebtoken'
+
+// Helpers
 import { secret } from '../../../../api/secret'
 import { Authenticated } from '../../../../api/authentication'
-import { Hotel, HotelForm, PlaceOfInterestElement } from '../../../../types/Hotel';
+
+// Types
 import { User } from '../../../../types/User'
-import { timeStamp } from 'console'
 
 type Hotels = {
     id: number,
@@ -27,57 +32,55 @@ export default Authenticated(async function EditUser(
     if (req.method !== 'POST') {
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
-    const authorization: string = req.cookies.auth || ''
+    const cookie = req.cookies.auth
     const response = JSON.parse(req.body)
-    const hotels: any = await validateTheHotelsSelected(response.hotel)
-    
-    if (!hotels.length) {
+
+    const userExist = await verifyIfUserExist(response.user)
+
+    if (userExist) {
+        return res.status(200).json({ res: false, message: 'El usuario ya existe en el sistema' })
+    }
+
+    if (!response.hotel.length) {
         return res.status(200).json({ res: false, message: 'There are not hotels selected' })
     }
 
-    bcrypt.hash(response.password, 12, async function (err, hash) {
-        // Store hash in your password DB.
+    hash(response.password, 12, async function (err, hash) {
         if (err) {
             return res.status(200).json({ res: false, message: 'No se pudo generar la contraseña HASH al usuario!' })
         }
 
-        jwt.verify(authorization, secret, async (err: any, currentUser: any) => {
+        verify(cookie, secret, async (err: any, currentUser: any) => {
             if (!err && currentUser) {
-                const userId = await editUser(response, hash)
+                // Store hash in your password DB.
+                const userId = await editUser(response, hash, currentUser)
                 await removeHotelsOfUser(userId)
-                const dataToSaveInDB = await prepareDataToSaveInDB(currentUser.email, userId, response, hotels)
+                const dataToSaveInDB = await prepareDataToSaveInDB(currentUser.email, userId, response, response.hotel)
                 await assignHotelToUser(dataToSaveInDB)
 
                 return res.status(200).json({ res: true, message: 'The user was created in the system' })
             }
-
 
             res.status(401).json({ message: "Lo sentimos pero usted no está autendicado!" })
         });
     });
 })
 
-const removeHotelsOfUser = async (userId: number) => {
-    return await prismaDB.usersOnHotels.deleteMany({
-        where: {
-            userId
-        }
-    }).catch((err: any) => { console.log(err);
+const verifyIfUserExist = async (user: User) => {
+    const userData = await prismaDB.users.findFirst({
+        where: { email: user.email }
     })
+
+    return userData
 }
 
-const validateTheHotelsSelected = (hotels: Hotels[]) => {
-    let aHotels: any = []
-    hotels.forEach(hotel => {
-        if (hotel.checked) {
-            aHotels.push(hotel)
-        }
-    });
-
-    return aHotels
+const removeHotelsOfUser = async (userId: number) => {
+    return await prismaDB.usersOnHotels
+        .deleteMany({ where: { userId } })
+        .catch((err: any) => { console.log(err); })
 }
 
-const editUser = async (userData: any, hashPassword: string) => {
+const editUser = async (userData: any, hashPassword: string, currentUser: any) => {
     const userEdited = await prismaDB.users
         .update({
             where: { id: userData.id },
@@ -91,14 +94,10 @@ const editUser = async (userData: any, hashPassword: string) => {
                 // image: response.status,
                 typeUserId: parseInt(userData.typeUserId),
                 departmentId: parseInt(userData.departmentId),
-                editedBy: 'x'
+                editedBy: currentUser.email
             },
             include: {
-                hotels: {
-                    include: {
-                        hotel: true
-                    }
-                }
+                hotels: { include: { hotel: true } }
             }
         })
     return userEdited.id
@@ -113,7 +112,7 @@ const prepareDataToSaveInDB = (currentUser: string, userId: number, user: User, 
             userId: userId,
             assignedBy: currentUser
         }
-        
+
         aData.push(data)
     });
 
@@ -121,9 +120,7 @@ const prepareDataToSaveInDB = (currentUser: string, userId: number, user: User, 
 }
 
 const assignHotelToUser = async (data: UsersOnHotes[]) => {
-    prismaDB.usersOnHotels.createMany({
-        data
-    }).catch((err: any) => {
-        console.log(err);
-    })
+    prismaDB.usersOnHotels
+        .createMany({ data })
+        .catch((err: any) => { console.log(err); })
 }

@@ -3,8 +3,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 // Libraries
+import { verify } from 'jsonwebtoken'
 import prismaDB from '../../../../prisma/Instance'
-import * as jwt from 'jsonwebtoken'
 
 // Helpers
 import { secret } from '../../../../api/secret'
@@ -19,7 +19,7 @@ export default Authenticated(async function AddDepartment(
     }
 
     const cookie = req.cookies.auth
-    const currentUser: any = jwt.verify(cookie, secret);
+    const currentUser: any = verify(cookie, secret);
     const departmentData = {
         name: req.body.name,
         editedBy: currentUser.email

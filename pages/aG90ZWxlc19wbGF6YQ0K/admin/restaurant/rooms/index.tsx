@@ -185,9 +185,8 @@ export default function RoomsHasBreakfast(props: any) {
     }
 
     useEffect(() => {
-        if (props.user && props.user.preferences.rooms.length) {
+        if (props.user && props.user.preferences && props.user.preferences.rooms.length) {
             console.log(props.user.preferences.rooms);
-            
             generateRoomCards()
         }
     }, [props.user])
@@ -202,16 +201,16 @@ export default function RoomsHasBreakfast(props: any) {
                         : 'No hay ninguna habitación con desayuno'
                 }</b>
             </h5>
-            : 'Cargando...')
+            : 'No hay habitaciones con desayunos')
 
     }, [roomsWithBreakfast])
 
     return (
         <Layout
-            title="Restaurante - Habitaciones"
+            title="Restaurante - Desayunos"
             description="Restaurante de los hoteles plaza"
         >
-            <h2 className={styles.title}>Usuarios</h2>
+            <h2 className={styles.title}>Habitaciones con desayuno</h2>
 
             <div ref={overlayRef} className={styles.overlay} />
             <div ref={modalOverlayRef} className={styles.modal_overlay} />

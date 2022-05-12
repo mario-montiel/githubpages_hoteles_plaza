@@ -79,7 +79,7 @@ export default function Sidebar() {
     const liSidebarWebsiteRef = useRef<HTMLLIElement>(null)
     const liSidebarRestaurantRef = useRef<HTMLLIElement>(null)
     const liSidebarHousekeeperRef = useRef<HTMLLIElement>(null)
-    const ulSidebarSecondSystemRef = useRef<HTMLUListElement>(null)
+    // const ulSidebarSecondSystemRef = useRef<HTMLUListElement>(null)
 
     const [user, setUser] = useState<any>()
     const [hotels, setHotels] = useState([])
@@ -94,7 +94,8 @@ export default function Sidebar() {
         try {
             const response = await fetch('/api/admin/users/showCurrentUserData')
             const responseApi = await response.json()
-            if (responseApi || responseApi.length > 0) {
+            
+            if (responseApi && Object.keys(responseApi).length) {
                 setUser(responseApi)
                 setHotels(responseApi.hotels)
                 if (responseApi.preferences && responseApi.preferences.name) {
@@ -114,9 +115,7 @@ export default function Sidebar() {
     const getHTMLIndex = (hotels: any, hotelSelected: number) => {
         let i = 0
         hotels.forEach((hotel: any, index: number) => {
-            if (hotel.hotel.id == hotelSelected) {
-                i = index
-            }
+            if (hotel.hotel.id == hotelSelected) { i = index }
         });
         return i
     }
@@ -175,7 +174,7 @@ export default function Sidebar() {
                             key={index}
                             onClick={() => hotelSelected(hotel.hotel, index, 'save')}
                         >
-                            <Image src={'/hotels/logos/' + hotel.hotel.pathImageName + 'logo.webp'} width={70} height={60} objectFit={'cover'} objectPosition={'center'} />
+                            <Image src={'/hotels/logos/' + hotel.hotel.pathImageName + 'logo.webp'} width={70} height={60} objectFit={'cover'} />
                         </li>
                     )
                 })
@@ -199,17 +198,16 @@ export default function Sidebar() {
     }
 
     async function changePreferencesOFHotel(hotelSelected: any) {
-        await fetch('/api/admin/users/readOrChangePreferencesHotel', {
+        const resp = await fetch('/api/admin/users/readOrChangePreferencesHotel', {
             method: "POST",
             body: JSON.stringify(hotelSelected.id)
-        }).then((responseJson) => {
-            responseJson.json()
-                .then(() => {
-                    const getCurrentUrl = router.pathname
-                    router.replace(getCurrentUrl)
-                })
-                .catch((err) => { console.log(err); })
         })
+        const response = await resp.json()
+
+        if (!response) { console.log('NELSON'); }
+
+        const getCurrentUrl = router.pathname
+        router.replace(getCurrentUrl)
     }
 
     const verifyPropertiesOfUser = (user: any) => {

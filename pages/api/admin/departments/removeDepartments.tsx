@@ -7,6 +7,7 @@ import prismaDB from '../../../../prisma/Instance'
 
 // Helpers
 import { Authenticated } from '../../../../api/authentication'
+import { getModuleUrl } from '../../../../api/getDirModuleUrl'
 import { RegisterDataRemoved } from '../../../../api/registerDataRemoved'
 
 export default Authenticated(async function RemoveDepartment(
@@ -17,17 +18,17 @@ export default Authenticated(async function RemoveDepartment(
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
 
+    const cookie = req.cookies.auth
     const response = req.body
-    
-    try {
-        await RegisterDataRemoved(req.cookies.auth, response.reasonToDelete)
+    const dirModuleUrl = await getModuleUrl(req)
 
-        await prismaDB.departments
-            .delete({ where: { id: response.department.id } })
-            .then(() => { res.status(200).json({ res: true, message: 'El usuario se creó con éxito!' }) })
-            .catch(() => { res.status(500).json({ res: false, message: 'No se pudo crear el usuario!' }) })
-    } catch (error) {
-        console.log(error);
-        
+    if (!dirModuleUrl) {
+        return res.status(200).json({ res: false, message: 'Ocurrió un problema y no se pudo registar el usuario que elimina datos' })
     }
+    
+    await RegisterDataRemoved(cookie, response.reasonToDelete, dirModuleUrl)
+    await prismaDB.departments
+        .delete({ where: { id: response.department.id } })
+        .then(() => { res.status(200).json({ res: true, message: 'El usuario se creó con éxito!' }) })
+        .catch(() => { res.status(500).json({ res: false, message: 'No se pudo crear el usuario!' }) })
 })

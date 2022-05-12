@@ -13,11 +13,12 @@ datasource db {
 }
 
 model ActivityOfDeleteData {
-  id         Int      @id @default(autoincrement())
-  user       String   @db.VarChar(60)
-  reason     String   @db.VarChar(60)
-  createdAt  DateTime @default(now())
-  typeUserId String   @db.VarChar(60)
+  id        Int      @id @default(autoincrement())
+  user      String   @db.VarChar(60)
+  reason    String   @db.VarChar(60)
+  module    String   @db.VarChar(60)
+  createdAt DateTime @default(now())
+  typeUser  String   @db.VarChar(60)
 }
 
 model Departments {

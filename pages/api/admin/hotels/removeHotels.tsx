@@ -12,6 +12,8 @@ import { Authenticated } from '../../../../api/authentication'
 
 // Types
 import { HotelForm } from '../../../../types/Hotel'
+import { getModuleUrl } from '../../../../api/getDirModuleUrl'
+import { RegisterDataRemoved } from '../../../../api/registerDataRemoved'
 
 export default Authenticated(async function RemoveHotel(
     req: NextApiRequest,
@@ -24,45 +26,61 @@ export default Authenticated(async function RemoveHotel(
     const cookie = req.cookies.auth
     const currentUser: any = jwt.verify(cookie, secret);
     const response = req.body
+    const dirModuleUrl = await getModuleUrl(req)
+
+    if (!dirModuleUrl) {
+        return res.status(200).json({ res: false, message: 'Ocurrió un problema y no se pudo registar el usuario que eliminará la información' })
+    }
     
-    if (response.placesOfInterest && response.placesOfInterest.length > 0) {
-        await removeAllPlacesOfInterest(response.id)
+    await RegisterDataRemoved(cookie, response.reasonToDelete, dirModuleUrl)
+    
+    if (response.hotel.placesOfInterest && response.hotel.placesOfInterest.length > 0) {
+        await removeAllPlacesOfInterest(res, response.id)
     }
 
-    if (response.rooms && response.rooms.length) {
-        removeAllRooms(response.id)
+    if (response.hotel.rooms && response.hotel.rooms.length) {
+        removeAllRooms(res, response.id)
     }
 
-    await removeUsers(currentUser, response)
-    await removeHotel(response)
-
-    res.status(200).json({ res: true, message: 'El hotel se eliminó con éxito!' })
+    await removeUsers(res, currentUser, response.hotel)
 })
 
-const removeAllPlacesOfInterest = async (id: number) => {
+const errorMessage = (res: NextApiResponse,  message: string) => {
+    res.status(200).json({ res: false, message })
+}
+
+const removeAllPlacesOfInterest = async (res: NextApiResponse, id: number) => {
     await prismaDB.placesInterest
         .deleteMany({ where: { hotelId: id } })
-        .catch((err: any) => console.log(err))
+        .catch(() => errorMessage(res, 'No se pudieron eliminar los lugares de interés del hotel'))
 }
 
-const removeAllRooms = async (id: number) => {
+const removeAllRooms = async (res: NextApiResponse, id: number) => {
     await prismaDB.rooms
         .deleteMany({ where: { hotelId: id } })
-        .catch((err: any) => console.log(err))
+        .catch(() => errorMessage(res, 'No se pudieron eliminar las habitaciones del hotel'))
 }
 
-const removeUsers = async (authJwt: any, response: any) => {
+const removeUsers = async (res: NextApiResponse, authJwt: any, hotel: any) => {
+    let users: any = []
+    
+    await hotel.usersOnHotels.forEach((user: any) => {
+        users.push(user.user.id)
+    });
+    
     await prismaDB.usersOnHotels.deleteMany({
         where: {
-            userId: parseInt(authJwt.sub.toString()),
-            hotelId: parseInt(response.id.toString())
+            userId: { in: users },
+            hotelId: hotel.id
         }
-    }).catch((err: any) => console.log('removeUsersERROR: ', err))
+    })
+    .then(() => { removeHotel(res, hotel) })
+    .catch(() =>  errorMessage(res, 'No se pudieron eliminar los usuarios del hotel'))
 }
 
-const removeHotel = async (hotel: HotelForm) => {
-    const hotelId: number = hotel.id || 0
+const removeHotel = async (res: NextApiResponse, hotel: HotelForm) => {
     await prismaDB.hotels
-        .delete({ where: { id: hotelId } })
-        .catch((err: any) => { console.log(err); })
+        .delete({ where: { id: hotel.id! } })
+        .then(() => { res.status(200).json({ res: true, message: 'El hotel se eliminó con éxito!' }) })
+        .catch((err: any) => { console.log(err); errorMessage(res, 'No se pudo eliminar el hotel') })
 }

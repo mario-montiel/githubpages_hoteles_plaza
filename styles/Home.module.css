@@ -16,3 +16,19 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+@media screen and (max-width: 800px) {
+  .container {
+    width: 100%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    margin: auto;
+    display: grid;
+    text-align: center;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+  }
+}

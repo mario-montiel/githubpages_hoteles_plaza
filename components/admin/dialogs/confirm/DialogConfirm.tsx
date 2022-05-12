@@ -43,13 +43,11 @@ export default function DialogConfirm(props: DialogConfirm) {
     const onSubmit = (data: any) => { confirmPasswordOfCurrentUser(data) }
 
     // Use State
-    const [isDisabled, setIsDisabled] = useState<boolean>(false)
 
     // Functions
 
 
     const confirmPasswordOfCurrentUser = async (dataForm: PasswordConfirm) => {
-        setIsDisabled(true)
 
         const resp = await fetch(endpoint + '/api/admin/auth/confirmPassCurrentUser', {
             method: "POST",
@@ -60,7 +58,6 @@ export default function DialogConfirm(props: DialogConfirm) {
         if (response.res) { return props.onConfirm(dataForm.reasonToDelete) }
 
         showMessage(response.message, 'error')
-        setIsDisabled(false)
     }
 
     const changeButtonColor = () => {
@@ -105,6 +102,7 @@ export default function DialogConfirm(props: DialogConfirm) {
                             id="password"
                             type="password"
                             autoFocus={true}
+                            autoSave="off"
                             autoComplete="off"
                             placeholder="Ingrese su contraseña"
                         />

@@ -1,13 +1,22 @@
+// React and Next
 import { useState } from "react"
-import { Department } from "../../../../types/Department"
-import { Hotel } from "../../../../types/Hotel"
-import { User } from "../../../../types/User"
-import styles from "../../../../styles/admin/system/users/Users.module.css"
 import { useRouter } from "next/router"
-import { getDate } from "../../../../helpers/dateTransform"
-import { toast } from 'react-toastify';
+
+// CSS
 import 'react-toastify/dist/ReactToastify.css';
+import styles from "../../../../styles/admin/system/users/Users.module.css"
+
+// Libraries
+import { toast, TypeOptions } from 'react-toastify';
+
+// Helpers
+import { getDate } from "../../../../helpers/dateTransform"
 import { verifyIfIsAdmin } from "../../../../api/authentication"
+
+// Types
+import { User } from "../../../../types/User"
+import { Department } from "../../../../types/Department"
+import { Hotel, HotelForm } from "../../../../types/Hotel"
 
 const UsersFunctions = (isAdmin: boolean) => {
 
@@ -21,6 +30,7 @@ const UsersFunctions = (isAdmin: boolean) => {
         description: '',
         btnConfirm: '',
         btnCancel: '',
+        isDelete: false,
         onConfirm: () => { },
         onClose: () => { }
     }
@@ -30,6 +40,7 @@ const UsersFunctions = (isAdmin: boolean) => {
     }
 
     // Use States
+    const [user, setUser] = useState<any>(null)
     const [currentUser, setCurrentUser] = useState<any>()
     const [usersData, setUsersData] = useState<Array<User>>([])
     const [hotelsData, setHotelsData] = useState<Array<Hotel>>([])
@@ -42,6 +53,15 @@ const UsersFunctions = (isAdmin: boolean) => {
     // Use Effect
 
     // Functions
+    const showMessage = (message: string, typeMessage: TypeOptions) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 2000,
+            closeOnClick: true,
+            type: typeMessage
+        })
+    }
+
     const handleDialogConfirm = (show: boolean, image?: string, alt?: string, title?: string, description?: string, btnConfirm?: string, btnCancel?: string, onConfirm?: () => void, onClose?: () => void) => {
         setShowDialogConfirm({
             ...showDialogConfirm,
@@ -69,7 +89,7 @@ const UsersFunctions = (isAdmin: boolean) => {
         })
     }
 
-    const showDialog = (dataForm: User) => {
+    const showDialog = (dataForm: User, hotels: Array<HotelForm>) => {
         handleDialogConfirm(
             true,           // Show
             '/hotels/dialog/user.svg', // Image
@@ -78,7 +98,7 @@ const UsersFunctions = (isAdmin: boolean) => {
             `¿Desea crear al usuario ${dataForm.fullName}?`,    // Description
             'Crear',    // BtnConfirm
             'Cerrar',   // BtnCancel
-            () => successConfirm(dataForm), // OnConfirm
+            () => successConfirm(dataForm, hotels), // OnConfirm
             () => setShowDialogConfirm(     // OnCancel
                 { ...showDialogConfirm, show: false }
             ))
@@ -92,6 +112,7 @@ const UsersFunctions = (isAdmin: boolean) => {
     }
 
     const askIfItShouldRemove = (dataForm: any) => {
+        setUser(dataForm)
         handleDialogConfirm(
             true,           // Show
             '/hotels/dialog/user.svg', // Image
@@ -100,7 +121,6 @@ const UsersFunctions = (isAdmin: boolean) => {
             `¿Desea eliminar al usuario ${dataForm.fullName}?`,    // Description
             'Eliminar',    // BtnConfirm
             'Cerrar',   // BtnCancel
-            () => deleteUser(dataForm), // OnConfirm
             () => setShowDialogConfirm(     // OnCancel
                 { ...showDialogConfirm, show: false }
             ))
@@ -133,7 +153,7 @@ const UsersFunctions = (isAdmin: boolean) => {
     // const verifyPropertiesOfUser = (user: any) => {
     //     if (user && !user.department && !user.typeUserId && user.typeUser === 'Superadmin') {
     //         console.log('entro');
-            
+
     //         return true
     //     }
 
@@ -211,41 +231,32 @@ const UsersFunctions = (isAdmin: boolean) => {
         userTableRef?.children[hotelIndex].children[areaIndex + 1].children[1].classList.toggle(styles.table_dissapear)
     }
 
-    const deleteUser = async (dataForm: User) => {
-        setShowDialogConfirm({ ...showDialogConfirm, show: false })
+    const deleteUser = async (reasonToDelete: string) => {
+        setShowDialogConfirm({ ...showDialogConfirm, show: true })
         setShowLoading({ ...showLoading, show: true, title: 'Eliminando hotel' })
 
-        await fetch('/api/admin/users/removeUsers', {
+        const resp = await fetch('/api/admin/users/removeUsers', {
             method: "POST",
-            body: JSON.stringify(dataForm)
-        }).then((response) => {
-            response.json().then((responseApi) => {
-                if (responseApi.res == 'The user is registred in the system') {
-                    userExistInDB()
-                }
+            body: JSON.stringify({ user, reasonToDelete })
+        })
+        const response = await resp.json()
+        console.log(response);
 
-                if (responseApi.res) {
-                    router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/users/users`)
-                    setTimeout(() => {
-                        toast('El usuario fue registrado con éxito!', {
-                            position: "top-right",
-                            autoClose: 2000,
-                            closeOnClick: true,
-                            type: 'success'
-                        })
-                    }, 300);
-                }
+        if (!response.res) {
+            setShowLoading({ ...showLoading, show: false });
+            setShowDialogConfirm({ ...showDialogConfirm, show: false })
+            return showMessage('', 'error')
+        }
 
-                setShowLoading({ ...showLoading, show: true })
-            }).catch((e) => {
-                console.log(e);
-                setShowLoading({ ...showLoading, show: true })
-            })
-
-        }).catch((error) => { console.log(error); })
+        router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/users/users`)
+        setTimeout(() => { showMessage('El usuario fue registrado con éxito!', 'error') }, 300);
+        setShowDialogConfirm({ ...showDialogConfirm, show: false })
+        setShowLoading({ ...showLoading, show: false })
     }
 
     const showEditDialog = (dataForm: User) => {
+        console.log('showEditDialog: ', dataForm);
+
         handleDialogConfirm(
             true,           // Show
             '/hotels/dialog/user.svg', // Image
@@ -260,70 +271,62 @@ const UsersFunctions = (isAdmin: boolean) => {
             ))
     }
 
-    const successConfirm = async (dataForm: User) => {
+    const successConfirm = async (dataForm: User, hotels: Array<HotelForm>) => {
         setShowLoading({ ...showLoading, show: true })
         handleDialogConfirm(false)
-        await fetch('/api/admin/users/addUsers', {
+
+        const resp = await fetch('/api/admin/users/addUsers', {
             method: "POST",
-            body: JSON.stringify(dataForm)
-        }).then((response) => {
-            response.json().then((responseApi) => {
-                if (responseApi.res == 'The user is registred in the system') {
-                    userExistInDB()
-                }
+            body: JSON.stringify({ dataForm, hotels })
+        })
+        const response = await resp.json()
 
-                if (responseApi.res) {
-                    router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/users/users`)
-                    setTimeout(() => {
-                        toast('El usuario fue registrado con éxito!', {
-                            position: "top-right",
-                            autoClose: 2000,
-                            closeOnClick: true,
-                            type: 'success'
-                        })
-                    }, 300);
-                }
+        if (!response.res) {
+            setShowLoading({ ...showLoading, show: false })
+            return showMessage(response.message, 'error')
+        }
 
-                setShowLoading({ ...showLoading, show: true })
-            }).catch((e) => {
-                console.log(e);
-                setShowLoading({ ...showLoading, show: true })
-            })
+        if (!response.res && response.message == 'El usuario ya existe en el sistema') {
+            userExistInDB()
+        }
 
-        }).catch((error) => { console.log(error); })
+        if (response.res) {
+            router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/users/users`)
+            setTimeout(() => { showMessage(response.message, 'success') }, 300);
+        }
+
+        setShowLoading({ ...showLoading, show: true })
     }
 
     const successEditConfirm = async (dataForm: User) => {
         setShowLoading({ ...showLoading, show: true })
         handleDialogConfirm(false)
-        await fetch('/api/admin/users/editUsers', {
+        const resp = await fetch('/api/admin/users/editUsers', {
             method: "POST",
             body: JSON.stringify(dataForm)
-        }).then((response) => {
-            response.json().then((responseApi) => {
-                if (responseApi.res == 'The user is registred in the system') {
-                    userExistInDB()
-                }
+        })
 
-                if (responseApi.res) {
-                    router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/users/users`)
-                    setTimeout(() => {
-                        toast('El usuario fue registrado con éxito!', {
-                            position: "top-right",
-                            autoClose: 2000,
-                            closeOnClick: true,
-                            type: 'success'
-                        })
-                    }, 300);
-                }
+        const response = await resp.json()
+        console.log(response);
 
-                setShowLoading({ ...showLoading, show: true })
-            }).catch((e) => {
-                console.log(e);
-                setShowLoading({ ...showLoading, show: true })
-            })
+        if (!response.res && response.message == 'El usuario ya existe en el sistema') {
+            userExistInDB()
+        }
 
-        }).catch((error) => { console.log(error); })
+        if (response.res) {
+            router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/users/users`)
+            setTimeout(() => {
+                toast('El usuario fue eliminado con éxito!', {
+                    position: "top-right",
+                    autoClose: 2000,
+                    closeOnClick: true,
+                    type: 'success'
+                })
+            }, 300);
+        }
+
+        setShowLoading({ ...showLoading, show: false })
+
     }
 
     const handleChangePassword = () => {

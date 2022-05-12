@@ -11,6 +11,7 @@ import ServicesDemo1 from "../../../../../components/website/demo1/services/Serv
 
 // Helpers
 import { endpoint } from "../../../../../config/endpoint"
+import { useEffect } from "react"
 
 // Types
 
@@ -28,6 +29,16 @@ async function getFetchData(url: string) {
 }
 
 export default function ServicesCatedralDemo1({ weather }: any) {
+
+    // Variables
+
+    // Use State
+
+    // Use Effect
+    useEffect(() => {
+        console.log('cargo');
+        
+    }, [])
 
     return (
         <LayoutDemo1

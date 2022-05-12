@@ -1,11 +1,17 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// Next.js API route support: https://nextjs.org/docs/api-routes
+// React and Next/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Authenticated } from '../../../../api/authentication'
-import prismaDB from '../../../../prisma/Instance'
-import { secret } from '../../../../api/secret'
-import { hash, hashSync } from 'bcrypt'
 
-export default async function ShowCurrentUser(
+// Libraries
+import { verify } from 'jsonwebtoken'
+import { hash, hashSync } from 'bcrypt'
+import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
+import { secret } from '../../../../api/secret'
+import { Authenticated } from '../../../../api/authentication'
+
+export default Authenticated(async function ShowCurrentUser(
     req: NextApiRequest,
     res: NextApiResponse<Object>
 ) {
@@ -14,15 +20,18 @@ export default async function ShowCurrentUser(
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
 
+    const cookie = req.cookies.auth
+    const currentUser: any = verify(cookie, secret);
     const response = JSON.parse(req.body)
     const salt = 12
     const hashPassword = hashSync(response.password, salt)
-    const passwordChanged = await prismaDB.users.update({
+    await prismaDB.users.update({
         where: { email: response.user.email },
         data: {
-            password: hashPassword
+            password: hashPassword,
+            editedBy: currentUser.email
         }
-    })
+    }).catch(() => { res.status(200).json({ res: false, message: 'No se pudo actualizada su contraseña!' }) })
     
     res.status(200).json({ res: true, message: 'Contraseña actualizada con éxito!' })
-}
+})

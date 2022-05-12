@@ -88,7 +88,7 @@ const DepartmentsFunctions = () => {
 
     const askIfItShouldRemove = (data: any) => {
         setDepartment(data)
-        setShowDialogConfirm({ 
+        setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
             title: '¿Desea eliminar el departamento ' + data.name + '?',
@@ -105,7 +105,7 @@ const DepartmentsFunctions = () => {
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({department, reasonToDelete})
+            body: JSON.stringify({ department, reasonToDelete })
         }).then(() => {
             showMessage('Departamento eliminada con éxito!', 'success')
             setShowLoading({ ...showLoading, show: false, title: 'Eliminando departamento' })
@@ -135,23 +135,40 @@ const DepartmentsFunctions = () => {
     const successEditConfirm = async () => {
         setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
         setShowLoading({ ...showLoading, show: true })
-        try {
-            await fetch(endpoint + '/api/admin/departments/editDepartments', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(editDepartment)
-            })
-                .then(() => {
-                    router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/departments/departments')
-                    setTimeout(() => {
-                        showMessage('Departamento editado con éxito!', 'success')
-                    }, 300);
-                }).catch((err) => { console.log(err); })
-        } catch (error) { console.log(error); }
 
+        const resp = await fetch(endpoint + '/api/admin/departments/editDepartments', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(editDepartment)
+        })
+        const response = await resp.json()
+
+        if (!response.res) {
+            return showMessage('No se pudo editar el departamento!', 'error')
+        }
+
+        router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/departments/departments')
+        setTimeout(() => {
+            showMessage('Departamento editado con éxito!', 'success')
+        }, 300);
         setShowLoading({ ...showLoading, show: false })
+        // try {
+        //     await fetch(endpoint + '/api/admin/departments/editDepartments', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-type': 'application/json'
+        //         },
+        //         body: JSON.stringify(editDepartment)
+        //     })
+        //         .then(() => {
+        //             router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/departments/departments')
+        //             setTimeout(() => {
+        //                 showMessage('Departamento editado con éxito!', 'success')
+        //             }, 300);
+        //         }).catch((err) => { console.log(err); })
+        // } catch (error) { console.log(error); }
     }
 
     return {

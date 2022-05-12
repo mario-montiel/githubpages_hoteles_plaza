@@ -18,7 +18,6 @@ import DialogConfirm from "../../../../../components/admin/dialogs/confirm/Dialo
 
 // Helpers
 import { endpoint } from "../../../../../config/endpoint"
-import { verifyIfIsAdmin } from "../../../../../api/authentication";
 import UsersFunctions from "../../../../../helpers/functions/admin/users/usersFunctions"
 
 // Types
@@ -73,6 +72,7 @@ export default function Users(props: any) {
         showLoading,
         loadData,
         generateAreaHTML,
+        deleteUser
     } = UsersFunctions(props.isAdmin.res)
     const addButton = `<svg  viewBox="0 0 24 24">
         <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
@@ -104,13 +104,14 @@ export default function Users(props: any) {
 
             {showDialogConfirm.show ? (
                 <DialogConfirm
+                    isDelete={true}
                     image={showDialogConfirm.image ? showDialogConfirm.image : ''}
                     alt={showDialogConfirm.alt ? showDialogConfirm.alt : ''}
                     title={showDialogConfirm.title ? showDialogConfirm.title : ''}
                     description={showDialogConfirm.description ? showDialogConfirm.description : ''}
                     btnConfirm={showDialogConfirm.btnConfirm ? showDialogConfirm.btnConfirm : ''}
                     btnCancel={showDialogConfirm.btnCancel ? showDialogConfirm.btnCancel : ''}
-                    onConfirm={showDialogConfirm.onConfirm ? showDialogConfirm.onConfirm : () => { }}
+                    onConfirm={(reasonToDelete: string) => deleteUser(reasonToDelete)}
                     onClose={showDialogConfirm.onClose ? showDialogConfirm.onClose : () => { }}
                 />
             ) : null}

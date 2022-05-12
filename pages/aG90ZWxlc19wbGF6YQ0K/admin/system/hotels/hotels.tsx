@@ -93,11 +93,12 @@ export default function Hotels(props: any) {
 
             {showDialogConfirm.show ? (
                 <DialogConfirm
+                    isDelete={true}
                     title={showDialogConfirm.title}
                     description={showDialogConfirm.description}
                     btnConfirm="Eliminar"
                     btnCancel="Cancelar"
-                    onConfirm={deleteHotel}
+                    onConfirm={(reasonToDelete: string) => deleteHotel(reasonToDelete)}
                     onClose={handleDialogConfirm}
                 />
             ) : null}

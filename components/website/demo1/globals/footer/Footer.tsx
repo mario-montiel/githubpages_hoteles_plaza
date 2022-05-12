@@ -18,7 +18,7 @@ import { convertKelvinToCelsius } from "../../../../../helpers/convertTemperatur
 // Types
 
 export default function FooterDemo1({ weather, currentHotel }: any) {
-    
+
     // Variables
     const router = useRouter()
     const initialUrlDataValues = {
@@ -26,10 +26,10 @@ export default function FooterDemo1({ weather, currentHotel }: any) {
         url: '',
         adress: ''
     }
-    const websiteUrl = `${endpoint}/demo-1/hotel`
 
     // Use State
     const [url, setUrl] = useState(initialUrlDataValues)
+    const [imageLoaded, setImageLoaded] = useState<boolean>(false)
     const [bookingModal, setBookingModal] = useState<boolean>(false)
 
     // Functions
@@ -42,6 +42,8 @@ export default function FooterDemo1({ weather, currentHotel }: any) {
 
         return time
     }
+
+    const handleImage = () => { setImageLoaded(true) }
 
     // Use Effect
     useEffect(() => {
@@ -63,7 +65,10 @@ export default function FooterDemo1({ weather, currentHotel }: any) {
     }, [router.asPath])
 
     return (
-        <footer className={styles.footer}>
+        <footer
+            className={styles.footer}
+            onLoad={handleImage}
+        >
             <img
                 className={styles.texture_image}
                 src="/hotels/symbols/frame_texture_bottom_left.webp"
@@ -95,27 +100,27 @@ export default function FooterDemo1({ weather, currentHotel }: any) {
                 <ul>
                     <li>NAVEGA</li>
                     <li>
-                        <Link href={`${websiteUrl}/plaza-${currentHotel}/`}>
+                        <Link href={`${url.url}/plaza-${currentHotel}/`}>
                             QUIÉNES SOMOS
                         </Link>
                     </li>
                     <li>
-                        <Link href={`${websiteUrl}/plaza-${currentHotel}/habitaciones`}>
+                        <Link href={`${url.url}/plaza-${currentHotel}/habitaciones`}>
                             HABITACIONES
                         </Link>
                     </li>
                     <li>
-                        <Link href={`${websiteUrl}/plaza-${currentHotel}/instalaciones`}>
+                        <Link href={`${url.url}/plaza-${currentHotel}/instalaciones`}>
                             INSTALACIONES
                         </Link>
                     </li>
                     <li>
-                        <Link href={`${websiteUrl}/plaza-${currentHotel}/servicios`}>
+                        <Link href={`${url.url}/plaza-${currentHotel}/servicios`}>
                             SERVICIOS
                         </Link>
                     </li>
                     <li>
-                        <Link href={`${websiteUrl}/plaza-${currentHotel}/ubicacion-y-contacto`}>
+                        <Link href={`${url.url}/plaza-${currentHotel}/ubicacion-y-contacto`}>
                             UBICACION Y CONTACTO
                         </Link>
                     </li>
@@ -136,11 +141,17 @@ export default function FooterDemo1({ weather, currentHotel }: any) {
                     </li>
                 </ul>
 
-                <img
-                    className={styles.logo_footer}
-                    src={`/hotels/logos/${url.logo}.webp`}
-                    alt="Logotipo del hotel"
-                />
+                {
+                    imageLoaded ? (
+                        <img
+                            className={styles.logo_footer}
+                            src={`/hotels/logos/${url.logo}.webp`}
+                            alt="Logotipo del hotel"
+                        />
+                    ) : (<div>
+                        Cargando logo...
+                    </div>)
+                }
             </div>
 
             {

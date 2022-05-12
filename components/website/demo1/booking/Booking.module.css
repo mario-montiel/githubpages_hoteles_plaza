@@ -140,16 +140,17 @@
 }
 
 .content form button {
+    border: none;
     font-weight: bold;
+    padding: 10px 30px;
+    color: var(--white);
     border-radius: 20px;
-    color: var(--black);
     margin: 40px auto 0px;
-    background-color: var(--white);
-    border: 0.5px solid var(--gray);
+    background-color: var(--main-color-demo-1);
 }
 
 .content form button:hover {
-    background-color: #d6d6d6;
+    background-color: #d9bc00;
 }
 
 .content .texture_image {
@@ -162,6 +163,10 @@
 }
 
 @media screen and (max-width: 800px) {
+    .content h2 {
+        font-size: 32pt;
+    }
+    
     .content > p {
         display: none;
     }
@@ -171,8 +176,8 @@
     }
 
     .content form button  {
-        background-color: transparent !important;
         color: var(--black) !important;
+        background-color: transparent !important;
         border: 0.5px solid var(--black) !important;
     }
 }

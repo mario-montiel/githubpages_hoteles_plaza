@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 
 // Libraries
-import { toast } from 'react-toastify';
+import { toast, TypeOptions } from 'react-toastify';
 
 // CSS
 import 'react-toastify/dist/ReactToastify.css';
@@ -57,6 +57,7 @@ const HotelesFunctions = (isAdmin?: any) => {
         description: '',
         btnConfirm: '',
         btnCancel: '',
+        isDelete: false,
         onConfirm: () => { },
         onClose: () => { }
     }
@@ -74,15 +75,24 @@ const HotelesFunctions = (isAdmin?: any) => {
     const [editHotel, setEditHotel] = useState(initialValues)
     const [hotelsLoaded, setHotelsLoaded] = useState<any>([])
     const [roomsError, setRoomsError] = useState<boolean>(false)
-    const [removeHotel, setRemoveHotel] = useState(initialValues)
+    // const [removeHotel, setRemoveHotel] = useState(initialValues)
     const [showLoading, setShowLoading] = useState(initialLoadingValues)
-    const [totalRoomsInFloor, setTotalRoomsInFloor] = useState<any>([])
+    // const [totalRoomsInFloor, setTotalRoomsInFloor] = useState<any>([])
     const [showDialogConfirm, setShowDialogConfirm] = useState(initialDialogValues)
     const [showDialogWarning, setShowDialogWarning] = useState(initialDialogValues)
 
     // Use Effect
 
     // Functions
+    const showMessage = (message: string, typeMessage: TypeOptions, duration: number) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: duration,
+            closeOnClick: true,
+            type: typeMessage
+        })
+    }
+
     const handleDialogConfirm = () => {
         setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm.show })
     }
@@ -205,17 +215,17 @@ const HotelesFunctions = (isAdmin?: any) => {
         return returnData
     }
 
-    const checkTotalOfRooms = async (total: number, totalInput: number, input: HTMLElement, type: string) => {
-        if (total < totalInput && type === '<') {
-            handleStylesRoomDiv(input)
-            return handleRoomsErrorVaues(true, 'La suma de todas las habitaciones no puede ser menor al total de habitaciones que seleccionó')
-        }
+    // const checkTotalOfRooms = async (total: number, totalInput: number, input: HTMLElement, type: string) => {
+    //     if (total < totalInput && type === '<') {
+    //         handleStylesRoomDiv(input)
+    //         return handleRoomsErrorVaues(true, 'La suma de todas las habitaciones no puede ser menor al total de habitaciones que seleccionó')
+    //     }
 
-        if (total > totalInput && type === '>') {
-            input.classList.add(styles.error_input)
-            return handleRoomsErrorVaues(true, 'La suma de todas las habitaciones no puede ser superior al total de habitaciones que seleccionó')
-        }
-    }
+    //     if (total > totalInput && type === '>') {
+    //         input.classList.add(styles.error_input)
+    //         return handleRoomsErrorVaues(true, 'La suma de todas las habitaciones no puede ser superior al total de habitaciones que seleccionó')
+    //     }
+    // }
 
     const handleStylesRoomDiv = (element?: HTMLElement) => {
         if (element) {
@@ -294,7 +304,7 @@ const HotelesFunctions = (isAdmin?: any) => {
         const inputRange: any = document.querySelectorAll('.input-range') as NodeListOf<HTMLInputElement>
         const inputs: any = document.querySelectorAll('.room-type-input-container') as NodeListOf<HTMLInputElement>
         const totalInputs: any = document.querySelectorAll('.total-rooms')
-        
+
         // GET INPUTS AND PRINT THE QUANTITIES ROOMS
         for (let index = 0; index < floors; index++) {
             roomsType.forEach((roomType, i) => {
@@ -310,7 +320,7 @@ const HotelesFunctions = (isAdmin?: any) => {
 
                     }
                 });
-                
+
                 // inputRange[index].value = floorQuantities
                 inputs[index].children[i].children[0].value = roomQuantities
                 totalInputs[index].value = floorQuantities
@@ -318,11 +328,11 @@ const HotelesFunctions = (isAdmin?: any) => {
         }
     }
 
-    const generateRooms = (index: number) => {
-        const rangeInput = document.querySelectorAll('.input-range') as NodeListOf<HTMLInputElement>
-        const totalRooms = document.querySelectorAll('.total-rooms') as NodeListOf<HTMLInputElement>
-        totalRooms[index].value = rangeInput[index].value
-    }
+    // const generateRooms = (index: number) => {
+    //     const rangeInput = document.querySelectorAll('.input-range') as NodeListOf<HTMLInputElement>
+    //     const totalRooms = document.querySelectorAll('.total-rooms') as NodeListOf<HTMLInputElement>
+    //     totalRooms[index].value = rangeInput[index].value
+    // }
 
     const countRoomRows = async (rowIndex: number) => {
         const total_rooms = document.querySelectorAll('.total-rooms') as NodeListOf<HTMLInputElement>
@@ -343,7 +353,7 @@ const HotelesFunctions = (isAdmin?: any) => {
 
     const showDialog = async (dataForm: HotelForm, roomData: any, placesOfInterestList: any) => {
         console.log('placesOfInterestListplacesOfInterestList: ', placesOfInterestList);
-        
+
         const hotelExist = await verifiedIfTheHotelIsRepeat(dataForm, roomData)
 
         if (!hotelExist.res) {
@@ -418,7 +428,7 @@ const HotelesFunctions = (isAdmin?: any) => {
 
     const saveDataInDB = async (dataForm?: Hotel, imageUrl?: string, roomsData?: any) => {
         console.log('SAVEDATAhotel: ', hotel);
-        
+
         const direction = dataForm ? 'editHotels' : 'addHotels'
         const url = endpoint + `/api/admin/hotels/${direction}`
         const actionToast = dataForm ? 'actualizado' : 'creado'
@@ -429,7 +439,7 @@ const HotelesFunctions = (isAdmin?: any) => {
             type: dataForm ? '' : 'veryfied'
         }
         console.log('hotelData:hotelData: ', hotelData);
-        
+
         const response = await fetch(url, {
             headers: { 'Content-type': 'application/json' },
             method: 'POST',
@@ -437,7 +447,7 @@ const HotelesFunctions = (isAdmin?: any) => {
         })
         const jsonResponse = await response.json()
         console.log(jsonResponse);
-        
+
 
         if (!jsonResponse.res) {
             setShowLoading({ ...showLoading, show: false })
@@ -588,79 +598,72 @@ const HotelesFunctions = (isAdmin?: any) => {
     }
 
     const askIfItShouldRemove = (data: any) => {
-        setRemoveHotel(data)
+        setHotel(data)
         setShowDialogConfirm({ ...showDialogConfirm, show: true, title: '¿Desea eliminar el hotel ' + data.name + '?', description: 'Se eliminará el hotel de forma permanente' })
     }
 
-    async function deleteHotel() {
+    async function deleteHotel(reasonToDelete: string) {
         setShowDialogConfirm({ ...showDialogConfirm, show: false })
         setShowLoading({ ...showLoading, show: true, title: 'Eliminando hotel' })
 
-        await fetch(endpoint + '/api/admin/hotels/removeHotels', {
+        const resp = await fetch(endpoint + '/api/admin/hotels/removeHotels', {
             method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(removeHotel)
-        }).then((response) => {
-            if (response.ok) {
-                router.reload()
-                setTimeout(() => {
-                    setShowLoading({ ...showLoading, show: false })
-                    // router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/hotels/hotels`)
-                    toast(`Hotel eliminado con éxito!`, {
-                        position: "top-right",
-                        autoClose: 2000,
-                        closeOnClick: true,
-                        type: 'success'
-                    })
-                }, 300);
-            }
-        }).catch(error => {
-            console.log(error);
-            setShowLoading({ ...showLoading, show: false })
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({ hotel, reasonToDelete })
         })
-    }
+        const response = await resp.json()
 
-    const redirectToDivMapGoogleMaps = () => {
-        const div = document.getElementById('map') as HTMLElement
-        div.scrollIntoView({ block: 'start', behavior: 'smooth' });
-        setShowDialogWarning({ ...showDialogWarning, show: !showDialogWarning })
-        div.classList.add(styles.addAnimiation)
+        if (!response.res) {
+            return showMessage(response.message, 'error', 4000)
+        }
+
+        // router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/hotels/hotels`)
         setTimeout(() => {
-            div.classList.remove(styles.addAnimiation)
-        }, 3000);
+            router.reload()
+            setShowLoading({ ...showLoading, show: false })
+            showMessage(response.message, 'success', 4000)
+        }, 300);
     }
 
-    return {
-        hotel,
-        editHotel,
-        hotelsLoaded,
-        rooms,
-        showDialogConfirm,
-        showDialogWarning,
-        showLoading,
-        roomsError,
-        handleDialogConfirm,
-        handleChangeImage,
-        handleRoomsErrorVaues,
-        handleStylesRoomDiv,
-        hotelNotHaveLatAndLng,
-        createFloors,
-        generateFloors,
-        generateStructureRoomData,
-        generateRoomDataInInputs,
-        showDialog,
-        successConfirm,
-        showData,
-        showEditDialog,
-        // loadEditImage,
-        VerifyIfImageWasChanged,
-        successEditConfirm,
-        askIfItShouldRemove,
-        deleteHotel,
-        redirectToDivMapGoogleMaps
-    }
+const redirectToDivMapGoogleMaps = () => {
+    const div = document.getElementById('map') as HTMLElement
+    div.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    setShowDialogWarning({ ...showDialogWarning, show: !showDialogWarning })
+    div.classList.add(styles.addAnimiation)
+    setTimeout(() => {
+        div.classList.remove(styles.addAnimiation)
+    }, 3000);
+}
+
+return {
+    hotel,
+    editHotel,
+    hotelsLoaded,
+    rooms,
+    showDialogConfirm,
+    showDialogWarning,
+    showLoading,
+    roomsError,
+    handleDialogConfirm,
+    handleChangeImage,
+    handleRoomsErrorVaues,
+    handleStylesRoomDiv,
+    hotelNotHaveLatAndLng,
+    createFloors,
+    generateFloors,
+    generateStructureRoomData,
+    generateRoomDataInInputs,
+    showDialog,
+    successConfirm,
+    showData,
+    showEditDialog,
+    // loadEditImage,
+    VerifyIfImageWasChanged,
+    successEditConfirm,
+    askIfItShouldRemove,
+    deleteHotel,
+    redirectToDivMapGoogleMaps
+}
 }
 
 export default HotelesFunctions

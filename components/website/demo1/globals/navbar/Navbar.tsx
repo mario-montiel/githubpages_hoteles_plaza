@@ -31,6 +31,7 @@ const NavbarDemo1 = () => {
 
     // Use State
     const [url, setUrl] = useState(initialUrlDataValues)
+    const [imageLoaded, setImageLoaded] = useState<boolean>(false)
     const [bookingModal, setBookingModal] = useState<boolean>(false)
 
     // Functions
@@ -47,6 +48,8 @@ const NavbarDemo1 = () => {
         });
     }
 
+    const handleImage = () => { setImageLoaded(true) }
+
     // Use Effect
     useEffect(() => {
         if (router.asPath.startsWith('/demo-1/hotel/plaza-catedral')) {
@@ -56,15 +59,23 @@ const NavbarDemo1 = () => {
         }
     }, [router.asPath])
 
+    useEffect(() => { handleImage() }, [])
+
     return (
         <nav className={styles.navbar}>
             <ul>
                 <li onClick={() => router.push('/')} className={styles.li_logo}>
-                    <img
-                        style={{ width: url.logo === 'catedral_logo' ? '130px' : '80px', height: url.logo === 'catedral_logo' ? '65px' : '65px' }}
-                        src={`/hotels/logos/${url.logo}.webp`}
-                        alt="Logo"
-                    />
+                    {
+                        imageLoaded ? (
+                            <img
+                                style={{ width: url.logo === 'catedral_logo' ? '130px' : '80px', height: url.logo === 'catedral_logo' ? '65px' : '65px' }}
+                                src={`/hotels/logos/${url.logo}.webp`}
+                                alt="Logo"
+                            />
+                        ) : (<div>
+                            Cargando logo...
+                        </div>)
+                    }
                 </li>
                 <ul ref={menuMobileRef}>
                     <li className={router.asPath == url.url ? styles.selected : ""}>

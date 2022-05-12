@@ -67,15 +67,6 @@ export default function Departments(props: any) {
         askIfItShouldRemove,
         deleteDepartment
     } = DepartmentsFunctions()
-    // const filterButton = {
-    //     icon: `<svg class="svg_department_icon" viewBox="0 0 24 24">
-    //         <path fill="currentColor" d="M11 11L16.76 3.62A1 1 0 0 0 16.59 2.22A1 1 0 0 0 16 2H2A1 1 0 0 0 1.38 2.22A1 1 0 0 0 1.21 3.62L7 11V16.87A1 1 0 0 0 7.29 17.7L9.29 19.7A1 1 0 0 0 10.7 19.7A1 1 0 0 0 11 18.87V11M13 16L18 21L23 16Z" />
-    //     </svg>`,
-    //     data: [
-    //         {text: 'Ascendente', onClick: () => get()},
-    //         {text: 'Descendente', onClick: () => get()}
-    //     ]
-    // }
     const addButton = `<svg  viewBox="0 0 24 24">
         <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
     </svg>`

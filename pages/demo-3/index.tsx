@@ -12,7 +12,7 @@ import styles from "../../styles/Demo3Home.module.css"
 
 // Types
 
-const Demo1 = () => {
+const Demo3 = () => {
 
     // Variables
 
@@ -105,4 +105,4 @@ const Demo1 = () => {
     )
 }
 
-export default Demo1
+export default Demo3

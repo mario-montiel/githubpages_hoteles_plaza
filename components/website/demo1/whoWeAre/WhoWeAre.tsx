@@ -18,18 +18,10 @@ const WhoWeAreDemo1 = ({ url, description, vision }: any) => {
     // Variables
 
     // Use State
-    const [size, setSize] = useState<any>([])
 
     // Functions
 
     // Use Effect
-    useEffect(() => {
-        console.log(size);
-        const handleResize = () => {
-            setSize([window.innerHeight, window.innerWidth])
-        }
-        window.addEventListener('resize', handleResize)
-    }, [])
 
     return (
         <section className={styles.who_we_are}>

@@ -28,21 +28,15 @@ export default async function handler(
     }
     
     const user: any = await prismaDB.users.findMany({
-        orderBy: {
-            fullName: 'asc'
-        },
-        where: {
-            email: {
-                equals: response.email
-            }
-        }
+        orderBy: { fullName: 'asc' },
+        where: { email: { equals: response.email } }
     })
 
-    if (user.length) {
-        verifyUser(response, user, res)
+    if (!user.length) {
+        return res.status(401).json({ res: false, message: 'El correo electrónico que ingresó no está registrado en el sistema' }) 
     }
 
-    return res.status(401).json({ res: false, message: 'El correo electrónico que ingresó no está registrado en el sistema' })
+    return verifyUser(response, user, res)
 }
 
 const verifyUser = async (response: any, user: any, res: NextApiResponse<Object>) => {

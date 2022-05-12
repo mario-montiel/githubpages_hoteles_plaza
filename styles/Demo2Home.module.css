@@ -93,7 +93,30 @@
     transition: all 0.5s;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1220px) {
+    .container .image_left .logo_container {
+        left: 35%;
+    }
+
+    .container .logo {
+        height: 15vh;
+    }
+
+    .container .image_right .logo_container {
+        left: 55%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .container .image_left .logo_container {
+        top: 20%;
+    }
+
+    .container .image_right .logo_container {
+        top: 60%;
+        right: 50%;
+    }
+
     .container .image_left {
         width: 85%;
         clip-path: polygon(calc(0%) 0%, 100% 0%, 20% 100%, 0% 100%);

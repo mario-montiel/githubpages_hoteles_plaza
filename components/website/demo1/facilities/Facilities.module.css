@@ -164,6 +164,10 @@
         transform: none !important;
     }
 
+    .gallery_container .current_image_selected {
+        opacity: 1;
+    }
+
     .small_images_container {
         display: none !important;
     }

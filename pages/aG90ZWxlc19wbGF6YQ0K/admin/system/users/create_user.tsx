@@ -1,10 +1,10 @@
 // React
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { NextPageContext } from "next"
 import Router, { useRouter } from "next/router"
 
 // Libraries
-import { useForm } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
 
 // CSS
 import styles from "../../../../../styles/admin/system/users/CreateUser.module.css"
@@ -22,7 +22,6 @@ import { endpoint } from "../../../../../config/endpoint"
 import UsersFunctions from "../../../../../helpers/functions/admin/users/usersFunctions"
 
 // types
-import { UserForm } from "../../../../../types/User"
 import { TypeUser } from "../../../../../types/TypeUser"
 import { Department } from "../../../../../types/Department"
 
@@ -73,38 +72,34 @@ export default function CreateUser(props: any) {
     const btnIconBack = `<svg class="svg_back" viewBox="0 0 24 24">
         <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
     </svg>`
-    const { register, setValue, clearErrors, handleSubmit, formState: { errors } } = useForm<UserForm>();
-    const onSubmit = (data: any) => {
-        showDialog(data)
-    }
+    const { register, setValue, setError, clearErrors, handleSubmit, formState: { errors } } = useForm<any>();
+    const onSubmit = (data: any) => { {showDialog(data!, hotels)} }
+
+    // Use State
+    const [hotels, setHotes] = useState<Array<any>>([])
 
     // States
 
     // Use Effect
     useEffect(() => {
         setValue("status", "active")
+        setError("hotel", { type: 'custom', message: 'Seleccione un hotel para poder continuar!' })
     }, [])
 
+    useEffect(() => {
+        if (!hotels.length) { setError("hotel", { type: 'custom', message: 'Seleccione un hotel para poder continuar!' }) }
+    }, [hotels])
+
     // Functions
-    const checkHotelErrors = () => {
-        let validate = false
-        const checkbox = document.querySelectorAll('.checkbox-user')
-        const checkbox_validate = document.querySelector('.checkbox-validate') as HTMLInputElement
+    const checkHotelErrors = (index: number) => {
 
-        // console.log(checkbox);
-        checkbox.forEach((checkbox: any) => {
-            if (checkbox_validate && checkbox.checked) {
-                validate = true
-                clearErrors('hotel')
-                return checkbox_validate.checked = true
-            }
-        });
-
-        if (checkbox_validate && !validate) {
-            checkbox_validate.checked = false
-        }
-
-        return validate
+        !index ? (
+            setError("hotel", { type: 'custom', message: 'Seleccione un hotel para poder continuar!' })
+        ) : (
+            <>
+                {clearErrors('hotel')}
+            </>
+        )
     }
 
     function errorMessagesPassword(errors: string) {
@@ -122,6 +117,17 @@ export default function CreateUser(props: any) {
                     </small>)
                 break;
         }
+    }
+
+    const addHotelToDataForm = async (hotel: any) => {
+        const index = hotels.findIndex((hotelFilter: any) => { return hotelFilter.name == hotel.name })
+
+        if (index > -1) {
+            return setHotes(hotels.filter((hotelFilter: any) => hotelFilter.name != hotel.name))
+        }
+
+        setHotes((oldValue: any) => [...oldValue, hotel])
+        checkHotelErrors(index)
     }
 
     return (
@@ -310,12 +316,12 @@ export default function CreateUser(props: any) {
                         {
                             props.hotels.length ? (
                                 props.hotels.map((hotelData: any, index: number) => {
-                                    const hotel: any = `hotel[${index}]`;
+                                    // const hotel: any = `hotel[${index}]`;
                                     return (
                                         <div key={index}>
-                                            {/* <input
+                                            <input
                                                 className={errors.hotel ? `${styles.checkbox_error} checkbox input_error_text` : 'checkbox'}
-                                                {...register(`${hotel}.id`, { required: false })}
+                                                // {...register(`${hotel}.id`, { required: false })}
                                                 id="hotel"
                                                 value={hotelData.id}
                                                 hidden
@@ -326,13 +332,13 @@ export default function CreateUser(props: any) {
                                                 <br />
                                                 <input
                                                     className={errors.hotel ? `${styles.checkbox_error} checkbox input_error_text checkbox-user` : 'checkbox checkbox-user'}
-                                                    {...register(`${hotel}.checked`, { required: false })}
+                                                    // {...register(`${hotel}.checked`, { required: false })}
                                                     id="hotel"
                                                     type="checkbox"
-                                                    onClick={() => checkHotelErrors()}
+                                                    onClick={() => addHotelToDataForm(hotelData)}
                                                 />
                                                 <br />
-                                            </div> */}
+                                            </div>
                                         </div>
                                     )
                                 })

@@ -5,10 +5,10 @@ import { useRouter } from "next/router"
 import { endpoint } from "../../../../config/endpoint";
 
 // Types
-import { RoomType } from "../../../../types/RoomType"
+import { RoomType, RoomTypeForm } from "../../../../types/RoomType"
 
 // Components and CSS
-import { toast } from 'react-toastify';
+import { toast, TypeOptions } from 'react-toastify';
 
 const TypeRoomsFunctions = () => {
 
@@ -31,12 +31,22 @@ const TypeRoomsFunctions = () => {
     }
 
     // Use State
+    const [roomType, setRoomType] = useState<RoomTypeForm>()
     const [showDialogConfirm, setShowDialogConfirm] = useState(initialDialogValues)
     const [showLoading, setShowLoading] = useState(initialLoadingValues)
 
     // Use Effect
 
     // Functions
+    const showMessage = (message: string, typeMessage: TypeOptions, duration: number) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: duration,
+            closeOnClick: true,
+            type: typeMessage
+        })
+    }
+
     const showDialog = (dataForm: RoomType) => {
         setShowDialogConfirm({
             ...showDialogConfirm,
@@ -54,42 +64,24 @@ const TypeRoomsFunctions = () => {
     const successConfirm = async (dataForm: RoomType) => {
         setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
         setShowLoading({ ...showLoading, show: true })
-        
-        try {
-            await fetch(endpoint + '/api/admin/rooms/roomsType/addRoomsType', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(dataForm)
-            })
-                .then((response) => {
 
-                    if (response.ok) {
-                        router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/rooms_type')
-                        return setTimeout(() => {
-                            toast('Tipo de habitación creada con éxito!', {
-                                position: "top-right",
-                                autoClose: 2000,
-                                closeOnClick: true,
-                                type: 'success'
-                            })
-                        }, 300);
-                    }
+        const resp = await fetch(endpoint + '/api/admin/rooms/roomsType/addRoomsType', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(dataForm)
+        })
+        const response = await resp.json()
 
+        if (!response.res) { return showMessage(response.message, 'error', 4000) }
 
-                }).catch((err) => {
-                    console.log(err);
-                })
-
-        } catch (error) {
-            console.log(error);
-        }
+        router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/rooms_type')
+        setTimeout(() => { showMessage(response.message, 'success', 4000) }, 300);
 
         setShowLoading({ ...showLoading, show: false })
     }
 
     const askIfItShouldRemove = (dataForm: RoomType) => {
+        setRoomType(dataForm)
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
@@ -98,36 +90,26 @@ const TypeRoomsFunctions = () => {
             description: `¿Desea eliminar el tipo de habitación ${dataForm.name}?`,
             btnConfirm: 'Eliminar',
             btnCancel: 'Cancelar',
-            onConfirm: () => deleteRoomType(dataForm),
             onClose: () => setShowDialogConfirm({ ...showDialogConfirm, show: false })
         })
     }
 
-    const deleteRoomType = async (dataForm: RoomType) => {
+    const deleteRoomType = async (reasonToDelete: string) => {
         setShowDialogConfirm({ ...showDialogConfirm, show: false })
         setShowLoading({ ...showLoading, show: true, title: 'Eliminando tipo de habitación' })
 
-        await fetch(endpoint + '/api/admin/rooms/roomsType/removeRoomsType', {
+        const resp = await fetch(endpoint + '/api/admin/rooms/roomsType/removeRoomsType', {
             method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(dataForm)
-        }).then(() => {
-            setTimeout(() => {
-                toast('Tipo de habitación eliminado con éxito!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    closeOnClick: true,
-                    type: 'success'
-                })
-            }, 300);
-            setShowLoading({ ...showLoading, show: false })
-            router.replace(router.asPath);
-        }).catch(error => {
-            console.log(error);
-            setShowLoading({ ...showLoading, show: false })
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({ roomType, reasonToDelete })
         })
+        const response = await resp.json()
+
+        if (!response.res) { return showMessage(response.message, 'error', 4000) }
+
+        router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/rooms_type')
+        setTimeout(() => { showMessage(response.message, 'success', 4000) }, 300);
+        setShowLoading({ ...showLoading, show: false })
     }
 
     const showEditDialog = (dataForm: RoomType) => {
@@ -146,46 +128,28 @@ const TypeRoomsFunctions = () => {
 
     const loadingData = (props: any) => {
         setShowLoading({ ...showLoading, show: true })
+        
         if (!props.roomType.res) {
-            toast('El tipo de habitación que desea editar no se encuentra registrado en el sistema', {
-                position: "top-right",
-                autoClose: 4000,
-                closeOnClick: true,
-                type: 'warning'
-            })
+            showMessage('El tipo de habitación que desea editar no se encuentra registrado en el sistema', 'warning', 4000)
             return router.replace(endpoint + '/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/rooms_type')
         } else { setShowLoading({ ...showLoading, show: false }) }
     }
 
     const successEditConfirm = async (dataForm: RoomType) => {
-        // selectToastText()
         setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
         setShowLoading({ ...showLoading, show: true })
-        try {
-            await fetch(endpoint + '/api/admin/rooms/roomsType/editRoomsType', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(dataForm)
-            })
-                .then(() => {
-                    router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/rooms_type')
-                    setTimeout(() => {
-                        toast('Tipo de habitación editado con éxito!', {
-                            position: "top-right",
-                            autoClose: 2000,
-                            closeOnClick: true,
-                            type: 'success'
-                        })
-                    }, 300);
-                }).catch((err) => {
-                    console.log(err);
-                })
-        } catch (error) {
-            console.log(error);
-        }
 
+        const resp = await fetch(endpoint + '/api/admin/rooms/roomsType/editRoomsType', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(dataForm)
+        })
+        const response = await resp.json()
+
+        if (!response.res) { return showMessage(response.message, 'error', 4000) }
+
+        router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/rooms_type')
+        setTimeout(() => { showMessage(response.message, 'success', 4000) }, 300);
         setShowLoading({ ...showLoading, show: false })
     }
 
@@ -198,7 +162,8 @@ const TypeRoomsFunctions = () => {
         showDialog,
         askIfItShouldRemove,
         showEditDialog,
-        loadingData
+        loadingData,
+        deleteRoomType
     }
 }
 
