@@ -1,4 +1,6 @@
-// React
+// React and Next
+import { NextPageContext } from "next"
+import { useEffect, useState } from "react"
 
 // CSS
 import styles from "../../../../styles/Demo1CatedralHome.module.css"
@@ -6,23 +8,18 @@ import styles from "../../../../styles/Demo1CatedralHome.module.css"
 // Componets
 import LayoutDemo1 from "../../../../components/globals/LayoutDemo1"
 import WhoWeAreDemo1 from "../../../../components/website/demo1/whoWeAre/WhoWeAre"
-import { NextPageContext } from "next"
-import { endpoint } from "../../../../config/endpoint"
-import { useEffect, useState } from "react"
 
 // Libraries
 
 // Helpers
+import { endpoint } from "../../../../config/endpoint"
 
 // Types
 
 HotelCatedralDemo1.getInitialProps = async (ctx: NextPageContext) => {
     let weatherJson: any = []
     weatherJson = await getFetchData(endpoint + '/api/weather', ctx)
-
-    return {
-        weather: weatherJson,
-    }
+    return { weather: weatherJson }
 }
 
 async function getFetchData(url: string, ctx: NextPageContext) {
@@ -41,9 +38,7 @@ export default function HotelCatedralDemo1({ weather }: any) {
     const getCurrentSize = () => { setWidth(window.innerWidth) }
 
     // Use Effect
-    useEffect(() => {
-        setWidth(window.innerWidth)
-    }, [])
+    useEffect(() => { setWidth(window.innerWidth) }, [])
     
     useEffect(() => {
         window.addEventListener('resize', getCurrentSize)

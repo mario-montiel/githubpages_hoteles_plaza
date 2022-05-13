@@ -117,13 +117,22 @@
         transition: all 0.4s;
         position: absolute;
         padding: 35px 0px 0px;
-        transform: translateY(-60%);
+        transform: translateY(-100%);
         background-color: #E8E6E6;
     }
 
     .active {
         display: none;
-        transform: translateY(62%) !important;
+        transform: translateY(60%) !important;
+    }
+
+    .selected {
+        background-color: var(--white);
+        width: 100%;
+    }
+
+    .selected a {
+        font-weight: bold;
     }
 
     .navbar ul > ul li {
@@ -135,8 +144,9 @@
     }
 
     .navbar ul > ul li:hover {
+        width: 100%;
         font-weight: bold;
-        background-color: var(--white);
+        background-color: rgb(245, 250, 245);
     }
 
     .navbar ul > ul li a,

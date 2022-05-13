@@ -181,6 +181,9 @@ export default function Sidebar() {
             ) : (null)
         }
 
+        console.log(hotels);
+        
+
         return html
     }
 

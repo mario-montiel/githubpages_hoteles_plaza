@@ -67,7 +67,7 @@ const NavbarDemo1 = () => {
                     {
                         imageLoaded ? (
                             <img
-                                style={{ width: url.logo === 'catedral_logo' ? '130px' : '80px', height: url.logo === 'catedral_logo' ? '65px' : '65px' }}
+                                style={{ width: url.logo === 'catedral_logo' ? '150px' : '80px', height: url.logo === 'catedral_logo' ? '75px' : '75px' }}
                                 src={`/hotels/logos/${url.logo}.webp`}
                                 alt="Logo"
                             />
@@ -79,7 +79,7 @@ const NavbarDemo1 = () => {
                 <ul ref={menuMobileRef}>
                     <li className={router.asPath == url.url ? styles.selected : ""}>
                         <Link href={`${url.url}/`}>
-                            QUIÉNES SOMOSx
+                            QUIÉNES SOMOS
                         </Link>
                     </li>
                     <li className={router.asPath == `${`${url.url}/habitaciones`}` ? styles.selected : ""}>

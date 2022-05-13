@@ -1,15 +1,29 @@
 .hotel_face {
     width: 100%;
-    min-height: 80vh;
+    min-height: 90vh;
     max-height: 100vh;
     object-fit: cover;
     object-position: center;
 }
 
-.hotel_face_top {
-    width: 100%;
-    min-height: 80vh;
-    max-height: 100vh;
-    object-fit: cover;
-    object-position: top;
+@media screen and (max-width: 800px) {
+    .hotel_face {
+        width: 150%;
+        height: 90%;
+    }
+
+    /* ==== All top images of modules of website ====  */
+    /* Plaza Catedral */
+    .image_facilities_catedral {
+        object-position: 0%;
+    }
+
+    .image_ubication_and_contact_catedral {
+        object-position: 40%;
+    }
+
+    /* Plaza Matamoros */
+    .image_ubication_and_contact_matamoros {
+        object-position: 100%;
+    }
 }

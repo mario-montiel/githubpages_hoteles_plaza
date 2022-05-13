@@ -1,9 +1,8 @@
-// React
-import { NextPageContext } from "next"
+// Reactimport { NextPageContext } from "next"
 import Head from "next/head"
-import { endpoint } from "../../config/endpoint"
 
 // CSS
+import styles from "../../styles/Home.module.css"
 
 // Componets
 import FooterDemo1 from "../website/demo1/globals/footer/Footer"
@@ -27,7 +26,7 @@ export default function LayoutDemo1 ({children, title, description, weather, cur
 
             <NavbarDemo1 />
 
-            <main>
+            <main className={styles.main}>
                 {children}
             </main>
 

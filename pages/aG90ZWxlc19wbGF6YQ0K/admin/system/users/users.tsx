@@ -137,6 +137,9 @@ export default function Users(props: any) {
                             <div className={styles.btn_container}>
                                 <BtnActions
                                     icon={addButton}
+                                    onClick={() => router.push('/aG90ZWxlc19wbGF6YQ0K/admin/system/users/attach_users_to_hotels')} />
+                                <BtnActions
+                                    icon={addButton}
                                     onClick={() => router.push('/aG90ZWxlc19wbGF6YQ0K/admin/system/users/create_user')} />
                             </div>
                         ) : null

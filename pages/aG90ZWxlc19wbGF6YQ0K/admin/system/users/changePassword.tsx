@@ -20,7 +20,7 @@ const ChangePassword = (props: any) => {
         confirmPassword: ''
     }
     const { register, setError, clearErrors, handleSubmit, formState: { errors } } = useForm<PasswordForm>();
-    const onSubmit = (data: any) => {
+    const onSubmit = () => {
         sendRequest(passwordForm)
     }
 

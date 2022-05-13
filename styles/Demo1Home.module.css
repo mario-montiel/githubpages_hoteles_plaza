@@ -87,12 +87,28 @@
 }
 
 @media screen and (max-width: 850px) {
+    .container {
+        overflow: hidden;
+    }
+
     .container .logo_container {
         display: grid;
         align-items: center;
         justify-content: center;
     }
+
     .container .logo {
         height: 12vh;
+    }
+
+    .container .image_left img {
+        object-position: 85%;
+    }
+    .container .image_right img {
+        object-position: 55%;
+    }
+
+    .container .hotel_face {
+        width: 200%;
     }
 }

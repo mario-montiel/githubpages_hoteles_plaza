@@ -39,7 +39,7 @@ export default function FacilitiesMatamorosDemo1({ weather }: any) {
         >
 
             <img
-                className={styles.hotel_face_top}
+                className={styles.hotel_face}
                 src="/hotels/facilities/matamoros/facilitie_face.webp"
                 alt="First Image"
             // srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,

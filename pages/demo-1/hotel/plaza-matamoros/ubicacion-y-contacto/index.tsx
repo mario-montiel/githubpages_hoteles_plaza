@@ -58,7 +58,7 @@ export default function UbicationContactCatedralDemo1({ weather }: any) {
         >
 
             <img
-                className={styles.hotel_face_top}
+                className={`${styles.hotel_face} ${styles.image_ubication_and_contact_matamoros}`}
                 src={`${endpoint}/hotels/ubication_contact/matamoros/ubi_cont.webp`}
                 alt="First Image"
             // srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,

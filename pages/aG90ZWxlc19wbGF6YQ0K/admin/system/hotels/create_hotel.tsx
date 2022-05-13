@@ -327,7 +327,6 @@ export default function CreateHotel(props: any) {
                                                         <tr key={index}>
                                                             <td>
                                                                 {data.name}
-                                                                {console.log(data)}
                                                                 {/* <input
                                                                     className={errors.placesInterest ? 'input input_error_text' : 'input'}
                                                                     id="placesInterest"

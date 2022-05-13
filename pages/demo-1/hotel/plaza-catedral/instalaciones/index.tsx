@@ -38,7 +38,7 @@ export default function FacilitiesCatedraDemo1({ weather }: any) {
         >
 
             <img
-                className={styles.hotel_face}
+                className={`${styles.hotel_face} ${styles.image_facilities_catedral}`}
                 src="/hotels/facilities/catedral/facilitie_face.webp"
                 alt="First Image"
             // srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
