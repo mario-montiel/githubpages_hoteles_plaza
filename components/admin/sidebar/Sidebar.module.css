@@ -9,7 +9,7 @@
     left: 0;
     background-color: white;
     height: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
     overflow-y: auto;
     transition: all 0.3s !important;
     z-index: 1;

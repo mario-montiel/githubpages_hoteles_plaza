@@ -17,6 +17,7 @@
     top: 0;
     right: 0;
     width: 30%;
+    z-index: -1;
     height: auto;
     position: absolute;
 }
@@ -67,6 +68,7 @@
     z-index: 1;
     height: 76%;
     display: flex;
+    transition: all 1s;
     position: absolute;
     align-items: center;
     transform: translate(-50%, -50%);
@@ -129,6 +131,7 @@
     height: 100%;
     float: right;
     display: flex;
+    transition: all 1s;
     margin: 0px 0px 0px auto;
 }
 
@@ -136,6 +139,7 @@
     width: 100%;
     height: 100%;
     display: flex;
+    transition: all 1s;
     align-items: center;
     margin: 4% 0px 10px auto;
 }
@@ -178,6 +182,7 @@
     min-width: auto;
     margin: 0px auto;
     object-fit: cover;
+    transition: all 1s;
     position: absolute;
     object-position: 0px;
     transform: translate(-50%, -50%);

@@ -1,0 +1,36 @@
+.image_opacity {
+    opacity: 0;
+}
+
+/* .to_left_is_appear {
+    animation-name: appearToLeft;
+    animation-duration: 1s;
+}
+
+.to_right_is_appear {
+    animation-name: appearToRight;
+    animation-duration: 1s;
+} */
+
+/* ==== ANIMATIONS ==== */
+/* @keyframes appearToLeft {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+@keyframes appearToRight {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+} */

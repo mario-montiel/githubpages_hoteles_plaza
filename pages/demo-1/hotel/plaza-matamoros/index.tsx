@@ -39,20 +39,22 @@ export default function HotelMatamorosDemo1({ weather }: any) {
             currentHotel="matamoros"
         >
 
-            <img
-                className={styles.hotel_face}
-                src="/hotels/main/fachada-matamoros-480x400.webp"
-                alt="First Image"
-                srcSet="/hotels/main/fachada-matamoros-480x400.webp 240w,
+            <div className={styles.main_image_container}>
+                <img
+                    className={`${styles.hotel_face} ${styles.image_who_we_are_matamoros}`}
+                    src="/hotels/main/fachada-matamoros-480x400.webp"
+                    alt="First Image"
+                    srcSet="/hotels/main/fachada-matamoros-480x400.webp 240w,
                     /hotels/main/fachada-matamoros-960x900.webp 530w,
                     /hotels/main/fachada-matamoros-1440x1040.webp 720w,
                     /hotels/main/fachada-matamoros-1920x1600.webp 910w"
-                sizes="(max-width: 480px) 120px,
+                    sizes="(max-width: 480px) 120px,
                     (max-width: 960px) 240px,
                     (max-width: 1440px) 530px,
                     910px
                 "
-            />
+                />
+            </div>
 
             {/* ¿Quienes Somos? */}
 

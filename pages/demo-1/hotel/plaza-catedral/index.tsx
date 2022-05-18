@@ -32,19 +32,10 @@ export default function HotelCatedralDemo1({ weather }: any) {
     // Variables
 
     // Use Staet
-    const [width, setWidth] = useState<any>()
 
     // Functions
-    const getCurrentSize = () => { setWidth(window.innerWidth) }
 
     // Use Effect
-    useEffect(() => { setWidth(window.innerWidth) }, [])
-    
-    useEffect(() => {
-        window.addEventListener('resize', getCurrentSize)
-        return () => { window.removeEventListener('resize', getCurrentSize) }
-        
-    })
 
     return (
         <LayoutDemo1
@@ -53,25 +44,26 @@ export default function HotelCatedralDemo1({ weather }: any) {
             weather={weather}
             currentHotel="catedral"
         >
-            <img
-                className={styles.hotel_face}
-                src="/hotels/main/fachada-catedral-480x400.webp"
-                alt="First Image"
-                srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
+            <div className={styles.main_image_container}>
+                <img
+                    className={`${styles.hotel_face} ${styles.image_who_we_are_catedral}`}
+                    src="/hotels/main/fachada-catedral-480x400.webp"
+                    alt="First Image"
+                    srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
                     /hotels/main/fachada-catedral-960x900.webp 530w,
                     /hotels/main/fachada-catedral-1440x1040.webp 720w,
                     /hotels/main/fachada-catedral-1920x1201.webp 910w"
-                sizes="(max-width: 480px) 120px,
+                    sizes="(max-width: 480px) 120px,
                     (max-width: 960px) 240px,
                     (max-width: 1440px) 530px,
                     910px
                 "
-            />
+                />
+            </div>
 
             {/* ¿Quienes Somos? */}
 
             <WhoWeAreDemo1
-                width={width}
                 url={"/hotels/mision_vision/catedral/"}
                 description="
                     Somos un hotel que ofrece un excelente servicio y trato cálido a todos

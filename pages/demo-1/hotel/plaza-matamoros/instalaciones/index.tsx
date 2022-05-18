@@ -37,21 +37,23 @@ export default function FacilitiesMatamorosDemo1({ weather }: any) {
             weather={weather}
             currentHotel="matamoros"
         >
-
-            <img
-                className={styles.hotel_face}
-                src="/hotels/facilities/matamoros/facilitie_face.webp"
-                alt="First Image"
-            // srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
-            //     /hotels/main/fachada-catedral-960x900.webp 530w,
-            //     /hotels/main/fachada-catedral-1440x1040.webp 720w,
-            //     /hotels/main/fachada-catedral-1920x1201.webp 910w"
-            // sizes="(max-width: 480px) 120px,
-            //     (max-width: 960px) 240px,
-            //     (max-width: 1440px) 530px,
-            //     910px
-            // "
-            />
+            
+            <div className={styles.main_image_container}>
+                <img
+                    className={`${styles.hotel_face} ${styles.image_facilities_matamoros}`}
+                    src="/hotels/facilities/matamoros/facilitie_face.webp"
+                    alt="First Image"
+                // srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
+                //     /hotels/main/fachada-catedral-960x900.webp 530w,
+                //     /hotels/main/fachada-catedral-1440x1040.webp 720w,
+                //     /hotels/main/fachada-catedral-1920x1201.webp 910w"
+                // sizes="(max-width: 480px) 120px,
+                //     (max-width: 960px) 240px,
+                //     (max-width: 1440px) 530px,
+                //     910px
+                // "
+                />
+            </div>
 
             <FacilitiesCatedralDemo1
                 url={`${endpoint}/hotels/facilities/matamoros/facilitie`}

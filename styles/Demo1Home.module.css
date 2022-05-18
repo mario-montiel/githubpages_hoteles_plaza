@@ -7,8 +7,9 @@
 .container .hotel_face {
     width: 100%;
     height: 100%;
-    filter: brightness(50%);
     object-fit: cover;
+    transition: all 0.3s;
+    filter: brightness(50%);
     object-position: center;
 }
 
@@ -78,6 +79,14 @@
     z-index: 1;
     color: #ffffff;
     transition: all 0.5s;
+}
+
+/* ====== ANIMATIONS AND ZOOMS ====== */
+/* ZOOM */
+.container .image_left:hover .hotel_face,
+.container .image_right:hover .hotel_face {
+    width: 105% !important;
+    height: 105% !important;
 }
 
 @media screen and (max-width: 1200px) {

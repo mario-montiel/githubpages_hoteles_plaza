@@ -17,6 +17,7 @@
     top: 0;
     right: 0;
     width: 30%;
+    z-index: -1;
     height: auto;
     position: absolute;
 }
@@ -54,9 +55,7 @@
 }
 
 .vision_container {
-    display: grid;
     margin: 15% auto;
-    grid-template-columns: repeat(2, 1fr);
     background-color: var(--background-mision-vision-text);
 }
 
@@ -64,11 +63,11 @@
     top: 50%;
     left: 35%;
     z-index: 1;
-    min-width: auto;
     max-width: 40%;
-    /* max-height: 80%; */
+    min-width: auto;
     min-height: auto;
     position: absolute;
+    transition: all 1s;
     transform: translate(-50%, -50%);
     background-color: var(--background-mision-vision-text);
 }
@@ -109,14 +108,17 @@
     height: 100%;
     float: right;
     display: flex;
+    transition: all 1s;
     margin: 0px 0px 0px auto;
+    transform: translateX(0%);
 }
 
 .vision_container .text_container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin: 0px 0px 10px auto;
+    width: 50%;
+    padding: 20px;
+    margin-left: auto;
+    transition: all 1s;
+    transform: translate(0%, 0%);
 }
 
 .vision_container .text_subcontainer {
@@ -142,6 +144,7 @@
     min-width: auto;
     margin: 0px auto;
     object-fit: cover;
+    transition: all 1s;
     position: absolute;
     object-position: 0px;
     transform: translate(-50%, -50%);

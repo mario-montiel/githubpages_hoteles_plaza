@@ -51,7 +51,6 @@
 
 .footer .menu_container ul:nth-child(2) li:hover {
     font-weight: bold;
-    cursor: pointer;
 }
 
 .footer .menu_container ul li .svg_weather_icon {
@@ -61,8 +60,9 @@
 }
 
 .footer .menu_container ul li a {
-    text-decoration: none;
+    cursor: pointer;
     color: var(--black);
+    text-decoration: none;
 }
 
 .footer .menu_container ul li .grades {

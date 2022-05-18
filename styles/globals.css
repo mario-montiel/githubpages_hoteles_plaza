@@ -666,3 +666,26 @@ input {
   width: 20px;
   height: 20px;
 }
+
+/* =================== 
+  * APPEAR AND DISAPPEAR ANIMATION CLASS *
+   ===================
+*/
+.is-hidden_right {
+  opacity: 0 !important;
+  transform: translateX(20%) !important;
+}
+
+.is-hidden_left {
+  opacity: 0 !important;
+  transform: translate(-70%, -50%) !important;
+}
+
+.is-hidden_bottom {
+  opacity: 0 !important;
+  transform: translate(-50%, 20%) !important;
+}
+
+.is-hidden_appear {
+  opacity: 0 !important;
+}

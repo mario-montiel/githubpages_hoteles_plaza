@@ -1,14 +1,23 @@
+.main_image_container {
+    overflow: hidden !important;
+}
+
 .hotel_face {
     width: 100%;
-    min-height: 90vh;
+    margin-top: 5rem;
+    min-height: 80vh;
     max-height: 100vh;
     object-fit: cover;
     object-position: center;
+    transition: transform 0.5s;
+}
+
+.hotel_face:hover {
+    transform: scale(1.1);
 }
 
 @media screen and (max-width: 800px) {
     .hotel_face {
-        width: 150%;
         height: 90%;
     }
 
@@ -18,12 +27,24 @@
         object-position: 0%;
     }
 
-    .image_ubication_and_contact_catedral {
+    .image_services_catedral {
         object-position: 40%;
     }
 
+    .image_ubication_and_contact_catedral {
+        object-position: 25%;
+    }
+
     /* Plaza Matamoros */
+    .image_who_we_are_matamoros {
+        object-position: 40% top;
+    }
+
+    .image_facilities_matamoros {
+        object-position: 25%;
+    }
+
     .image_ubication_and_contact_matamoros {
-        object-position: 100%;
+        object-position: 60%;
     }
 }

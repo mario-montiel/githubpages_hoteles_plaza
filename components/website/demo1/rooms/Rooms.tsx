@@ -21,10 +21,17 @@ const RoomsCatedralDemo1 = ({ roomUrl, width }: any) => {
     const [currentIndexImage, setCurrentIndexImage] = useState<number>(2)
 
     // Use Ref
+    /* Gallery */
     const currentImageRef = useRef<any>(null)
     const smallImageRef = useRef<any>(null)
+    /* Animations */
+    const SimpleRoomRef = useRef<HTMLImageElement>(null)
+    const DoubleRoomRef = useRef<HTMLImageElement>(null)
+    const SimpleRoomTextRef = useRef<HTMLDivElement>(null)
+    const DoubleRoomTextRef = useRef<HTMLDivElement>(null)
 
     // Functions
+    /* Gallery */
     const generateSuiteRooms = () => {
         const html: any = []
         const siuteImages: number = 6
@@ -69,7 +76,8 @@ const RoomsCatedralDemo1 = ({ roomUrl, width }: any) => {
             images[i].classList.remove(styles.selected)
             smallImages[i].classList.remove(styles.selected)
         }
-
+        console.log(index, width);
+        
         switch (index) {
             case 1:
                 currentImageRef.current!.style.transform = width > 800 ? 'translate(15%)' : 'translate(0%)'
@@ -106,9 +114,47 @@ const RoomsCatedralDemo1 = ({ roomUrl, width }: any) => {
         showSuiteImageSelected(index)
     }
 
+    /* Animations */
+    const functionObserver = (entries: IntersectionObserverEntry[], observe: IntersectionObserver) => {
+        entries.forEach((entry: IntersectionObserverEntry, index: number) => {
+            const i = selectClassToRemove(entry.target)
+
+            if (entry.isIntersecting) { entry.target.classList.remove(`is-hidden_${i}`) }
+            else { entry.target.classList.add(`is-hidden_${i}`); }
+        });
+    }
+
+    const selectClassToRemove = (elementTarget: Element) => {
+        if (elementTarget == SimpleRoomRef.current) { return 'right' }
+        if (elementTarget == DoubleRoomRef.current) { return 'left' }
+        if (elementTarget == SimpleRoomTextRef.current) { return 'left' }
+        if (elementTarget == DoubleRoomTextRef.current) { return 'right' }
+    }
+
+    // Use Effect
+    /* Gallery */
     useEffect(() => {
         showSuiteImageSelected(currentIndexImage)
     }, [])
+
+    /* Animations */
+    useEffect(() => {
+        let observer = new IntersectionObserver((entries: any, observe) => {
+            functionObserver(entries, observe)
+        });
+
+        if (SimpleRoomRef.current) { observer.observe(SimpleRoomRef.current) }
+        if (DoubleRoomRef.current) { observer.observe(DoubleRoomRef.current) }
+        if (SimpleRoomTextRef.current) { observer.observe(SimpleRoomTextRef.current) }
+        if (DoubleRoomTextRef.current) { observer.observe(DoubleRoomTextRef.current) }
+
+        return () => {
+            if (SimpleRoomRef.current) { observer.unobserve(SimpleRoomRef.current) }
+            if (DoubleRoomRef.current) { observer.unobserve(DoubleRoomRef.current) }
+            if (SimpleRoomTextRef.current) { observer.unobserve(SimpleRoomTextRef.current) }
+            if (DoubleRoomTextRef.current) { observer.unobserve(DoubleRoomTextRef.current) }
+        }
+    }, [SimpleRoomRef.current, DoubleRoomRef.current, SimpleRoomTextRef.current, DoubleRoomTextRef.current])
 
     return (
         <section className={styles.rooms}>
@@ -130,7 +176,7 @@ const RoomsCatedralDemo1 = ({ roomUrl, width }: any) => {
             {/* SIMPLE ROOM */}
 
             <div className={styles.simple_room_container}>
-                <div className={styles.text_container}>
+                <div ref={SimpleRoomTextRef} className={styles.text_container}>
                     <div className={styles.text}>
                         <h5>Habitación</h5>
                         <h5>Sencilla</h5>
@@ -139,6 +185,7 @@ const RoomsCatedralDemo1 = ({ roomUrl, width }: any) => {
                 </div>
 
                 <img
+                    ref={SimpleRoomRef}
                     className={styles.simple_room_image}
                     src={`${roomUrl}simple_room.webp`}
                     alt="Recepción"
@@ -150,11 +197,12 @@ const RoomsCatedralDemo1 = ({ roomUrl, width }: any) => {
             <div className={styles.double_room_container}>
                 <div />
                 <img
+                    ref={DoubleRoomRef}
                     className={styles.double_room_image}
                     src={`${roomUrl}double_room.webp`}
                     alt="Recepción"
                 />
-                <div className={styles.text_container}>
+                <div ref={DoubleRoomTextRef} className={styles.text_container}>
                     <div className={styles.text_subcontainer}>
                         <div className={styles.text}>
                             <h5>Habitación</h5>

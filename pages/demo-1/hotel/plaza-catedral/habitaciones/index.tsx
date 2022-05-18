@@ -1,4 +1,5 @@
 // React
+import { useEffect, useRef } from "react"
 
 // CSS
 import styles from "../../../../../styles/Demo1CatedralHome.module.css"
@@ -11,23 +12,34 @@ import RoomsCatedral from "../../../../../components/website/demo1/rooms/Rooms"
 
 // Helpers
 import { endpoint } from "../../../../../config/endpoint"
+import { appear } from "../../../../../helpers/animations/images/appear"
 
 // Types
 
 RoomsCatedralDemo1.getInitialProps = async () => {
     const weatherJson = await getFetchData(endpoint + '/api/weather')
-  
+
     return {
-      weather: weatherJson,
+        weather: weatherJson,
     }
-  }
-  
-  async function getFetchData(url: string) {
+}
+
+async function getFetchData(url: string) {
     const resp = await fetch(url)
     return await resp.json()
 }
 
 export default function RoomsCatedralDemo1({ weather }: any) {
+
+    // Use Ref
+    const mainImage = useRef<HTMLImageElement>(null)
+
+    // Use Effect
+    useEffect(() => {
+        if (mainImage) {
+            appear(mainImage)
+        }
+    }, [])
 
     return (
         <LayoutDemo1
@@ -37,11 +49,15 @@ export default function RoomsCatedralDemo1({ weather }: any) {
             currentHotel="catedral"
         >
 
-            <img
-                className={styles.hotel_face}
-                src="/hotels/rooms/catedral/room_face.webp"
-                alt="First Image"
-            // srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
+            <div className={styles.main_image_container}>
+                <img
+                    ref={mainImage}
+                    className={`${styles.hotel_face} ${styles.image_rooms_catedral} ${styles.hotel_opacity}`}
+                    src="/hotels/rooms/catedral/room_face.webp"
+                    alt="First Image"
+                />
+            </div>
+            {/* // srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
             //     /hotels/main/fachada-catedral-960x900.webp 530w,
             //     /hotels/main/fachada-catedral-1440x1040.webp 720w,
             //     /hotels/main/fachada-catedral-1920x1201.webp 910w"
@@ -49,8 +65,7 @@ export default function RoomsCatedralDemo1({ weather }: any) {
             //     (max-width: 960px) 240px,
             //     (max-width: 1440px) 530px,
             //     910px
-            // "
-            />
+            // " */}
 
             <RoomsCatedral
                 roomUrl={`${endpoint}/hotels/rooms/catedral/`}

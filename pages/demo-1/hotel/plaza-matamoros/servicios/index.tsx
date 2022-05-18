@@ -46,20 +46,22 @@ export default function ServicesCatedralDemo1({ weather }: any) {
             currentHotel="matamoros"
         >
 
-            <img
-                className={styles.hotel_face}
-                src="/hotels/services/matamoros/service_face.webp"
-                alt="First Image"
-            // srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
-            //     /hotels/main/fachada-catedral-960x900.webp 530w,
-            //     /hotels/main/fachada-catedral-1440x1040.webp 720w,
-            //     /hotels/main/fachada-catedral-1920x1201.webp 910w"
-            // sizes="(max-width: 480px) 120px,
-            //     (max-width: 960px) 240px,
-            //     (max-width: 1440px) 530px,
-            //     910px
-            // "
-            />
+            <div className={styles.main_image_container}>
+                <img
+                    className={styles.hotel_face}
+                    src="/hotels/services/matamoros/service_face.webp"
+                    alt="First Image"
+                // srcSet="/hotels/main/fachada-catedral-480x400.webp 240w,
+                //     /hotels/main/fachada-catedral-960x900.webp 530w,
+                //     /hotels/main/fachada-catedral-1440x1040.webp 720w,
+                //     /hotels/main/fachada-catedral-1920x1201.webp 910w"
+                // sizes="(max-width: 480px) 120px,
+                //     (max-width: 960px) 240px,
+                //     (max-width: 1440px) 530px,
+                //     910px
+                // "
+                />
+            </div>
 
             <ServicesDemo1 />
 
