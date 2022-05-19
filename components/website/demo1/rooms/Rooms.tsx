@@ -14,7 +14,7 @@ import { endpoint } from "../../../../config/endpoint"
 // Types
 
 const RoomsCatedralDemo1 = ({ roomUrl, width }: any) => {
-
+    
     // Variables
 
     // Use State
@@ -76,7 +76,6 @@ const RoomsCatedralDemo1 = ({ roomUrl, width }: any) => {
             images[i].classList.remove(styles.selected)
             smallImages[i].classList.remove(styles.selected)
         }
-        console.log(index, width);
         
         switch (index) {
             case 1:

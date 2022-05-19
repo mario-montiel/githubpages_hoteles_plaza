@@ -11,6 +11,7 @@ import RoomsCatedral from "../../../../../components/website/demo1/rooms/Rooms"
 
 // Helpers
 import { endpoint } from "../../../../../config/endpoint"
+import { useEffect, useState } from "react"
 
 // Types
 
@@ -29,6 +30,23 @@ async function getFetchData(url: string) {
 }
 
 export default function RoomsMatamorosDemo1({ weather }: any) {
+
+    // Variables
+
+    // Use Ref
+
+    // Use State
+    const [width, setWidth] = useState<any>()
+
+    // Functions
+    const getCurrentSize = () => { setWidth(window.innerWidth) }
+
+    // Use Effect
+    useEffect(() => { setWidth(window.innerWidth) }, [])
+    useEffect(() => {
+        window.addEventListener('resize', getCurrentSize)
+        return () => { window.removeEventListener('resize', getCurrentSize) }
+    })
 
     return (
         <LayoutDemo1
@@ -56,6 +74,7 @@ export default function RoomsMatamorosDemo1({ weather }: any) {
             </div>
 
             <RoomsCatedral
+                width={width}
                 roomUrl={`${endpoint}/hotels/rooms/matamoros/`}
             />
 

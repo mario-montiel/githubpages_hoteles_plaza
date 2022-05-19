@@ -54,6 +54,10 @@
     object-fit: cover;
 }
 
+.services .service_content {
+    transition: all 1s;
+}
+
 .services .services_container .service_content p {
     padding: 0px 5%;
     font-size: 12.84pt;

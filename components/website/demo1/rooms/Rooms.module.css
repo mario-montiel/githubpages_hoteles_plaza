@@ -191,11 +191,6 @@
 /* ==== SUITE ==== */
 
 /* Galery */
-
-.suite_room_container {
-    overflow: hidden;
-}
-
 .suite_room_container .small_images {
     display: flex;
     margin: 15px auto;
@@ -207,7 +202,6 @@
     width: 200%;
     display: flex;
     transition: all 0.3s;
-    transform: translateX(-5%) !important;
 }
 
 .suite_room_container .current_image_selected {

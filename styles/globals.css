@@ -671,6 +671,10 @@ input {
   * APPEAR AND DISAPPEAR ANIMATION CLASS *
    ===================
 */
+.is-hidden_appear {
+  opacity: 0 !important;
+}
+
 .is-hidden_right {
   opacity: 0 !important;
   transform: translateX(20%) !important;
@@ -684,8 +688,4 @@ input {
 .is-hidden_bottom {
   opacity: 0 !important;
   transform: translate(-50%, 20%) !important;
-}
-
-.is-hidden_appear {
-  opacity: 0 !important;
 }

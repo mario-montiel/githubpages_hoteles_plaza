@@ -11,6 +11,7 @@
     height: 50vh;
     object-fit: cover;
     object-position: center;
+    transition: transform 0.5s;
 }
 
 .main_blur {
@@ -147,6 +148,25 @@
     color: rgb(36, 36, 36);
     transition: all 0.5s;
     font-weight: bold;
+}
+
+.container .left,
+.container .right {
+    overflow: hidden;
+}
+
+.container .right .main_blur:hover .image_left .hotel_face {
+    transform: scale(1.04);
+}
+
+/* .container .left .main_blur:hover .image_left .hotel_face,
+.container .right:hover .image_right .hotel_face {
+    transform: scale(1.04);
+} */
+
+.container .left:hover .image_left .hotel_face,
+.container .right:hover .image_right .hotel_face {
+    transform: scale(1.04);
 }
 
 @media screen and (max-width: 800px) {

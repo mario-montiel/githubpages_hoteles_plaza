@@ -85,8 +85,7 @@
 /* ZOOM */
 .container .image_left:hover .hotel_face,
 .container .image_right:hover .hotel_face {
-    width: 105% !important;
-    height: 105% !important;
+    transform: scale(1.04);
 }
 
 @media screen and (max-width: 1200px) {

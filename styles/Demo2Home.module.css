@@ -11,6 +11,7 @@
     object-fit: cover;
     filter:brightness(50%);
     object-position: center;
+    transition: transform 0.5s;
 }
 
 .container .image_left,
@@ -91,6 +92,11 @@
     z-index: 1;
     color: #ffffff;
     transition: all 0.5s;
+}
+
+.container .image_left:hover .hotel_face,
+.container .image_right:hover .hotel_face {
+    transform: scale(1.04);
 }
 
 @media screen and (max-width: 1220px) {

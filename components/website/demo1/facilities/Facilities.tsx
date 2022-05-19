@@ -76,9 +76,6 @@ const FacilitiesDemo1 = ({ width, url, sections, limit }: any) => {
             smallImages[i + 1].classList.remove(styles.selected)
         }
 
-        console.log(index);
-
-
         switch (index) {
             case 1:
                 currentImageRef.current!.style.transform = 'translate(15%)'
@@ -273,9 +270,7 @@ const FacilitiesDemo1 = ({ width, url, sections, limit }: any) => {
             )
         }
 
-        if (circlesContainerRef.current) {
-            printCircleSelected()
-        }
+        if (circlesContainerRef.current) { printCircleSelected() }
 
         return html
     }
@@ -291,9 +286,7 @@ const FacilitiesDemo1 = ({ width, url, sections, limit }: any) => {
         circlesContainerRef.current!.children[imageSection.section - 1].classList.add(styles.circle_selected)
     }
 
-    useEffect(() => {
-        showSmallImagesSelected()
-    }, [imageSection.section])
+    useEffect(() => { showSmallImagesSelected() }, [imageSection.section])
 
     return (
         <section className={styles.facilities}>

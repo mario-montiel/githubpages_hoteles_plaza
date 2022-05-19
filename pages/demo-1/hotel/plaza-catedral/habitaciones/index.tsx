@@ -1,5 +1,5 @@
 // React
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 // CSS
 import styles from "../../../../../styles/Demo1CatedralHome.module.css"
@@ -31,15 +31,30 @@ async function getFetchData(url: string) {
 
 export default function RoomsCatedralDemo1({ weather }: any) {
 
+    // Variables
+
     // Use Ref
     const mainImage = useRef<HTMLImageElement>(null)
 
+    // Use State
+    const [width, setWidth] = useState<any>()
+
+    // Functions
+    const getCurrentSize = () => { setWidth(window.innerWidth) }
+
     // Use Effect
     useEffect(() => {
-        if (mainImage) {
-            appear(mainImage)
-        }
+        if (mainImage) { appear(mainImage) }
+
+        setWidth(window.innerWidth)
+        console.log(width);
+        
     }, [])
+
+    useEffect(() => {
+        window.addEventListener('resize', getCurrentSize)
+        return () => { window.removeEventListener('resize', getCurrentSize) }
+    })
 
     return (
         <LayoutDemo1
@@ -68,6 +83,7 @@ export default function RoomsCatedralDemo1({ weather }: any) {
             // " */}
 
             <RoomsCatedral
+                width={width}
                 roomUrl={`${endpoint}/hotels/rooms/catedral/`}
             />
 
