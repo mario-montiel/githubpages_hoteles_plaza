@@ -33,7 +33,7 @@ const BookingModalCatedralDemo1 = ({ close }: any) => {
     const functionObserver = (entries: IntersectionObserverEntry[], observe: IntersectionObserver) => {
         entries.forEach((entry: IntersectionObserverEntry) => {
             const i = selectClassToRemove(entry.target)
-            
+
             if (entry.isIntersecting) { entry.target.classList.remove(`is-hidden_${i}`) }
             else { entry.target.classList.add(`is-hidden_${i}`); }
         });
@@ -81,8 +81,6 @@ const BookingModalCatedralDemo1 = ({ close }: any) => {
                     </svg>
                 </button>
 
-                <h2>Reservaciones</h2>
-
                 <img
                     ref={ImageTopRef}
                     className={styles.texture_top_image}
@@ -90,113 +88,117 @@ const BookingModalCatedralDemo1 = ({ close }: any) => {
                     alt="texture_image"
                 />
 
-                <img
-                    ref={ImageSmallRef}
-                    className={styles.symbol}
-                    src="/hotels/symbols/frame.webp"
-                    alt="Símbolo"
-                />
+                <div className={styles.content_position}>
+                    <h2>Reservaciones</h2>
 
-                <p>Cómodas instalaciones para hacer de su estancia
-                    una experiencia única.</p>
+                    <img
+                        ref={ImageSmallRef}
+                        className={styles.symbol}
+                        src="/hotels/symbols/frame.webp"
+                        alt="Símbolo"
+                    />
 
-                <form>
-                    <div className={styles.input_group}>
-                        <label htmlFor="check-in">Check In:</label>
-                        <br />
-                        <input
-                            type="text"
-                            id="check-in"
-                            className={styles.input_date}
-                            placeholder="DD/MM/AAAA"
-                        />
-                    </div>
+                    <p>Cómodas instalaciones para hacer de su estancia
+                        una experiencia única.</p>
 
-                    <div className={styles.input_group}>
-                        <label htmlFor="check-out">Check Out:</label>
-                        <br />
-                        <input
-                            type="text"
-                            id="check-out"
-                            className={styles.input_date}
-                            placeholder="DD/MM/AAAA"
-                        />
-                    </div>
-
-                    <div className={styles.input_group}>
-                        <label htmlFor="persons">Número de personas:</label>
-                        <br />
-                        <input
-                            type="text"
-                            id="persons"
-                            className={styles.input_date}
-                            placeholder="DD/MM/AAAA"
-                        />
-                    </div>
-
-                    <div className={styles.grid}>
+                    <form>
                         <div className={styles.input_group}>
-                            <label htmlFor="name"></label>
+                            <label htmlFor="check-in">Check In:</label>
+                            <br />
                             <input
                                 type="text"
-                                id="name"
-                                className={styles.input}
-                                placeholder="Nombre"
+                                id="check-in"
+                                className={styles.input_date}
+                                placeholder="DD/MM/AAAA"
                             />
                         </div>
 
                         <div className={styles.input_group}>
-                            <label htmlFor="lastname"></label>
+                            <label htmlFor="check-out">Check Out:</label>
+                            <br />
                             <input
                                 type="text"
-                                id="lastname"
-                                className={styles.input}
-                                placeholder="Apellido"
+                                id="check-out"
+                                className={styles.input_date}
+                                placeholder="DD/MM/AAAA"
                             />
                         </div>
 
                         <div className={styles.input_group}>
-                            <label htmlFor="phone"></label>
+                            <label htmlFor="persons">Número de personas:</label>
+                            <br />
                             <input
                                 type="text"
-                                id="phone"
-                                className={styles.input}
-                                placeholder="Teléfono"
+                                id="persons"
+                                className={styles.input_date}
+                                placeholder="DD/MM/AAAA"
                             />
+                        </div>
+
+                        <div className={styles.grid}>
+                            <div className={styles.input_group}>
+                                <label htmlFor="name"></label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    className={styles.input}
+                                    placeholder="Nombre"
+                                />
+                            </div>
+
+                            <div className={styles.input_group}>
+                                <label htmlFor="lastname"></label>
+                                <input
+                                    type="text"
+                                    id="lastname"
+                                    className={styles.input}
+                                    placeholder="Apellido"
+                                />
+                            </div>
+
+                            <div className={styles.input_group}>
+                                <label htmlFor="phone"></label>
+                                <input
+                                    type="text"
+                                    id="phone"
+                                    className={styles.input}
+                                    placeholder="Teléfono"
+                                />
+                            </div>
+
+                            <div className={styles.input_group}>
+                                <label htmlFor="email"></label>
+                                <input
+                                    type="text"
+                                    id="email"
+                                    className={styles.input}
+                                    placeholder="Correo"
+                                />
+                            </div>
                         </div>
 
                         <div className={styles.input_group}>
-                            <label htmlFor="email"></label>
+                            <label htmlFor="comments"></label>
                             <input
                                 type="text"
-                                id="email"
-                                className={styles.input}
-                                placeholder="Correo"
+                                id="comments"
+                                className={styles.input_textarea}
+                                placeholder="DD/MM/AAAA"
                             />
                         </div>
-                    </div>
 
-                    <div className={styles.input_group}>
-                        <label htmlFor="comments"></label>
-                        <input
-                            type="text"
-                            id="comments"
-                            className={styles.input_textarea}
-                            placeholder="DD/MM/AAAA"
-                        />
-                    </div>
+                        <button>
+                            RESERVAR
+                        </button>
+                    </form>
 
-                    <button>
-                        RESERVAR
-                    </button>
-                </form>
-
-                <img
-                    ref={ImageBottomRef}
-                    className={styles.texture_image}
-                    src="/hotels/symbols/frame_texture_bottom_left.webp"
-                    alt=""
-                />
+                    <img
+                        ref={ImageBottomRef}
+                        className={styles.texture_image}
+                        src="/hotels/symbols/frame_texture_bottom_left.webp"
+                        alt=""
+                    />
+                </div>
             </div>
         </div>
     )
