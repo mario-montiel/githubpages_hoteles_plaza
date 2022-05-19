@@ -176,29 +176,43 @@
 
 @media screen and (max-width: 800px) {
     .content {
-        height: 80%;
+        width: 90%;
+        max-height: 90%;
+        min-height: auto;
     }
 
     .menu_container {
-        height: 100%;
+        height: auto;
     }
 
     .content h2 {
         font-size: 32pt;
     }
     
-    .content > p {
-        display: none;
+    .content p {
+        display: none !important;
     }
 
     .content form {
+        width: 90%;
         overflow: hidden;
         height: 100%;
+        margin: 0px auto;
+        padding: 0px 0px 64px;
+    }
+
+    .content form .input_group {
+        padding: 0px;
+        margin: 15px 0px !important;
     }
 
     .content form button  {
         color: var(--black) !important;
         background-color: transparent !important;
         border: 0.5px solid var(--black) !important;
+    }
+
+    .content .texture_image {
+        bottom: 0;
     }
 }
