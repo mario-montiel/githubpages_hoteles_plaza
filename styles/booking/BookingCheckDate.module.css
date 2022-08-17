@@ -1,0 +1,42 @@
+.checkdate_container {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 4px solid var(--main-color-demo-1);
+    border-bottom: 4px solid var(--main-color-demo-1);
+}
+
+.container {
+    height: 100%;
+    margin: 40px auto;
+    border-radius: 6px;
+    padding: 40px;
+    background-color: var(--white);
+}
+
+.btn_submit {
+    padding: 10px 20px;
+    margin: 3rem auto 2rem;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 30px;
+    color: var(--white);
+    border-radius: 20px;
+    background-color: var(--main-color-demo-1);
+}
+
+.btn_submit:hover {
+    background-color: var(--demo1-btn-hover);
+}
+
+@media screen and (max-width: 1000px) {
+    .checkdate_container {
+        display: block;
+        border-right: 4px solid var(--main-color-demo-1);
+    }
+
+    .container {
+        padding: 40px 20px;
+    }
+}

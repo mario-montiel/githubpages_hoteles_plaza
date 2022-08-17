@@ -1,0 +1,39 @@
+.steps_container {
+    width: 100%;
+    display: grid;
+    padding: 16px 0px;
+    position: relative;
+    border-radius: 6px;
+    margin: 3rem auto 4rem;
+    background-color: var(--white);
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.step_circle {
+    z-index: 1;
+    width: 35px;
+    height: 35px;
+    margin: auto;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    border: 2px solid var(--main-color-demo-1);
+}
+
+.step_circle_selected {
+    font-weight: bold;
+    color: var(--white);
+    background-color: var(--main-color-demo-1);
+}
+
+.line {
+    top: 50%;
+    left: 50%;
+    width: 75%;
+    height: 2px;
+    position: absolute;
+    transform:translate(-50%, -50%);
+    background-color: var(--main-color-demo-1);
+}

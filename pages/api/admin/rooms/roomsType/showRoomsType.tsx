@@ -11,11 +11,7 @@ export default async function getRoomsType(
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
 
-    const roomType = await prismaDB.roomType.findMany({
-        orderBy: {
-            id: 'asc'
-        }
-    })
+    const roomType = await prismaDB.roomType.findMany({ orderBy: { id: 'asc' }, include: { ServicesOnRoom: { include: { service: true } }, RoomTypeImages: true } })
 
     res.json(roomType)
 }

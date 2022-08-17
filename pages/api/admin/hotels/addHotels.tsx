@@ -124,9 +124,8 @@ const verifyIfHotelExist = async (hotel: Hotel, res: NextApiResponse) => {
 
 const createPlacesOfInterestInDB = async (places: any) => {
     const placesRegistre = await prismaDB.placesInterest
-        .createMany({
-            data: places
-        }).catch((err: any) => console.log('createPlacesOfInterestInDB ERRR: ', err))
+        .createMany({ data: places })
+        .catch((err: any) => console.log('createPlacesOfInterestInDB ERRR: ', err))
 
     if (!placesRegistre) {
          return false

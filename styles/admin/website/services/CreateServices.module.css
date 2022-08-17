@@ -1,0 +1,71 @@
+.btn_back_container {
+    margin: 20px 0px 0px 0px;
+}
+
+.btn_back_container button {
+    margin: 0px;
+}
+
+.create_service_grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.checkbox_container {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.checkbox_container fieldset {
+    border: none;
+}
+
+.checkbox_container label {
+    font-size: 14px;
+    margin: 0px 5px 0px 0px;
+}
+
+.checkbox {
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+
+.room_type_checkbox {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    margin: 10px 10px 0px 0px;
+}
+
+.error_text {
+    font-size: 13px;
+    margin-bottom: 30px;
+    color: var(--text-error);
+}
+
+.icon_container {
+    width: auto;
+    height: auto;
+    color: black !important;
+}
+
+.icon_container svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+@media screen and (max-width: 1000px) {
+    .create_service_grid,
+    .checkbox_container {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .create_service_grid,
+    .checkbox_container {
+        grid-template-columns: 100%;
+    }
+}

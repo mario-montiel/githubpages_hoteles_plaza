@@ -1,3 +1,11 @@
+.btn_back_container {
+    margin: 20px 0px 0px 0px;
+}
+
+.btn_back_container>button {
+    margin: 0px;
+}
+
 .title {
     color: #3B444B;
 }
@@ -8,45 +16,82 @@
     margin: 30px 0px 0px 0px;
 }
 
-.attach_user_hotel_section .users_container > ul,
-.attach_user_hotel_section .attach_user_hotel_grid > ul {
+.attach_user_hotel_section .users_container>ul {
     list-style: none;
-    padding: 5px 10px;
+    padding: 15px 10px;
     background-color: var(--white);
 }
 
-.attach_user_hotel_section .users_container > ul li,
-.attach_user_hotel_section .attach_user_hotel_grid > ul li {
-    padding: 5px 15px;
-    margin: 5px 0px;
-    cursor: pointer;
-}
-
-.attach_user_hotel_section .users_container > ul li {
+.attach_user_hotel_section .user_card {
+    display: flex;
+    padding: 10px;
+    margin: 20px 0px;
     border-radius: 5px;
-    border: 0.5px solid rgb(188, 188, 188);
+    align-items: center;
+    background-color: var(--white);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
-.attach_user_hotel_section .users_container > ul li:hover {
+.attach_user_hotel_section .user_card:hover {
     background-color: rgb(210, 255, 251);
 }
 
-.attach_user_hotel_section .attach_user_hotel_grid {
-    display: grid;
-    margin: 5px 10px;
-    padding: 5px 10px;
-    background-color: var(--white);;
-    grid-template-columns: 33% 33% 33%;
+.attach_user_hotel_section .user_card button {
+    margin-left: auto;
+    border-radius: 5px;
+    background-color: rgb(197, 197, 197);
+    border: 0.5px solid rgb(195, 195, 195);
 }
 
-.attach_user_hotel_section .attach_user_hotel_grid .user_into_hotel {
-    list-style: none;
-    padding: 5px 0px;;
+.attach_user_hotel_section .attach_user_hotel_grid {
+    padding: 10px 15px 30px;
     background-color: var(--white);
 }
 
-.dragEl {
-    
+.attach_user_hotel_section .attach_user_hotel_container {
+    width: 100%;
+}
+
+.attach_user_hotel_section .attach_user_hotel_container .text_container {
+    display: flex;
+    align-items: center;
+}
+
+.attach_user_hotel_section .attach_user_hotel_container .text_container p {
+    font-size: 12px;
+    margin-left: 10px;
+    color: var(--text-error);
+}
+
+.attach_user_hotel_section .attach_user_hotel_grid .user_into_hotel {
+    min-height: 70px;
+    max-height: 100%;
+    list-style: none;
+    padding: 5px 20px 5px 20px;
+    background-color: rgb(240, 240, 240);
+}
+
+.attach_user_hotel_section form > button {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    width: 15rem;
+    height: 40px;
+    background-color: var(--btn-submit);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    margin: 3rem auto;
+    display: block;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.attach_user_hotel_section form > button:hover {
+    cursor: pointer;
+    font-weight: 600;
+    background-color: var(--btn-submit-hover);
 }
 
 @media screen and (max-width: 1000px) {

@@ -1,17 +1,24 @@
+.btn_back_container {
+    margin: 20px 0px 0px 0px;
+}
+
+.btn_back_container button {
+    margin: 0px;
+}
+
 .room_card {
     width: 10rem;
     height: 6rem;
-    background-color: red;
+    position: relative;
     border-radius: 10px;
     justify-content: center;
-    position: relative;
 }
 
 .room_card p {
-    position: absolute;
     left: 50%;
-    transform: translate(-50%, -50%);
     font-size: 12px;
+    position: absolute;
+    transform: translate(-50%, -50%);
 }
 
 .room_card p:first-child {

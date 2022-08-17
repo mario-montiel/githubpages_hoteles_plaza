@@ -1,0 +1,74 @@
+.content {
+    height: 100%;
+    margin: 40px auto;
+    border-radius: 6px;
+    padding: 10px 1rem 40px;
+    /* background-color: rgb(207, 232, 214); */
+    background-color: rgb(240, 239, 239);
+    border: 1px solid rgb(87, 86, 84);
+}
+
+.content .content_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.content .hotel_select_container > div,
+.content .date_select_container > div,
+.content .people_select_container > div  {
+    border: 0.5px solid #e0e0e0;
+    height: 3rem;
+}
+
+.content .date_select_container > div div:nth-child(2) > div,
+.content .people_select_container > div > ul li:first-of-type {
+    align-items: center;
+    display: flex;
+    padding: 0px 1rem;
+
+}
+
+.content .date_select_container > div div:nth-child(2) > div svg,
+.content .people_select_container > div ul svg {
+    margin: 0px;
+    padding-right: 1rem;
+}
+
+.content .hotel_select_container img {
+    display: none;
+}
+
+.content .hotel_select_container ul:first-of-type li {
+    width: 100%;
+    display: flex;
+    padding: 0rem 1rem;
+}
+
+.content .hotel_select_container ul:last-of-type li {
+    padding: 1rem;
+    display: block;
+}
+
+.content .btn_submit {
+    margin: 2rem auto 0rem;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 30px;
+    color: var(--white);
+    border-radius: 20px;
+    background-color: var(--main-color-demo-1);
+}
+
+@media screen and (max-width: 1000px) {
+    .content .content_grid {
+        grid-template-columns: 100%;
+    }
+
+    .content .hotel_select_container > div,
+    .content .date_select_container > div,
+    .content .people_select_container > div {
+        height: 1.5rem;
+    }
+    
+}

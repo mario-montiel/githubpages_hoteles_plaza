@@ -25,8 +25,7 @@ import { RoomStatus } from "../../../../../../../types/RoomStatus"
 import Layout from "../../../../../../../components/globals/Layout"
 
 EditCategory.getInitialProps = async (ctx: NextPageContext) => {
-    let roomStatusJson: any = []
-    roomStatusJson = await getFetch(endpoint + '/api/admin/rooms/roomsStatus/showEditRoomStatus', ctx)
+    const roomStatusJson = await getFetch(endpoint + '/api/admin/rooms/roomsStatus/showEditRoomStatus', ctx)
     return { roomStatus: roomStatusJson }
 }
 
@@ -34,9 +33,7 @@ async function getFetch(url: string, ctx: NextPageContext) {
     const cookie = ctx.req?.headers.cookie
     const resp = await fetch(url, {
         method: 'POST',
-        headers: {
-            cookie: cookie!
-        },
+        headers: { cookie: cookie! },
         body: ctx.query.id as string
     })
 

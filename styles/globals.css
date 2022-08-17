@@ -316,9 +316,13 @@ template {
   /* Text */
   --text-p: #636363;
   --title-line: #969595;
+  --text-demo-1: #905F00;
   
   /* Buttons */
   --demo1-btn-hover: #b8963f;
+
+  /* Select */
+  --select-items-hover: #f5f3c3;
 }
 
 
@@ -689,3 +693,15 @@ input {
   opacity: 0 !important;
   transform: translate(-50%, 20%) !important;
 }
+
+/* =================== 
+  * TOASTIFY *
+   ===================
+*/
+
+.Toastify,
+.Toastify__toast {
+  z-index: 999 !important;
+}
+
+ /* Toastify__toast-theme--light Toastify__toast--warning */

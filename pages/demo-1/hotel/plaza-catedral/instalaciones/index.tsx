@@ -16,10 +16,7 @@ import { endpoint } from "../../../../../config/endpoint"
 
 FacilitiesCatedraDemo1.getInitialProps = async () => {
     const weatherJson = await getFetchData(endpoint + '/api/weather')
-
-    return {
-        weather: weatherJson,
-    }
+    return { weather: weatherJson }
 }
 
 async function getFetchData(url: string) {

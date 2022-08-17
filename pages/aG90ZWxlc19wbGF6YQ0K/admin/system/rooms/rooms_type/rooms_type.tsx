@@ -1,4 +1,5 @@
 // React
+import { useRef } from "react"
 import { NextPageContext } from "next"
 import Router, { useRouter } from "next/router"
 
@@ -7,7 +8,7 @@ import { ToastContainer } from "react-toastify"
 
 // CSS
 import 'react-toastify/dist/ReactToastify.css'
-import styles from "../../../../../../styles/admin/system/categories/Categories.module.css"
+import styles from "../../../../../../styles/admin/system/rooms/roomTypes/RoomTypes.module.css"
 
 // Components
 import Layout from "../../../../../../components/globals/Layout";
@@ -21,24 +22,24 @@ import { unauthorized } from "../../../../../../helpers/notification401"
 import TypeRoomsFunctions from "../../../../../../helpers/functions/admin/roomsType/roomsTypeFunctions"
 
 // Types
-import { RoomType } from "../../../../../../types/RoomType"
+import { RoomType, RoomTypeImagesTable } from "../../../../../../types/RoomType"
 
 RoomsType.getInitialProps = async (ctx: NextPageContext) => {
     const isAdmin = await getFetch(endpoint + '/api/admin/auth/isAdmin', ctx)
+    const hotelsJson = await getFetch(endpoint + '/api/admin/hotels/showHotels', ctx)
     const json = await getFetch(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
 
     return {
         isAdmin,
-        roomsType: json
+        roomsType: json,
+        hotels: hotelsJson
     }
 }
 
 async function getFetch(url: string, ctx: NextPageContext) {
     const cookie = ctx.req?.headers.cookie
     const resp = await fetch(url, {
-        headers: {
-            cookie: cookie!
-        }
+        headers: { cookie: cookie! }
     })
 
     if (resp.status === 401 && !ctx.req) {
@@ -59,7 +60,8 @@ async function getFetch(url: string, ctx: NextPageContext) {
     return await resp.json()
 }
 
-export default function RoomsType(props: any) {
+export default function RoomsType({ isAdmin, hotels, roomsType }: any) {
+    console.log(roomsType);
 
     // Variables
     const router = useRouter()
@@ -68,16 +70,59 @@ export default function RoomsType(props: any) {
         showLoading,
         askIfItShouldRemove,
         deleteRoomType
-    } = TypeRoomsFunctions()
+    } = TypeRoomsFunctions(hotels) /* Catedral_2020 */
     const addButton = `<svg  viewBox="0 0 24 24">
         <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
     </svg>`
+
+    // Use Ref
+    const roomTypeTableRef = useRef<HTMLTableSectionElement>(null)
 
     // States
 
     // UseEffect
 
     // Functions
+    const showImagesData = (roomTypeImagesData: any, index: number) => {
+        return (
+            <div
+                className={styles.images_data}
+                onMouseEnter={() => showImageDataElement(index)}
+                onMouseLeave={() => hiddenImageDataElement(index)}
+            >
+                {roomTypeImagesData.length}
+                <>
+                    <svg className={styles.svg_icon} viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" />
+                    </svg>
+                </>
+                <div className={styles.image_container}>
+                    <h5>Imágenes</h5>
+                    {
+                        roomTypeImagesData.length ? (
+                            showImages(roomTypeImagesData)
+                        ) : (<p>No hay imágenes registradas</p>)
+                    }
+                </div>
+            </div>
+        )
+    }
+
+    const showImageDataElement = (index: number) => {
+        roomTypeTableRef.current?.childNodes[index].childNodes[roomTypeTableRef.current?.childNodes[index].childNodes.length - 2].childNodes[0].childNodes[2].classList.add(styles.show_element)
+    }
+
+    const hiddenImageDataElement = (index: number) => {
+        roomTypeTableRef.current?.childNodes[index].childNodes[roomTypeTableRef.current?.childNodes[index].childNodes.length - 2].childNodes[0].childNodes[2].classList.remove(styles.show_element)
+    }
+
+    const showImages = (roomTypeImagesData: any) => {
+        let html: any = []
+        roomTypeImagesData.forEach((roomTypeImageData: RoomTypeImagesTable, index: number) => {
+            html.push(<img key={index} src={roomTypeImageData.imageUrl} alt={'Imágenes de las habitaciones de los hoteles plaza'}></img>)
+        });
+        return html
+    }
 
     return (
         <Layout
@@ -104,12 +149,12 @@ export default function RoomsType(props: any) {
                 />
             ) : null}
 
-            <section className={styles.category_section}>
+            <section className={styles.room_type_section}>
                 <div className={styles.container}>
-                    <h5 className={styles.data_in_subtitle}>Total de tipos de habitaciones: <b>{props.roomsType.length ? props.roomsType.length : 'No se pudieron cargar los datos!'}</b></h5>
+                    <h5 className={styles.data_in_subtitle}>Total de tipos de habitaciones: <b>{roomsType.length ? roomsType.length : 'No se pudieron cargar los datos!'}</b></h5>
 
                     {
-                        props.isAdmin.res ? (
+                        isAdmin.res ? (
                             <div className={styles.btn_container}>
                                 {/* <BtnFilter
                             filterData={filterButton}
@@ -134,16 +179,17 @@ export default function RoomsType(props: any) {
                             <th>Descripción</th>
                             <th>Personas máximas</th>
                             <th>Fumar</th>
+                            <th>Imágenes</th>
                             {
-                                props.isAdmin.res ? (
+                                isAdmin.res ? (
                                     <th>Acciones</th>
                                 ) : null
                             }
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody ref={roomTypeTableRef}>
                         {
-                            props.roomsType.map((roomType: RoomType, index: number) =>
+                            roomsType.map((roomType: RoomType, index: number) =>
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{roomType.name}</td>
@@ -153,8 +199,11 @@ export default function RoomsType(props: any) {
                                     <td>{roomType.description}</td>
                                     <td>{roomType.maxPeople}</td>
                                     <td>{roomType.smoke ? 'Si' : 'No'}</td>
+                                    <td>
+                                        {showImagesData(roomType.RoomTypeImages, index)}
+                                    </td>
                                     {
-                                        props.isAdmin.res ? (
+                                        isAdmin.res ? (
                                             <td>
                                                 <div className="container">
                                                     <button className="btn_action" onClick={() => router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/${roomType.id}`)}>

@@ -9,10 +9,8 @@ import { useEffect, useState } from "react"
 import styles from "./Footer.module.css"
 
 // Componets
-import BookingModalCatedralDemo1 from "../../booking/Booking"
 
 // Helpers
-import { endpoint } from "../../../../../config/endpoint";
 import { convertKelvinToCelsius } from "../../../../../helpers/convertTemperature";
 
 // Types
@@ -158,12 +156,6 @@ export default function FooterDemo1({ weather, currentHotel }: any) {
                     </div>)
                 }
             </div>
-
-            {
-                bookingModal ? (
-                    <BookingModalCatedralDemo1 close={() => setBookingModal(false)} />
-                ) : null
-            }
         </footer>
     )
 }

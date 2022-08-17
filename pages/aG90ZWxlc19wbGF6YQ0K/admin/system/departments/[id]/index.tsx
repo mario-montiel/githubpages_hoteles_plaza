@@ -24,8 +24,7 @@ import { endpoint } from "../../../../../../config/endpoint";
 import { DepartmentForm } from "../../../../../../types/Department"
 
 EditDepartment.getInitialProps = async (ctx: NextPageContext) => {
-    let departmentJson: any = []
-    departmentJson = await getDepartmentToEdit(endpoint + '/api/admin/departments/showEditDepartment', ctx)
+    const departmentJson = await getDepartmentToEdit(endpoint + '/api/admin/departments/showEditDepartment', ctx)
     return { department: departmentJson }
 }
 
@@ -33,9 +32,7 @@ async function getDepartmentToEdit(url: string, ctx: NextPageContext) {
     const cookie = ctx.req?.headers.cookie
     const resp = await fetch(url, {
         method: 'POST',
-        headers: {
-            cookie: cookie!
-        },
+        headers: { cookie: cookie! },
         body: ctx.query.id as string
     })
 

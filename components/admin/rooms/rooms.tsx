@@ -1,25 +1,27 @@
 // React
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // CSS
 import styles from '../../../styles/admin/system/rooms/Rooms.module.css'
 
 // Components
-import { toast } from 'react-toastify';
+import { toast, TypeOptions } from 'react-toastify';
 import DialogConfirm from '../dialogs/confirm/DialogConfirm';
+import DialogWarning from '../dialogs/warning/DialogWarning';
 
 // Helpers
 import BookingDate from '../booking/BookingDate';
 import { endpoint } from "../../../config/endpoint";
-import { getDateFormat_Dnum_D_M_Y } from '../../../helpers/dateTransform';
+import { getDateFormat_Dnum_D_M_Y, getMxDate } from '../../../helpers/dateTransform';
 
 // Types
 import { Room } from '../../../types/Room';
 import { RoomType } from '../../../types/RoomType';
-import { CalendarDate } from '../../../types/CalendarDate';
+import BtnActions from '../buttons/actions/BtnActions';
+import RoomsFloors from './rooms_floor';
 
-export const RoomInfoSelected = (userData: any) => {
+export const RoomInfoSelected = () => {
     return (
         <div className={styles.user_data_container}>
             <h5>Estado de la habitación</h5>
@@ -47,8 +49,9 @@ export const RoomInfoSelected = (userData: any) => {
     )
 }
 
-const Rooms = (props: any) => {
-
+const Rooms = ({ guests, user, roomsStatus }: any) => {
+    console.log('xxxxfasdf: ', roomsStatus);
+    
     // Variables
     const router = useRouter()
     const initialDialogValues = {
@@ -57,91 +60,65 @@ const Rooms = (props: any) => {
         alt: '',
         title: '',
         description: '',
+        isBooking: false,
+        btnConfirm: '',
+        btnCancel: '',
+        onConfirm: (reasonToBooking?: string) => { },
+        onClose: () => { }
+    }
+    const initialWarningDialogValues = {
+        show: false,
+        title: '',
+        description: '',
         btnConfirm: '',
         btnCancel: '',
         onConfirm: () => { },
         onClose: () => { }
     }
 
+    // Use Ref
+    const roomCardContainerRef = useRef<HTMLDivElement>(null)
+
     // Use State
+    const [room, setRoom] = useState<Room>()
     const [rooms, setRooms] = useState([])
+    // const [roomData, setRoomData] = useState<any>()
     const [floors, setFloors] = useState<number>(0)
-    const [roomId, setRoomId] = useState<number>(0)
+    // const [roomId, setRoomId] = useState<number>(0)
 
     const [showDialogConfirm, setShowDialogConfirm] = useState(initialDialogValues)
+    const [showDialogWarning, setShowDialogWarning] = useState(initialWarningDialogValues)
     const [showBookingDate, setShowBookingDate] = useState<boolean>(false)
 
     // Use Effect
-    useEffect(() => {
-        searchRoomsOfHotelSelected()
-    }, [props])
+    useEffect(() => { searchRoomsOfHotelSelected() }, [])
 
     // Functions
-    const showRoomName = (room: any) => {
-        if (room.hotel.totalFloors === 1) {
-            const roomName = (room.roomNumber < 10 ? '0' + room.roomNumber : room.roomNumber)
-            return roomName
-        }
+    const showMessage = (text: string, duration: number, type: TypeOptions) => {
+        toast(text, {
+            position: "top-right",
+            autoClose: duration,
+            closeOnClick: true,
+            type: type
+        })
+    }
 
-        const roomName = (room.floor) + '' + (room.roomNumber < 10 ? '0' + room.roomNumber : room.roomNumber)
-        return roomName
+    const showBookingDateData = (isValidate: boolean) => {
+        setShowBookingDate(isValidate)
+    }
+
+    const redirectTo = (url: string, query?: any) => {
+        router.push(url)
     }
 
     const searchRoomsOfHotelSelected = () => {
-        if (props.user && props.user.hotels && props.user.hotels.length) {
-            props.user.hotels.forEach((hotel: any) => {
-                if (hotel.hotelId === props.user.preferencesId) {
+        if (user && user.hotels && user.hotels.length) {
+            user.hotels.forEach((hotel: any) => {
+                if (hotel.hotelId === user.preferencesId) {
                     setRooms(hotel.hotel.rooms)
                     setFloors(hotel.hotel.totalFloors)
                 }
             });
-        }
-    }
-
-    const generateFloors = () => {
-        let html: any = []
-        for (let index = 0; index < floors!; index++) {
-            html.push(
-                <div key={index + 500}>
-                    <p className={styles.floor_title}>Piso {index + 1}</p>
-                    {generateRooms(index + 1)}
-                </div>
-            )
-        }
-        return html
-    }
-
-    const generteRoomTypes = (actualStatusId: number, lastStatusId: number, roomFormIndex: number) => {
-        let html: any = []
-        props.roomsStatus.forEach((roomType: RoomType, index: number) => {
-            html.push(
-                roomType && parseInt(roomType.id!.toString()) == actualStatusId ? (
-                    <li className={`${styles.actual_status} li-selected`} style={{ color: styles.actual_status }} key={index} value={roomType.id}>
-                        <p>{roomType.name}</p>
-                        <p>Actual</p>
-                    </li>
-                ) : (
-                    <li className={`${styles.li_selected} li-selected`} key={index} onClick={() => addStyleLiSelected(roomFormIndex, index)} value={roomType.id}><p>{roomType.name}</p></li>
-                ),
-            )
-        });
-
-        return html
-    }
-
-    const openStylesRoomCard = (roomCardIndex: number) => {
-        const roomCardDiv = document.querySelectorAll('.room-settings') as NodeListOf<HTMLElement>
-        const cardRoomDiv = document.querySelectorAll('.room-card') as NodeListOf<HTMLElement>
-        const overlay = document.querySelector('.room-overlay')
-
-        overlay?.classList.add(styles.overlay_active)
-
-        closeStylesRoomCard()
-
-        if (!roomCardDiv[roomCardIndex].classList.contains(styles.room_settings_displayed)) {
-            cardRoomDiv[roomCardIndex].classList.add(styles.room_card_selected)
-            roomCardDiv[roomCardIndex].classList.add(styles.room_settings_displayed)
-            roomCardDiv[roomCardIndex].focus()
         }
     }
 
@@ -163,48 +140,45 @@ const Rooms = (props: any) => {
         }
     }
 
-    const addStyleLiSelected = (roomFormIndex: number, index: number) => {
+    const addStyleLiSelected = (roomId: number, roomFormIndex: number, index: number) => {
         const roomFormUl = document.querySelectorAll('.room-settings form ul') as NodeListOf<HTMLElement>
         const lis: HTMLCollectionOf<HTMLElement> = roomFormUl[roomFormIndex].children as HTMLCollectionOf<HTMLElement>
 
-        for (let index = 0; index < lis.length; index++) {
-            const li = lis[index];
+        for (let i = 0; i < lis.length; i++) {
+            const li = lis[i];
             li.classList.remove(styles.selected)
         }
 
         roomFormUl[roomFormIndex].children[index].classList.add(styles.selected)
     }
 
-    const showDetailsOfRoom = (roomId: number) => {
-        if (roomId) {
-            router.push('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/' + roomId)
-        }
-    }
-
-    const handleBookingDate = (isConfirm: boolean, initialDate: CalendarDate, endDate: CalendarDate, initialDateText: string, endDateText?: string, totalDays?: number, isBreakfast?: boolean) => {
+    const handleBookingDate = (bookingData: any) => {
         setShowBookingDate(false)
         closeStylesRoomCard()
+        closeOverlay()
+        addStylesAfterSendRequest(1)
 
-        if (isConfirm) {
-            closeOverlay()
+        if (bookingData) {
             setShowDialogConfirm({
                 ...showDialogConfirm,
                 show: true,
                 image: '/hotels/dialog/booking.svg',
                 alt: 'Agregar reservación',
                 title: '¿Desea agregar la reservación?',
-                description: `El periodo de reservacion es del ${initialDateText} al ${endDateText}, siendo un total de ${totalDays} ${totalDays === 0 ? 'día' : 'días'}`,
+                description: `El periodo de reservacion es del ${bookingData.step1Booking.initialDate} al ${bookingData.step1Booking.endDate}, siendo un total de ${bookingData.step1Booking.totalDays} ${bookingData.step1Booking.totalDays === 0 ? 'día' : 'días'}`,
+                isBooking: true,
                 btnConfirm: 'Agregar',
                 btnCancel: 'Cancelar',
-                onConfirm: () => saveBooking(initialDate, endDate, isBreakfast ? isBreakfast : false),
+                onConfirm: (reasonToBooking?: string) => (
+                    saveBooking(
+                        bookingData,
+                        reasonToBooking ? reasonToBooking : ''
+                    )
+                ),
                 onClose: () => onCloseDialogs()
             })
         }
-    }
 
-    const roomSelectedToBooking = (id: number) => {
-        setRoomId(id)
-        setShowBookingDate(true)
     }
 
     const onCloseDialogs = () => {
@@ -212,50 +186,21 @@ const Rooms = (props: any) => {
         setShowDialogConfirm({ ...showDialogConfirm, show: false })
     }
 
-    const saveBooking = async (initialDate: CalendarDate, endDate: CalendarDate, isBreakfast: boolean) => {
+    const saveBooking = async (bookingData: any, reasonToBooking: string) => {
         setShowDialogConfirm({ ...showDialogConfirm, show: false })
 
-        const roomBooking = {
-            roomId,
-            initialDate: {
-                day: initialDate.day,
-                month: initialDate.month,
-                year: initialDate.year
-            },
-            endDate: {
-                day: endDate.day,
-                month: endDate.month,
-                year: endDate.year
-            },
-            roomStatus: props.roomsStatus,
-            isBreakfast
-        }
-
-        await fetch(endpoint + '/api/admin/rooms/assignBooking/AssignBooking', {
+        const getResponse = await fetch(endpoint + '/api/admin/rooms/assignBooking/AssignBooking', {
             method: 'POST',
-            body: JSON.stringify(roomBooking)
-        }).then((resp) => {
-            if (resp.ok) {
-                toast('Habitación reservada con éxito!', {
-                    position: "top-right",
-                    autoClose: 3000,
-                    closeOnClick: true,
-                    type: 'success'
-                })
-                router.push(endpoint + '/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms')
-            }
-        }).catch((err) => { console.log(err); })
-    }
+            body: JSON.stringify({ bookingData, reasonToBooking })
+        })
+        const response = await getResponse.json()
 
-    const closeRoomSettings = (index: number) => {
-        const roomCardDiv = document.querySelectorAll('.room-settings') as NodeListOf<HTMLElement>
-        const overlay = document.querySelector('.room-overlay')
-        window.onclick = (e: any) => {
-            if (e.target == overlay) {
-                closeOverlay()
-                roomCardDiv[index].classList.remove(styles.room_settings_displayed)
-            }
+        if (!response.res) {
+            return showMessage('No se pudo realizar la reservación!', 4000, 'error')
         }
+
+        router.reload()
+        setTimeout(() => { showMessage(response.message, 4000, 'success') }, 300);
     }
 
     const closeOverlay = () => {
@@ -263,107 +208,44 @@ const Rooms = (props: any) => {
         overlay?.classList.remove(styles.overlay_active)
     }
 
-    const generateRooms = (floorNumber: number) => {
-        let html: any = []
+    const handleDialogWarning = (isShow: boolean, room?: Room, data?: any, index?: number, title?: string, description?: string) => {
         {
-            rooms.length ? (
-                rooms.map((room: any, index: number) => {
-                    room.floor === floorNumber ? (
-                        html.push(
-                            <div className={styles.container_room_cards} key={index + room.floor}>
-                                <div
-                                    className={`${styles.room_card} room-card`}
-                                    style={{
-                                        border: room.roomStatus.border ? '0.05px solid #CBCBCB' : 'none',
-                                        backgroundColor: room.roomStatus.backgroundColor
-                                    }}
-                                    key={index}
-                                    onClick={() => openStylesRoomCard(index)}
-                                >
-                                    <div className={styles.room_last_status_card} style={{ backgroundColor: room.lastRoomStatus.backgroundColor }} key={index} />
+            isShow && room && data && index && title && description ? (
+                setShowDialogWarning({
+                    ...showDialogWarning,
+                    show: true,
+                    title,
+                    description,
+                    btnConfirm: 'Cambiar',
+                    btnCancel: 'Cancelar',
+                    onConfirm: () => { handleDialogConfirm(room, index, data) },
 
-                                    <div className={styles.room_text_container}>
-                                        <p style={{ color: room.roomStatus.textColor }}>{showRoomName(room)}</p>
-                                        <p style={{ color: room.roomStatus.textColor }}>{room.roomType.keyWord}</p>
-                                    </div>
-                                </div>
-                                <div
-                                    className={`${styles.room_settings} room-settings`}
-                                    tabIndex={0}
-                                    onBlur={() => closeRoomSettings(index)}
-                                >
-                                    <form onSubmit={(e) => e.preventDefault()}>
-                                        <button className={styles.btn_close} type="button" onClick={() => closeStylesRoomCard(index)}>
-                                            <svg className={styles.svg_icon} viewBox="0 0 24 24">
-                                                <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
-                                            </svg>
-                                        </button>
-                                        <h5>Cambiar estatus</h5>
-                                        <ul>
-                                            {generteRoomTypes(room.roomStatusId, room.lastRoomStatusId, index)}
-                                        </ul>
-                                        <button className={styles.btn_details} onClick={() => roomSelectedToBooking(room.id)}>
-                                            Agregar reservación
-                                        </button>
-                                        <button className={styles.btn_details} onClick={() => showDetailsOfRoom(room.id)}>
-                                            Ver detalles
-                                        </button>
-                                        <button className={styles.btn_submit} type="button" onClick={() => changeRoomStatus(room, index)}>
-                                            Cambiar
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        )
-                    ) : null
+                    onClose: () => { closeDialogs(index); setShowDialogWarning({ ...showDialogWarning, show: false }) }
                 })
-            ) : null
+            ) : (
+                setShowDialogWarning({
+                    ...showDialogWarning,
+                    show: false
+                })
+            )
         }
-        return html
     }
 
-    const changeRoomStatus = async (room: Room, index: number) => {
-        let roomTypeId: number = 0
-        let lastRoomTypeId: number = 0
-        const roomCardDiv = document.querySelectorAll('.room-settings') as NodeListOf<HTMLElement>
-        const lis = roomCardDiv[index].children[0].children[2].children as HTMLCollectionOf<HTMLElement>
+    const handleDialogConfirm = (room: Room, index: number, data?: any) => {
+        console.log(room, index, data);
 
-        for (let index = 0; index < lis.length; index++) {
-            const li = lis[index] as HTMLLIElement;
-            if (li.classList.contains(styles.selected)) {
-                roomTypeId = li.value
-            }
-
-            if (li.classList.contains(styles.actual_status)) {
-                lastRoomTypeId = li.value
-            }
-        }
-
-        if (roomTypeId === 0) {
-            return toast('Seleccione un estatus para poder continuar!', {
-                position: "top-right",
-                autoClose: 2000,
-                closeOnClick: true,
-                type: 'warning'
-            })
-        }
-
-        const data = {
-            id: room.id,
-            roomTypeId,
-            lastRoomTypeId
-        };
-
-        // Para poder editar la habitación debe ingresar su contraseña
+        handleDialogWarning(false)
+        addStylesAfterSendRequest(1, index, 1)
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
-            image: '/hotels/dialog/room.svg',
-            alt: 'Editar habitación',
-            description: `¿Desea cambiar el estatus de habitación de la habitación ${(room.floor)}${room.roomNumber < 10 ? '0' + room.roomNumber : room.roomNumber}? Si la habitación tiene reservación esta será borrada.`,
+            // image: '/hotels/dialog/room.svg',
+            // alt: 'Editar habitación',
+            title: "Cambiar estado de habitación",
+            description: `¿Desea cambiar el estatus de habitación de la habitación ${(room.floor)}${room.roomNumber < 10 ? '0' + room.roomNumber : room.roomNumber}?.`,
             btnConfirm: 'Editar',
             btnCancel: 'Cancelar',
-            onConfirm: () => editRoom(data),
+            onConfirm: () => editRoom(room),
             onClose: () => closeDialogs(index)
         })
     }
@@ -386,54 +268,63 @@ const Rooms = (props: any) => {
         setShowDialogConfirm({ ...showDialogConfirm, show: false })
     }
 
-    const editRoom = async (data: any) => {
-        const roomData = {
-            roomData: data,
-            type: 'status'
-        }
-        await fetch('/api/admin/rooms/editRooms', {
-            headers: {
-                'Content-type': 'application/json'
-            },
+    const editRoom = async (room: Room) => {
+        const roomData = { roomData: room, type: 'status' }
+        const getResponse = await fetch('/api/admin/rooms/editRooms', {
+            headers: { 'Content-type': 'application/json' },
             method: 'POST',
             body: JSON.stringify(roomData),
-        }).then(() => {
-            addStylesAfterSendRequest(1)
-            setShowDialogConfirm({ ...showDialogConfirm, show: false })
-
-            toast('Estatus de la habitación actualizado con éxito!', {
-                position: "top-right",
-                autoClose: 3000,
-                closeOnClick: true,
-                type: 'success'
-            })
-
-            router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms')
         })
+        const response = await getResponse.json()
+        console.log('RESPONSE: ', response);
+
+        if (!response.res) { showMessage(response.message, 4000, 'error') }
+
+        setShowDialogConfirm({ ...showDialogConfirm, show: false })
+        // router.reload()
+
+        // setTimeout(() => {
+        //     showMessage(response.message, 4000, 'success')
+        // }, 300);
     }
 
     return (
         <div className={styles.rooms_home_admin}>
-
             {
                 showBookingDate ? (
                     <BookingDate
+                        guests={guests}
+                        roomSelected={room}
                         handleBookingDate={(
-                            isShow: boolean,
-                            initialDate: CalendarDate,
-                            endDate: CalendarDate,
-                            initialDateText: string,
-                            endDateText: string,
-                            totalDays: number,
-                            isBreakFast: boolean
-                        ) => handleBookingDate(isShow, initialDate, endDate, initialDateText, endDateText, totalDays, isBreakFast)}
-                    // isBookingDate = {(isShow: boolean) => handleBookingDate(isShow)}
+                            bookingData: any
+                        ) => handleBookingDate(bookingData)}
+                    />
+                ) : null
+            }
+
+            <BtnActions
+                icon='<svg className={styles.svg_icon} viewBox="0 0 24 24">
+                <path fill="currentColor" d="M1 2V23H3V21H21V23H23V7C23 4.79 21.21 3 19 3H10V8H3V2M6.5 2A2.5 2.5 0 0 0 4 4.5A2.5 2.5 0 0 0 6.5 7A2.5 2.5 0 0 0 9 4.5A2.5 2.5 0 0 0 6.5 2M3 11H21V13.56C20.41 13.21 19.73 13 19 13H10V18H3M6.5 12A2.5 2.5 0 0 0 4 14.5A2.5 2.5 0 0 0 6.5 17A2.5 2.5 0 0 0 9 14.5A2.5 2.5 0 0 0 6.5 12Z" />
+            </svg>'
+                onClick={() => router.push('/aG90ZWxlc19wbGF6YQ0K/admin/website/bookings/')}
+            />
+
+            {
+                showDialogWarning.show ? (
+                    <DialogWarning
+                        title={showDialogWarning.title}
+                        description={showDialogWarning.description}
+                        btnConfirm={showDialogWarning.btnConfirm}
+                        btnCancel={showDialogWarning.btnCancel}
+                        onConfirm={() => showDialogWarning.onConfirm()}
+                        onClose={() => showDialogWarning.onClose()}
                     />
                 ) : null
             }
 
             {showDialogConfirm.show ? (
                 <DialogConfirm
+                    isBooking={showDialogConfirm.isBooking}
                     image={showDialogConfirm.image}
                     alt={showDialogConfirm.alt}
                     title={showDialogConfirm.title}
@@ -450,16 +341,68 @@ const Rooms = (props: any) => {
                     <p className={styles.rooms_title}>Habitaciones</p>
                     <p className={styles.date}>{getDateFormat_Dnum_D_M_Y()}</p>
                 </div>
-                <div className={styles.room_card_container}>
+                <div ref={roomCardContainerRef} className={styles.room_card_container}>
                     {
-                        floors > 0 ? (
-                            generateFloors()
+                        floors > 0 && roomsStatus.length ? (
+                            <RoomsFloors
+                                floors={floors}
+                                rooms={rooms}
+                                roomStatus={roomsStatus}
+                                showMessage={
+                                    (
+                                        text: string,
+                                        duration: number,
+                                        type: TypeOptions
+                                    ) => showMessage(text, duration, type)
+                                }
+                                handleDialogWarning={
+                                    (
+                                        isShow: boolean,
+                                        room?: Room,
+                                        data?: any,
+                                        index?: number,
+                                        title?: string,
+                                        description?: string
+                                    ) => handleDialogWarning(
+                                        isShow, room, data, index, title, description
+                                    )
+                                }
+                                handleDialogConfirm={
+                                    (room: Room, index: number, data?: any) => handleDialogConfirm(
+                                        room, index, data
+                                    )
+                                }
+                                setShowDialogWarning={
+                                    (
+                                        show?: boolean,
+                                        title?: string,
+                                        description?: string,
+                                        btnConfirm?: string,
+                                        btnCancel?: string,
+                                        onConfirm?: () => void,
+                                        onClose?: () => void
+                                    ) => setShowDialogWarning({
+                                        ...showDialogWarning,
+                                        show: show ? show : showDialogWarning.show,
+                                        title: title ? title : showDialogWarning.title,
+                                        description: description ? description : showDialogWarning.description,
+                                        btnConfirm: btnConfirm ? btnConfirm : showDialogWarning.btnConfirm,
+                                        btnCancel: btnCancel ? btnCancel : showDialogWarning.btnCancel,
+                                        onConfirm: onConfirm ? onConfirm : showDialogWarning.onConfirm,
+                                        onClose: onClose ? onClose : showDialogWarning.onClose
+                                    })
+                                }
+                                setRoom={(room: Room) => setRoom(room)}
+                                setShowBookingDate={(isValidate: boolean) => showBookingDateData(isValidate)}
+                                redirectTo={(url: string, query?: any) => redirectTo(url, query)}
+                            />
+                            // generateFloors()
                         ) : null
                     }
                 </div>
             </div>
             {
-                props.user && !props.user.preferencesId ? (
+                user && !user.preferencesId ? (
                     <div className={styles.text_info}>
                         <svg className={styles.svg_icon_arrow} viewBox="0 0 24 24">
                             <path fill="currentColor" d="M10.05 16.94V12.94H18.97L19 10.93H10.05V6.94L5.05 11.94Z" />

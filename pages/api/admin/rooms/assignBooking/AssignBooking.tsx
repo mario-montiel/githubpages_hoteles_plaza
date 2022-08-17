@@ -3,6 +3,7 @@ import prismaDB from '../../../../../prisma/Instance'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Authenticated } from '../../../../../api/authentication'
 import { CalendarDate } from '../../../../../types/CalendarDate'
+import { Guest } from '../../../../../types/Guest'
 
 export default Authenticated(async function AssignBooking(
     req: NextApiRequest,
@@ -11,46 +12,85 @@ export default Authenticated(async function AssignBooking(
     if (req.method !== 'POST') {
         return res.status(405).json({ message: "Código de estado de respuesta no permitido" })
     }
-    
+
     const response = JSON.parse(req.body)
-    const data = await  getDataGenerated(response)
+    const isNewGuest = response.bookingData.step2Booking.isNewGuest
+    const guest: Guest = isNewGuest ? ( await createGuest(response, res) ) : response.bookingData.step2Booking.guest
     
-    saveInDB(data)
-    
-    res.status(200).json({ res: true, message: 'Room updated successful' })
+    await saveInDB(response, guest, res)
+
+    res.status(200).json({ res: true, message: 'Habitación actualizada con éxito!' })
 })
 
-const getDataGenerated = async (response: any) => {
-    const date = new Date()
-    const endDate = response.endDate as CalendarDate
-    const initialDate = response.initialDate as CalendarDate
-    // reservationStatusId = Get the ID of status called 'Reservado'
-    const reservationStatusId = response.roomStatus.findIndex((status: any) => status.name === 'Reservado')
-    const hour = date.getHours()
-    const minutes = date.getMinutes()
-    const seconds = date.getSeconds()
-    const iDate = new Date(initialDate.year, initialDate.month, initialDate.day, hour, minutes, seconds)
-    const eDate = new Date(endDate.year, endDate.month, endDate.day, 15, 0)
-    const dates = {
-        roomId: response.roomId,
-        initialDate: iDate,
-        endDate: eDate,
-        roomStatusId: response.roomStatus[reservationStatusId],
-        isBreakfast: response.isBreakfast,
+const createGuest = async (response: any, res: NextApiResponse) => {
+    const guest = await prismaDB.guest.create({
+        data: {
+            email: response.bookingData.step2Booking.guest.email,
+            password: response.bookingData.step2Booking.guest.password,
+            fullName: response.bookingData.step2Booking.guest.fullName,
+            lastName: response.bookingData.step2Booking.guest.lastName,
+            company: response.bookingData.step2Booking.guest.company,
+            city: response.bookingData.step2Booking.guest.city
+        }
+    })
+
+    if (!guest) {
+        res.status(200).json({ res: false, message: 'No se pudo agregar el huésped a la base de datos' })
+        return {}
     }
-    
-    return dates
+
+    return guest
 }
 
-const saveInDB = async (response: any) => {
-    await prismaDB.rooms.update({
-        where: { id: response.roomId },
+const saveInDB = async (response: any, guest: Guest, res: NextApiResponse) => {
+    const date = new Date()
+    const initialDate = response.bookingData.step1Booking.initialDate.dateMx
+    const endDate = response.bookingData.step1Booking.endDate.dateMx
+    const nowDate = date.toLocaleDateString("es-MX", { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+    const roomId = response.bookingData.room.id
+    const roomBookingId = response.bookingData.room.RoomBookings[0].id
+    const changeLastRoomBooking = await prismaDB.roomBookings.update({
+        where: {id: roomBookingId},
+        data: { status: 'Eliminado' }
+    })
+
+    if (!changeLastRoomBooking) {
+        res.status(200).json({ res: false, message: 'Ocurrió un problema y no se pudo actualizar la reservación' })
+        return {}
+    }
+
+    const roomBooking = await prismaDB.roomBookings.create({
         data: {
-            checkIn: response.initialDate,
-            checkOut: response.endDate,
-            isBooking: true,
-            isBreakfast: response.isBreakfast,
-            roomStatusId: response.roomStatusId.id
+            detailsOfRoom: response.bookingData.room.roomDetails,
+            detailsOfBooking: response.reasonToBooking,
+            checkIn: initialDate,
+            checkOut: endDate,
+            isBreakfast: response.bookingData.step1Booking.isBreakFast,
+            guestId: guest.id,
+            roomsId: roomId,
+            createdAt: nowDate
         }
-    }).catch((err: any) => console.log(err))
+    })
+    
+    if (!roomBooking) {
+        res.status(200).json({ res: false, message: 'Ocurrió un problema y no se pudo crear la reservación' })
+        return {}
+    }
+    
+    const room = await prismaDB.rooms.update({
+        where: { id: response.bookingData.room.id },
+        data: { 
+            isBooking: true,
+            roomStatusId: 3,
+            lastRoomStatusId: response.bookingData.room.roomStatusId,
+            bookedAt: initialDate,
+        }
+    })
+
+    if (!room) {
+        res.status(200).json({ res: false, message: 'No se pudo actualizar la fecha de reservación de la habitación' })
+        return {}
+    }
+
+    return roomBooking
 }

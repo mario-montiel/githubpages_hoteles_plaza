@@ -24,3 +24,23 @@ export const getDateFormat_Dtext_D_M_Y = (dateTimer: number) => {
         
     return date
 }
+
+export const getMxDate = (dateTime: string) => {
+    const aMonths =
+    ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+    const dateTimeSplit = dateTime.split(' ')
+    const dateSplit = dateTimeSplit[0]
+    const timeSplit = dateTimeSplit[1]
+    const dateMx = dateSplit.split('/')
+    const month: number = parseInt(dateMx[1])
+    const dataFormat = dateMx[0] + ' ' + aMonths[month] + ' ' + dateMx[2]
+    const timeFormat = timeSplit.replaceAll(',' , ':')
+    
+    const date = {
+        date: dataFormat,
+        time: timeFormat,
+        dateTime: dataFormat + ' a las ' + timeFormat
+    }
+    
+    return date
+}

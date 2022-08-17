@@ -1,10 +1,10 @@
 // React
-import { useEffect, useState } from "react"
 import { NextPageContext } from "next"
+import { useEffect, useState } from "react"
 import Router, { useRouter } from "next/router"
 
 // Libraries
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 
 // CSS
 import styles from "../../../../../styles/admin/system/users/CreateUser.module.css"
@@ -36,11 +36,7 @@ CreateUser.getInitialProps = async (ctx: NextPageContext) => {
 
 async function getFetch(url: string, ctx: NextPageContext) {
     const cookie = ctx.req?.headers.cookie
-    const resp = await fetch(url, {
-        headers: {
-            cookie: cookie!
-        }
-    })
+    const resp = await fetch(url, { headers: { cookie: cookie! } })
 
     if (resp.status === 401 && !ctx.req) {
         Router.replace(endpoint + '/aG90ZWxlc19wbGF6YQ0K/authentication/login')

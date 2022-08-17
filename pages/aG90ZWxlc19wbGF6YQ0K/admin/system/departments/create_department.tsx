@@ -8,7 +8,6 @@ import { useRouter } from "next/router"
 import styles from "../../../../../styles/admin/system/departments/CreateDepartment.module.css"
 
 // Components
-import { btnBack } from "../../../../../helpers/svg/btnBack";
 import Layout from "../../../../../components/globals/Layout";
 import Loading from "../../../../../components/admin/loading/Loader"
 import BtnSubmit from "../../../../../components/admin/buttons/submit/BtnSubmit"
@@ -16,6 +15,7 @@ import BtnActions from "../../../../../components/admin/buttons/actions/BtnActio
 import DialogConfirm from "../../../../../components/admin/dialogs/confirm/DialogConfirm"
 
 // Helpers
+import { btnBack } from "../../../../../helpers/svg/btnBack";
 import DepartmentsFunctions from "../../../../../helpers/functions/admin/departments/departmentsFunctions"
 
 // Types

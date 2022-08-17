@@ -7,7 +7,7 @@ import { useRouter } from "next/router"
 import styles from "./Navbar.module.css"
 
 // Componets
-import BookingModalCatedralDemo1 from "../../booking/Booking"
+import { endpoint } from "../../../../../config/endpoint"
 
 // Libraries
 
@@ -30,10 +30,14 @@ const NavbarDemo1 = () => {
 
     // Use State
     const [url, setUrl] = useState(initialUrlDataValues)
+    const [currentHotel, setCurrentHotel] = useState<string>('')
     const [imageLoaded, setImageLoaded] = useState<boolean>(false)
-    const [bookingModal, setBookingModal] = useState<boolean>(false)
 
     // Functions
+    const redirectTo = (url: string) => {
+        router.push({ pathname: url})
+    }
+
     const handleHamburgerStyles = () => {
         const lines = hamburgerRef.current?.childNodes as NodeListOf<HTMLDivElement>
 
@@ -53,8 +57,10 @@ const NavbarDemo1 = () => {
     useEffect(() => {
         if (router.asPath.startsWith('/demo-1/hotel/plaza-catedral')) {
             setUrl({ ...url, logo: 'catedral_logo', url: "/demo-1/hotel/plaza-catedral" })
+            setCurrentHotel('plaza catedral')
         } else {
             setUrl({ ...url, logo: 'matamoros_logo', url: "/demo-1/hotel/plaza-matamoros" })
+            setCurrentHotel('plaza matamoros')
         }
     }, [router.asPath])
 
@@ -62,7 +68,7 @@ const NavbarDemo1 = () => {
 
     return (
         <nav className={styles.navbar}>
-            <ul>
+            <ul className={styles.navbar_content}>
                 <li onClick={() => router.push('/')} className={styles.li_logo}>
                     {
                         imageLoaded ? (
@@ -76,7 +82,7 @@ const NavbarDemo1 = () => {
                         </div>)
                     }
                 </li>
-                <ul ref={menuMobileRef}>
+                <ul ref={menuMobileRef} className={styles.menu}>
                     <li className={router.asPath == url.url ? styles.selected : ""}>
                         <Link href={`${url.url}/`}>
                             QUIÉNES SOMOS
@@ -102,7 +108,7 @@ const NavbarDemo1 = () => {
                             UBICACIÓN Y CONTACTO
                         </Link>
                     </li>
-                    <button onClick={() => setBookingModal(true)}>
+                    <button onClick={() => redirectTo(endpoint + '/demo-1/hotel/booking')}> {/*  seleccionar-tipo-habitacion */}
                         RESERVAR
                     </button>
                 </ul>
@@ -112,14 +118,7 @@ const NavbarDemo1 = () => {
                     <div className={styles.line} />
                     <div className={styles.line} />
                 </div>
-
-                {
-                    bookingModal ? (
-                        <BookingModalCatedralDemo1 close={() => setBookingModal(false)} />
-                    ) : null
-                }
             </ul>
-
         </nav>
     )
 }

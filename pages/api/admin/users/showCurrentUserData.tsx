@@ -41,7 +41,18 @@ export default async function ShowCurrentUser(
                                     roomStatus: true,
                                     lastRoomStatus: true,
                                     roomType: true,
-                                    hotel: true
+                                    hotel: true,
+                                    RoomBookings: {
+                                        take: 1,
+                                        where: {OR: [
+                                            {status: 'En proceso'},
+                                            {status: 'Pagado'}
+                                        ]},
+                                        orderBy: { id: 'desc' },
+                                        include: {
+                                            guest: true
+                                        }
+                                    }
                                 },
                                 orderBy: [
                                     { floor: 'asc' },

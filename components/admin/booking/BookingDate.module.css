@@ -9,28 +9,78 @@
 }
 
 .calendar_overlay .calendar_content {
-    width: 70%;
-    height: auto;
-    background-color: var(--white);
-    position: absolute;
     top: 50%;
     left: 50%;
+    width: 70%;
+    height: auto;
+    overflow: hidden;
+    position: absolute;
     border-radius: 15px;
+    background-color: var(--white);
     transform: translate(-50%, -50%);
 }
 
-.calendar_overlay .calendar_content .btn_close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+.calendar_overlay .calendar_content .calendar_steps {
+    width: 200%;
+    height: 100%;
+    display: grid;
+    transition: transform 0.5s;
+    grid-template-columns: 50% 50%;
+}
+
+.booking_guest_container {
+    width: 95%;
+    /* margin: auto; */
+    margin: 5px auto;
+}
+
+/* BOOKING GUEST */
+
+.booking_guest {
+    /* padding: 64px 1rem; */
+}
+
+.calendar_overlay .calendar_content .btn_actions_container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 5px 0px 2rem;
+}
+
+.calendar_overlay .calendar_content .booking_guest .btn_actions_container button {
+    width: 3rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    margin: 0px 1rem 0px 0px;
+    background-color: var(--white);
+    box-shadow: 0px 0px 5px 0px rgba(146, 146, 146, 0.5);
+}
+
+.input_guest::placeholder {
+    font-weight: 400;
+}
+
+.input_guest {
+    font-size: 14px;
+    border-radius: 5px;
+    border: 0.5px solid #d5d5d5;
+    color: var(--black) !important;
+    font-weight: 600;
+}
+
+/* CALENDAR */
+
+.calendar_overlay .calendar_content .btn_close {
+    top: 10px;
+    z-index: 1;
+    right: 10px;
     width: 2rem;
     height: 2rem;
+    display: flex;
     cursor: pointer;
     border-radius: 5px;
-    background-color: transparent;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
     border: 0.5px solid rgb(202, 202, 202);
 }
 
@@ -50,12 +100,12 @@
 }
 
 .calendar_overlay .calendar_content .calendar label {
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    margin: 0rem auto 1rem;
     display: block;
-    color: var(--calendar-label);
     font-weight: 600;
+    text-align: center;
+    margin: 0rem auto 1rem;
+    color: var(--calendar-label);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .calendar_overlay .calendar_content .calendar select {

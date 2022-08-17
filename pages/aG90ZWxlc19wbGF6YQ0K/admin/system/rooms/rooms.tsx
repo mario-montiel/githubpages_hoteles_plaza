@@ -1,7 +1,7 @@
 // React
 import { NextPageContext } from "next";
 import { useEffect, useState } from "react";
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 
 // Libraries
 import { toast, ToastContainer } from "react-toastify";
@@ -29,6 +29,7 @@ import RoomFunctions from "../../../../../helpers/functions/admin/rooms/roomsFun
 
 Rooms.getInitialProps = async (ctx: NextPageContext) => {
     const isAdmin = await getFetchData(endpoint + '/api/admin/auth/isAdmin', ctx)
+    const guestsJson = await getFetchData(endpoint + '/api/admin/guests/showGuests', ctx)
     const userJson = await getFetchData(endpoint + '/api/admin/users/showCurrentUserData', ctx)
     const roomsTypeJson = await getFetchData(endpoint + '/api/admin/rooms/roomsType/showRoomsType', ctx)
     const roomsStatusJson = await getFetchData(endpoint + '/api/admin/rooms/roomsStatus/showRoomsStatus', ctx)
@@ -36,6 +37,7 @@ Rooms.getInitialProps = async (ctx: NextPageContext) => {
     return {
         isAdmin,
         user: userJson,
+        guests: guestsJson,
         roomsType: roomsTypeJson,
         roomsStatus: roomsStatusJson
     }
@@ -43,11 +45,7 @@ Rooms.getInitialProps = async (ctx: NextPageContext) => {
 
 async function getFetchData(url: string, ctx: NextPageContext) {
     const cookie = ctx.req?.headers.cookie
-    const resp = await fetch(url, {
-        headers: {
-            cookie: cookie!
-        }
-    })
+    const resp = await fetch(url, { headers: { cookie: cookie! } })
 
     if (resp.status === 401 && !ctx.req) {
         unauthorized()
@@ -67,14 +65,13 @@ async function getFetchData(url: string, ctx: NextPageContext) {
     return await resp.json()
 }
 
-export default function Rooms(props: any) {
+export default function Rooms({ user, guests, isAdmin, roomsStatus, roomsType }: any) {
     
     // Variables
-    const router = useRouter()
     const {
         showDialogConfirm,
         showLoading,
-        sendUseRefData,
+        // sendUseRefData,
         confirmToAddRooms
     } = RoomFunctions()
     const addButton = `<svg  viewBox="0 0 24 24">
@@ -86,12 +83,10 @@ export default function Rooms(props: any) {
     const [showModalCreate, setShowModalCreate] = useState<boolean>(false)
 
     // UseEffect
-    useEffect(() => {
-        setFloorSelcted(1)
-    }, [])
+    useEffect(() => { setFloorSelcted(1) }, [])
 
     useEffect(() => {
-        sendUseRefData(props.user)
+        // sendUseRefData(props.user)
         initDisabledCheckbox()
     }, [showModalCreate])
 
@@ -167,12 +162,12 @@ export default function Rooms(props: any) {
                 floor: floorSelected,
                 roomTypeId: 1,
                 registredBy: '',
-                hotelId: props.user.preferences.id,
-                roomStatusId: props.roomsStatus[0].id,
+                hotelId: user.preferences.id,
+                roomStatusId: roomsStatus[0].id,
                 observations: '',
-                lastRoomStatusId: props.roomsStatus[0].id,
-                totalRoomsOfHotel: props.user.preferences.totalRooms,
-                rooms: props.user.preferences.totalFloors > 1 ? props.user.preferences.rooms : false
+                lastRoomStatusId: roomsStatus[0].id,
+                totalRoomsOfHotel: user.preferences.totalRooms,
+                rooms: user.preferences.totalFloors > 1 ? user.preferences.rooms : false
             }
         }
 
@@ -181,7 +176,7 @@ export default function Rooms(props: any) {
 
     const showRoomsRange = () => {
         let html: any = []
-        props.roomsType.map((roomType: RoomType, index: number) => {
+        roomsType.map((roomType: RoomType, index: number) => {
             html.push(
                 <div className={`${stylesModalCreate.roomtype_container}`} key={index}>
                     <input
@@ -220,7 +215,7 @@ export default function Rooms(props: any) {
 
     const showFloors = () => {
         let array = []
-        for (let index = 0; index < props.user.preferences.totalFloors; index++) {
+        for (let index = 0; index < user.preferences.totalFloors; index++) {
             array.push(
                 <option value={(index + 1)} key={index}>{(index + 1)}</option>
             )
@@ -241,7 +236,7 @@ export default function Rooms(props: any) {
 
             <ToastContainer />
 
-            {showDialogConfirm.show ? (
+            {/* {showDialogConfirm.show ? (
                 <DialogConfirm
                     image={showDialogConfirm.image ? showDialogConfirm.image : ''}
                     alt={showDialogConfirm.alt ? showDialogConfirm.alt : ''}
@@ -252,7 +247,7 @@ export default function Rooms(props: any) {
                     onConfirm={showDialogConfirm.onConfirm ? showDialogConfirm.onConfirm : () => { }}
                     onClose={showDialogConfirm.onClose ? showDialogConfirm.onClose : () => { }}
                 />
-            ) : null}
+            ) : null} */}
 
             <div className={`${styles.overlay} room-overlay`} />
 
@@ -261,7 +256,7 @@ export default function Rooms(props: any) {
                     {/* <h5 className={styles.data_in_subtitle}>Total de habitaciones: <b>{props.user.preferences.totalRooms ? props.user.preferences.totalRooms : 'No se pudieron cargar los datos!'}</b></h5> */}
 
                     {
-                        props.isAdmin.res ? (
+                        isAdmin.res ? (
                             <div className={styles.btn_container}>
                                 {/* <BtnFilter
                             filterData={filterButton}
@@ -317,7 +312,11 @@ export default function Rooms(props: any) {
                 }
 
                 <section>
-                    <ComponentRooms user={props.user} roomsStatus={props.roomsStatus} />
+                    <ComponentRooms
+                        user={user}
+                        guests={guests}
+                        roomsStatus={roomsStatus}
+                    />
                 </section>
 
             </section>

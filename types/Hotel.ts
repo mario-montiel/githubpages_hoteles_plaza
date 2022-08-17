@@ -18,6 +18,7 @@ export type HotelForm = {
     rooms: [],
     totalFloors: number
     totalRooms: number
+    pathImageName: string
     file: string
     image: string
     url: string
@@ -41,6 +42,7 @@ export type Hotel = {
     facebook?: string
     whatsapp?: string
     instagram?: string
+    pathImageName: string
     file: string
     image: string,
     url: string

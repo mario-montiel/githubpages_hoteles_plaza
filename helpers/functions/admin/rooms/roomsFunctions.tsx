@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { endpoint } from "../../../../config/endpoint";
 
 // Components and CSS
-import { toast } from 'react-toastify';
+import { toast, ToastOptions, TypeOptions } from 'react-toastify';
 import { Room } from "../../../../types/Room";
 import { RoomStatus } from "../../../../types/RoomStatus";
 
@@ -28,34 +28,21 @@ const RoomFunctions = () => {
     }
 
     // Use State
-    const [rooms, setRooms] = useState([])
-    const [floors, setFloors] = useState<number>()
+    // const [rooms, setRooms] = useState([])
+    // const [floors, setFloors] = useState<number>()
     const [showDialogConfirm, setShowDialogConfirm] = useState(initialDialogValues)
     const [showLoading, setShowLoading] = useState(initialLoadingValues)
 
     // Use Effect
 
     // Functions
-    const sendUseRefData = (user: any) => {
-        console.log(user);
-        
-        if (user && user.hotels) {
-            user.hotels.forEach((hotel: any) => {
-                if (hotel.hotelId === user.preferencesId) {
-                    setRooms(hotel.hotel.rooms)
-                    setFloors(hotel.hotel.totalFloors)
-                }
-            });
-        }
-    }
-
-    const changeCheckBox = () => {
-
-        // if (checkBoxInput) {
-        //     return input.style.border = '0.05px solid #CBCBCB'
-        // }
-
-        // return input.style.border = 'none'
+    const showMessage = (text: string, duration: number, typeToast: TypeOptions) => {
+        toast(text, {
+            position: "top-right",
+            autoClose: duration,
+            closeOnClick: true,
+            type: typeToast
+        })
     }
 
     const errorsMessages = (errors: string, type?: string, quantity?: number) => {
@@ -93,37 +80,30 @@ const RoomFunctions = () => {
     }
 
     const successConfirm = async (dataForm: RoomStatus) => {
-        setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
-        setShowLoading({ ...showLoading, show: true })
+        // setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
+        // setShowLoading({ ...showLoading, show: true })
+        // console.log('xaaaa');
+        // console.log('dataForm: ', dataForm);
 
-        try {
-            await fetch(endpoint + '/api/admin/rooms/roomsStatus/addRoomsStatus', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(dataForm)
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_status/rooms_status')
-                        setTimeout(() => {
-                            toast('El estatus de la habitación se creó con éxito!', {
-                                position: "top-right",
-                                autoClose: 2000,
-                                closeOnClick: true,
-                                type: 'success'
-                            })
-                        }, 300);
-                    }
-                }).catch((err) => {
-                    console.log(err);
-                })
-        } catch (error) {
-            console.log(error);
-        }
+        // const getResponse = await fetch(endpoint + '/api/admin/rooms/roomsStatus/addRoomsStatus', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(dataForm)
+        // })
+        // const response = await getResponse.json()
 
-        setShowLoading({ ...showLoading, show: false })
+        // if (!response.res) {
+        //     return showMessage('No se pudo crear el estatus de la habitación!', 4000, 'error')
+        // }
+
+        // router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_status/rooms_status')
+        // setTimeout(() => {
+        //     showMessage('xxxxEl estatus de la habitación se creó con éxito!', 4000, 'success')
+        // }, 300);
+
+        // setShowLoading({ ...showLoading, show: false })
     }
 
     const askIfItShouldRemove = (dataForm: RoomStatus) => {
@@ -141,30 +121,30 @@ const RoomFunctions = () => {
     }
 
     const deleteRoomStatus = async (dataForm: RoomStatus) => {
-        setShowDialogConfirm({ ...showDialogConfirm, show: false })
-        setShowLoading({ ...showLoading, show: true, title: 'Eliminando tipo de habitación' })
+        // setShowDialogConfirm({ ...showDialogConfirm, show: false })
+        // setShowLoading({ ...showLoading, show: true, title: 'Eliminando tipo de habitación' })
 
-        await fetch(endpoint + '/api/admin/rooms/roomsStatus/removeRoomsStatus', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(dataForm)
-        }).then(() => {
-            setTimeout(() => {
-                toast('El estatus de la habitación se eliminó con éxito!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    closeOnClick: true,
-                    type: 'success'
-                })
-            }, 300);
-            setShowLoading({ ...showLoading, show: false })
-            router.replace(router.asPath);
-        }).catch(error => {
-            console.log(error);
-            setShowLoading({ ...showLoading, show: false })
-        })
+        // await fetch(endpoint + '/api/admin/rooms/roomsStatus/removeRoomsStatus', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(dataForm)
+        // }).then(() => {
+        //     setTimeout(() => {
+        //         toast('El estatus de la habitación se eliminó con éxito!', {
+        //             position: "top-right",
+        //             autoClose: 5000,
+        //             closeOnClick: true,
+        //             type: 'success'
+        //         })
+        //     }, 300);
+        //     setShowLoading({ ...showLoading, show: false })
+        //     router.replace(router.asPath);
+        // }).catch(error => {
+        //     console.log(error);
+        //     setShowLoading({ ...showLoading, show: false })
+        // })
     }
 
     const showEditDialog = (dataForm: RoomStatus) => {
@@ -184,45 +164,31 @@ const RoomFunctions = () => {
     const loadingData = (props: any) => {
         setShowLoading({ ...showLoading, show: true })
         if (!props.roomType.res) {
-            toast('El tipo de habitación que desea editar no se encuentra registrado en el sistema', {
-                position: "top-right",
-                autoClose: 4000,
-                closeOnClick: true,
-                type: 'warning'
-            })
+            showMessage('El tipo de habitación que desea editar no se encuentra registrado en el sistema', 4000, 'warning')
             return router.replace(endpoint + '/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/rooms_type')
         } else { setShowLoading({ ...showLoading, show: false }) }
     }
 
     const successEditConfirm = async (dataForm: RoomStatus) => {
-        setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
-        setShowLoading({ ...showLoading, show: true })
-        try {
-            await fetch(endpoint + '/api/admin/rooms/roomsStatus/editRoomsStatus', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(dataForm)
-            })
-                .then(() => {
-                    router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_status/rooms_status')
-                    setTimeout(() => {
-                        toast('Estatus de habitación actualizada con éxito!', {
-                            position: "top-right",
-                            autoClose: 2000,
-                            closeOnClick: true,
-                            type: 'success'
-                        })
-                    }, 300);
-                }).catch((err) => {
-                    console.log(err);
-                })
-        } catch (error) {
-            console.log(error);
-        }
+        // setShowDialogConfirm({ ...showDialogConfirm, show: !showDialogConfirm })
+        // setShowLoading({ ...showLoading, show: true })
+        // try {
+        //     await fetch(endpoint + '/api/admin/rooms/roomsStatus/editRoomsStatus', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-type': 'application/json'
+        //         },
+        //         body: JSON.stringify(dataForm)
+        //     })
+        //         .then(() => {
+        //             router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_status/rooms_status')
+        //             setTimeout(() => {
+        //                 showMessage('Estatus de habitación actualizada con éxito!', 2000, 'success')
+        //             }, 300);
+        //         }).catch((err) => { console.log(err); })
+        // } catch (error) { console.log(error); }
 
-        setShowLoading({ ...showLoading, show: false })
+        // setShowLoading({ ...showLoading, show: false })
     }
 
     // ROOMS COMPONENT
@@ -261,12 +227,7 @@ const RoomFunctions = () => {
             if (resp.ok) {
                 setShowLoading({ ...showLoading, show: false })
                 setTimeout(() => {
-                    toast(`${text} agregada con éxito!`, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        closeOnClick: true,
-                        type: 'warning'
-                    })
+                    showMessage(`${text} agregada con éxito!`, 5000, 'warning')
                 }, 300);
                 router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms')
             }
@@ -289,35 +250,29 @@ const RoomFunctions = () => {
     }
 
     const sendEditRoomRequest = async (room: Room) => {
-        const data = {
-            roomData: room,
-            type: 'room'
-        }
-
-        await fetch('/api/admin/rooms/editRooms', {
-            headers: {
-                'Content-type': 'application/json'
-            },
+        const data = { roomData: room, type: 'room' }
+        const getResponse = await fetch('/api/admin/rooms/editRooms', {
+            headers: { 'Content-type': 'application/json' },
             method: 'POST',
             body: JSON.stringify(data),
-        }).then(() => {
-            setTimeout(() => {
-                toast('Habitación actualizada con éxito!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    closeOnClick: true,
-                    type: 'success'
-                })
-            }, 300);
-            router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms')
         })
+        const response = await getResponse.json()
+        console.log('Catedral_2020: ', response);
+        
+        if (!response.res) {
+            return showMessage('No se pudo actualizar la habitación!', 5000, 'error')
+        }
+
+        router.replace('/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms')
+        setTimeout(() => {
+            showMessage('Habitación actualizada con éxito!', 5000, 'success')
+        }, 300);
     }
 
     return {
         showDialogConfirm,
         showLoading,
-        sendUseRefData,
-        changeCheckBox,
+        // sendUseRefData,
         errorsMessages,
         successConfirm,
         successEditConfirm,

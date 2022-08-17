@@ -14,6 +14,7 @@ import styles from "./DialogConfirm.module.css"
 // Helpers
 import { endpoint } from "../../../../config/endpoint";
 import DepartmentsFunctions from "../../../../helpers/functions/admin/departments/departmentsFunctions";
+import BtnSubmit from "../../buttons/modal/BtnSubmit";
 
 // Types
 type DialogConfirm = {
@@ -22,42 +23,44 @@ type DialogConfirm = {
     image?: string,
     btnCancel: string,
     isDelete?: boolean,
+    isBooking?: boolean,
     btnConfirm: string,
     onClose: () => void,
     description?: string,
-    onConfirm: (reasonToDelete: string) => void,
+    onConfirm: (reasonToDelete: string, reasonToBooking?: string) => void,
 }
 
 type PasswordConfirm = {
     password: string,
-    reasonToDelete: string
+    reasonToDelete: string,
+    reasonToBooking: string
 }
 
 export default function DialogConfirm(props: DialogConfirm) {
     
     // Variables
-    const {
-        showMessage
-    } = DepartmentsFunctions()
+    const { showMessage } = DepartmentsFunctions()
     const { register, handleSubmit, formState: { errors } } = useForm<PasswordConfirm>();
     const onSubmit = (data: any) => { confirmPasswordOfCurrentUser(data) }
 
     // Use State
+    const [loading, setLoading] = useState<boolean>(false)
 
     // Functions
 
-
     const confirmPasswordOfCurrentUser = async (dataForm: PasswordConfirm) => {
-
-        const resp = await fetch(endpoint + '/api/admin/auth/confirmPassCurrentUser', {
+        setLoading(true)
+        const getResponse = await fetch(endpoint + '/api/admin/auth/confirmPassCurrentUser', {
             method: "POST",
             body: JSON.stringify(dataForm)
         })
-        const response = await resp.json()
+        const response = await getResponse.json()
+        const reasonToAction: string = dataForm.reasonToDelete ? dataForm.reasonToDelete : dataForm.reasonToBooking
 
-        if (response.res) { return props.onConfirm(dataForm.reasonToDelete) }
+        if (response.res) { return props.onConfirm(reasonToAction) }
 
         showMessage(response.message, 'error')
+        setLoading(false)
     }
 
     const changeButtonColor = () => {
@@ -125,10 +128,27 @@ export default function DialogConfirm(props: DialogConfirm) {
                             </div>
                         ) : null
                     }
+                    {
+                        props.isBooking ? (
+                            <div className="input-container">
+                                <input
+                                    className={errors.reasonToDelete ? 'input input_error_text' : 'input'}
+                                    {...register("reasonToBooking", { required: false })}
+                                    id="reason"
+                                    type="text"
+                                    autoComplete="off"
+                                    placeholder="Si hay un motivo en especial para realizar la reservación, ingreselo"
+                                />
+                                <br />
+                                {errors.reasonToBooking && <small>El campo motivo está vacio!</small>}
+                            </div>
+                        ) : null
+                    }
                     <div className={styles.container}>
-                        <button type="submit" className={changeButtonColor()}>
+                        {/* <button type="submit" className={changeButtonColor()}>
                             <p>{props.btnConfirm}</p>
-                        </button>
+                        </button> */}
+                        <BtnSubmit title={props.btnConfirm} loading={loading} />
                         <button type="button" className={styles.btn_cancel} onClick={props.onClose}>
                             <p>{props.btnCancel}</p>
                         </button>

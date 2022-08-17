@@ -31,7 +31,7 @@ const UsersFunctions = (isAdmin: boolean) => {
         btnConfirm: '',
         btnCancel: '',
         isDelete: false,
-        onConfirm: () => { },
+        onConfirm: (reasonToDelete: string) => { },
         onClose: () => { }
     }
     const initialLoadingValues = {
@@ -150,16 +150,6 @@ const UsersFunctions = (isAdmin: boolean) => {
         return html
     }
 
-    // const verifyPropertiesOfUser = (user: any) => {
-    //     if (user && !user.department && !user.typeUserId && user.typeUser === 'Superadmin') {
-    //         console.log('entro');
-
-    //         return true
-    //     }
-
-    //     return false
-    // }
-
     const generateTableData = (hotelName: string, type: string, i: number = 1) => {
         return (
             <table className={`${styles.table_dissapear} table`}>
@@ -206,7 +196,7 @@ const UsersFunctions = (isAdmin: boolean) => {
                                                     ) : null
                                                 }
                                                 {
-                                                    /* verifyIfIsAdmin(currentUser) || user?.typeUserId === 1 */ isAdmin ? (
+                                                    isAdmin ? (
                                                         <button className="btn_action" onClick={() => askIfItShouldRemove(user)}>
                                                             <svg className="svg_table_icon" viewBox="0 0 24 24">
                                                                 <path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
@@ -231,7 +221,7 @@ const UsersFunctions = (isAdmin: boolean) => {
         userTableRef?.children[hotelIndex].children[areaIndex + 1].children[1].classList.toggle(styles.table_dissapear)
     }
 
-    const deleteUser = async (reasonToDelete: string) => {
+    const deleteUser = async (reasonToDelete?: string) => {
         setShowDialogConfirm({ ...showDialogConfirm, show: true })
         setShowLoading({ ...showLoading, show: true, title: 'Eliminando hotel' })
 
@@ -240,7 +230,6 @@ const UsersFunctions = (isAdmin: boolean) => {
             body: JSON.stringify({ user, reasonToDelete })
         })
         const response = await resp.json()
-        console.log(response);
 
         if (!response.res) {
             setShowLoading({ ...showLoading, show: false });
@@ -255,8 +244,6 @@ const UsersFunctions = (isAdmin: boolean) => {
     }
 
     const showEditDialog = (dataForm: User) => {
-        console.log('showEditDialog: ', dataForm);
-
         handleDialogConfirm(
             true,           // Show
             '/hotels/dialog/user.svg', // Image
@@ -307,7 +294,6 @@ const UsersFunctions = (isAdmin: boolean) => {
         })
 
         const response = await resp.json()
-        console.log(response);
 
         if (!response.res && response.message == 'El usuario ya existe en el sistema') {
             userExistInDB()
@@ -333,6 +319,20 @@ const UsersFunctions = (isAdmin: boolean) => {
         setIsChangePassword(!isChangePassword)
     }
 
+    const attachUsersIntoHotels = async (data: Array<any>) => {
+        const resp = await fetch('/api/admin/users/attachUsersToHotels', {
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+
+        const response = await resp.json()
+
+        if (response.res) {
+            router.push(`/aG90ZWxlc19wbGF6YQ0K/admin/system/users/users`)
+            setTimeout(() => { showMessage(response.message, 'success') }, 300);
+        }
+    }
+
     return {
         hotelsData,
         showDialogConfirm,
@@ -346,7 +346,8 @@ const UsersFunctions = (isAdmin: boolean) => {
         showDialog,
         showEditDialog,
         successConfirm,
-        deleteUser
+        deleteUser,
+        attachUsersIntoHotels
     }
 }
 

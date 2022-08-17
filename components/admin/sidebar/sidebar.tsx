@@ -18,6 +18,7 @@ import { endpoint } from "../../../config/endpoint";
 
 // Types
 import { Hotel } from '../../../types/Hotel';
+import { log } from 'console';
 
 type Sidebar = {
     title?: string,
@@ -39,24 +40,6 @@ type SidebarLiTitles = {
     title: string,
     url: string
 }
-
-// type CurrentUserSidebar = {
-//     id?: number,
-//     email: string
-//     password: string
-//     fullName: string
-//     lastName: string
-//     phone: string
-//     hotel: []
-//     departmentId: number
-//     typeUserId: number
-//     preferencesId?: string
-//     status: string
-//     image?: string
-//     type?: string
-//     registredBy?: string,
-//     department: Department
-// }
 
 export default function Sidebar() {
 
@@ -94,7 +77,7 @@ export default function Sidebar() {
         try {
             const response = await fetch('/api/admin/users/showCurrentUserData')
             const responseApi = await response.json()
-            
+
             if (responseApi && Object.keys(responseApi).length) {
                 setUser(responseApi)
                 setHotels(responseApi.hotels)
@@ -166,7 +149,7 @@ export default function Sidebar() {
         let html: any = []
 
         {
-            hotels && hotels.length > 0 ? (
+            hotels && hotels.length ? (
                 hotels.map((hotel: any, index: number) => {
                     html.push(
                         <li
@@ -174,15 +157,12 @@ export default function Sidebar() {
                             key={index}
                             onClick={() => hotelSelected(hotel.hotel, index, 'save')}
                         >
-                            <Image src={'/hotels/logos/' + hotel.hotel.pathImageName + 'logo.webp'} width={70} height={60} objectFit={'cover'} />
+                            <Image src={'/hotels/logos/' + hotel.hotel.pathImageName + 'logo.webp'} width={hotel.hotel.pathImageName == 'catedral_' ? 80 : 60} height={hotel.hotel.pathImageName == 'catedral_' ? 60 : 60} objectFit={'cover'} objectPosition={'center'} />
                         </li>
                     )
                 })
             ) : (null)
         }
-
-        console.log(hotels);
-        
 
         return html
     }
@@ -313,25 +293,20 @@ export default function Sidebar() {
                 </li>
                 <ul className={dropwdown.dropdown2 && !dropwdown.sidebar ? styles.ul_sidebar_website_dropdown_active : styles.ul_sidebar_website_dropdown} >
                     <li className={styles.li_sidebar_line_dropdown} />
+                    <Link href={endpoint + '/aG90ZWxlc19wbGF6YQ0K/admin/website/bookings'}>
+                        <li className={styles.li_sidebar_website_dropdown}>
+                            <div className={styles.chip}>
+                                <p>Ver reservaciones</p>
+                            </div>
+                        </li>
+                    </Link>
                     <li className={styles.li_sidebar_website_dropdown}>
+                        <Link href={endpoint + '/aG90ZWxlc19wbGF6YQ0K/admin/website/services/services'}>
                         <div className={styles.chip}>
-                            <p>Ver reservaciones</p>
+                            <p>Servicios</p>
                         </div>
-                    </li>
-                    <li className={styles.li_sidebar_website_dropdown}>
-                        <div className={styles.chip}>
-                            <p>Facturas</p>
-                        </div>
-                    </li>
-                    <li className={styles.li_sidebar_website_dropdown}>
-                        <div className={styles.chip}>
-                            <p>Habitaciones</p>
-                        </div>
-                    </li>
-                    <li className={styles.li_sidebar_website_dropdown}>
-                        <div className={styles.chip}>
-                            <p>Promociones</p>
-                        </div>
+                        </Link>
+                        
                     </li>
                 </ul>
             </ul>

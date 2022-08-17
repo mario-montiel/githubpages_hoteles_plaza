@@ -18,3 +18,50 @@
     height: 1.5rem;
     width: 1.5rem;
 }
+
+.roomstype_form .rooms_images_container {
+    padding: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.roomstype_form .svg_icon_container {
+    opacity: 0;
+    height: auto;
+    margin: 5px 0px;
+    padding: 5px 10px;
+    position: relative;
+    border-radius: 3px;
+    color: var(--white);
+    align-items: center;
+    background-color: #2aaf2a;
+}
+
+.roomstype_form .svg_icon_container .svg_icon_selected {
+    display: flex;
+    align-items: center;
+}
+
+.roomstype_form .room_image_selected {
+    opacity: 1;
+}
+
+.roomstype_form .remove_images {
+    top: 50%;
+    right: -3%;
+    display: flex;
+    cursor: pointer;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.roomstype_form .svg_icon_container .svg_icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0px 10px 0px 0px;
+}
+
+.roomstype_form img {
+    width: 100%;
+    height: 90%;
+    cursor: pointer;
+}

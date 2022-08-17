@@ -1,10 +1,8 @@
-// React
+// 
+import { useEffect, useRef } from "react"
+import { endpoint } from "../../../../config/endpoint"
 
 // CSS
-// import { EntryType } from "perf_hooks"
-import { useEffect, useRef, useState } from "react"
-import { endpoint } from "../../../../config/endpoint"
-// import { appearToLeftAfterScrollDown, appearToRightAfterScrollDown } from "../../../../helpers/animations/images/appear"
 import styles from "./WhoWeAre.module.css"
 
 // Componets

@@ -1,6 +1,8 @@
 // React
-import { useRouter } from "next/router"
+import { NextPageContext } from "next";
 import { useForm } from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
+import Router, { useRouter } from "next/router"
 
 // CSS
 import styles from "../../../../../../styles/admin/system/rooms/roomTypes/CreateRoomTypes.module.css"
@@ -16,30 +18,108 @@ import BtnActions from "../../../../../../components/admin/buttons/actions/BtnAc
 import DialogConfirm from "../../../../../../components/admin/dialogs/confirm/DialogConfirm"
 
 // Helpers
+import { endpoint } from "../../../../../../config/endpoint";
+import { unauthorized } from "../../../../../../helpers/notification401";
 import TypeRoomsFunctions from "../../../../../../helpers/functions/admin/roomsType/roomsTypeFunctions";
 
 // Types
-import { RoomTypeForm } from "../../../../../../types/RoomType"
+import { RoomTypeForm, RoomTypeImages } from "../../../../../../types/RoomType"
 
-export default function CreateRoomsType() {
+CreateRoomsType.getInitialProps = async (ctx: NextPageContext) => {
+    const isAdmin = await getFetch(endpoint + '/api/admin/auth/isAdmin', ctx)
+    const hotelsJson = await getFetch(endpoint + '/api/admin/hotels/showHotels', ctx)
+
+    return { isAdmin, hotels: hotelsJson }
+}
+
+async function getFetch(url: string, ctx: NextPageContext) {
+    const cookie = ctx.req?.headers.cookie
+    const resp = await fetch(url, { headers: { cookie: cookie! } })
+
+    if (resp.status === 401 && !ctx.req) {
+        unauthorized()
+        Router.replace('/aG90ZWxlc19wbGF6YQ0K/authentication/login')
+        return {};
+    }
+
+    if (resp.status === 401 && ctx.req) {
+        unauthorized()
+        ctx.res?.writeHead(302, {
+            Location: 'http://localhost:3000/aG90ZWxlc19wbGF6YQ0K/authentication/login'
+        })
+        ctx.res?.end()
+        return;
+    }
+
+    return await resp.json()
+}
+
+export default function CreateRoomsType({ hotels }: any) {
 
     // Variables
     const router = useRouter()
     const {
+        imagesUrl,
+        showImages,
+        roomImageSelected,
+        loadHotelsImages,
         showDialogConfirm,
         showLoading,
-        // errorsMessages,
         showDialog,
-    } = TypeRoomsFunctions()
+    } = TypeRoomsFunctions(hotels)
     const btnIconBack = `<svg class="svg_back" viewBox="0 0 24 24">
         <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
     </svg>`
-    const { register, handleSubmit, formState: { errors } } = useForm<RoomTypeForm>();
-    const onSubmit = (data: any) => { showDialog(data) }
+    const { register, setValue, clearErrors, handleSubmit, formState: { errors } } = useForm<RoomTypeForm>();
+    const onSubmit = (data: any) => { console.log(data); showDialog(data) }
+
+    // UseRef
+    const roomImageContainerRef = useRef<HTMLDivElement>(null)
 
     // States
+    const [imagesData, setImagesData] = useState<Array<RoomTypeImages>>([])
+    const [imagesSelecteds, setImagesSelecteds] = useState<Array<number>>([])
+
+    // Functions
+    const addOrRemoveImages = () => {
+        if (roomImageContainerRef.current && roomImageContainerRef.current?.childNodes.length) {
+            roomImageContainerRef.current?.childNodes.forEach((element, i) => {
+                const htmlElement = element.childNodes[0] as HTMLDivElement
+
+                if (roomImageSelected.type == 'remove' && imagesSelecteds.length && roomImageSelected.imageSelected == i) {
+                    htmlElement.classList.remove(styles.room_image_selected)
+                    setValue('roomTypeImages', imagesData)
+                }
+
+                if (roomImageSelected.type == 'add' && imagesSelecteds.length && imagesSelecteds.includes(i)) {
+                    htmlElement.classList.add(styles.room_image_selected)
+                    setValue('roomTypeImages', imagesData)
+                    clearErrors('roomTypeImages')
+                }
+            });
+        }
+    }
+
+    const addImages = () => {
+        if (imagesSelecteds.indexOf(roomImageSelected.imageSelected) == -1 && roomImageSelected.imageSelected >= 0) {
+            const data= {hotelId: roomImageSelected.hotelId!, imageUrl: roomImageSelected.imageUrl, pathDirect: roomImageSelected.hotelName, index: roomImageSelected.imageSelected}
+            
+            setImagesSelecteds((oldValue: Array<number>) => [...oldValue, roomImageSelected.imageSelected]);
+            setImagesData((oldValue: any) => [...oldValue, data])
+        }
+    }
+
+    const removeImagesSelected = () => {
+        setImagesSelecteds(imagesSelecteds.filter((item: number) => item !== roomImageSelected.imageSelected));
+        setImagesData(imagesData.filter((item: RoomTypeImages) => item.imageUrl !== roomImageSelected.imageUrl));
+    }
 
     // Use Efffect
+    useEffect(() => { if (!imagesUrl.length) { loadHotelsImages(hotels) } }, [imagesUrl])
+
+    useEffect(() => { addOrRemoveImages() }, [imagesSelecteds])
+
+    useEffect(() => { if (roomImageSelected.type == 'add') { addImages(); } else { removeImagesSelected() } }, [roomImageSelected])
 
     return (
         <Layout
@@ -172,6 +252,17 @@ export default function CreateRoomsType() {
                             />
                             <br />
                         </div>
+                    </div>
+
+                    <h5 className={styles.subtitle}>Seleccione la imágen del tipo de habitación</h5>
+
+                    <div className="input-container">
+                        <input hidden type="text" {...register('roomTypeImages', { required: true })} />
+                        <div ref={roomImageContainerRef} className='form-grid'>
+                            {imagesUrl && imagesUrl.length ? (showImages()) : null}
+                        </div>
+                        <br />
+                        {errors.roomTypeImages && <small>Debe seleccionar una imágen para poder continuar</small>}
                     </div>
 
                     {!Object.values(errors).length ? (

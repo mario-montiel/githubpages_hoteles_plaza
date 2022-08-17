@@ -18,10 +18,7 @@ import { appear } from "../../../../../helpers/animations/images/appear"
 
 RoomsCatedralDemo1.getInitialProps = async () => {
     const weatherJson = await getFetchData(endpoint + '/api/weather')
-
-    return {
-        weather: weatherJson,
-    }
+    return { weather: weatherJson }
 }
 
 async function getFetchData(url: string) {

@@ -7,7 +7,6 @@ generator client {
 
 datasource db {
   provider          = "mysql"
-  // url      = env("DATABASE_URL")
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
@@ -90,17 +89,18 @@ model Users {
 }
 
 model Guest {
-  id        Int         @id @default(autoincrement())
-  email     String      @unique
-  password  String      @db.VarChar(60)
-  fullName  String      @db.VarChar(50)
-  lastName  String      @db.VarChar(50)
-  createdAt DateTime    @default(now())
-  updateAt  DateTime?
-  company   String?     @db.VarChar(60)
-  city      String
-  comments  Comments[]
-  emailForm EmailForm[]
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  password     String         @db.VarChar(60)
+  fullName     String         @db.VarChar(50)
+  lastName     String         @db.VarChar(50)
+  createdAt    DateTime       @default(now())
+  updateAt     DateTime?
+  company      String?        @db.VarChar(60)
+  city         String
+  comments     Comments[]
+  emailForm    EmailForm[]
+  RoomBookings RoomBookings[]
 }
 
 // model Categories {
@@ -152,26 +152,26 @@ model Hotels {
   id                 Int                  @id @default(autoincrement())
   createdAt          DateTime             @default(now())
   updateAt           DateTime?
-  name               String
+  name               String               @db.VarChar(60)
   ubication          String
   phone              String               @db.VarChar(10)
   // category           Categories           @relation(fields: [categoryId], references: [id])
   // categoryId         Int
   stars              Int
-  facebook           String?
-  whatsapp           String?
-  instagram          String?
+  facebook           String?              @db.VarChar(40)
+  whatsapp           String?              @db.VarChar(15)
+  instagram          String?              @db.VarChar(40)
   references         String
-  googleMaps         String?
-  latitude           String?
-  longitude          String?
+  googleMaps         String?              @db.VarChar(60)
+  latitude           String?              @db.VarChar(10)
+  longitude          String?              @db.VarChar(10)
   totalFloors        Int
   totalRooms         Int
   editedBy           String?              @db.VarChar(60)
-  logoImage          String
-  imageUrl           String
-  pathDirImage       String
-  pathImageName      String
+  logoImage          String               @db.VarChar(60)
+  imageUrl           String               @db.VarChar(60)
+  pathDirImage       String               @db.VarChar(60)
+  pathImageName      String               @db.VarChar(60)
   placeId            String
   // smoke              Boolean
   // facilityId       Facilities       @relation(fields: [facilitiesId], references: [id])
@@ -188,19 +188,27 @@ model Hotels {
   SuperAdminOnHotels SuperAdminOnHotels[]
   OnlyEmail          OnlyEmail[]
   EmailForm          EmailForm[]
+  RoomTypeImages     RoomTypeImages[]
 }
 
 model Services {
-  id        Int       @id
-  createdAt DateTime  @default(now())
-  updateAt  DateTime?
-  name      String
-  altImage  String?
-  url       String?
-  title     String
-  editedBy  String?
-  // servicesOnRoom ServicesOnRoom[]
-  // rooms          Rooms[]
+  id              Int              @id @default(autoincrement())
+  createdAt       DateTime         @default(now())
+  updateAt        DateTime?
+  name            String           @db.VarChar(60)
+  description     String?
+  icon            String           @db.LongText
+  editedBy        String?          @db.VarChar(40)
+  mainInformation Boolean
+  ServicesOnRoom  ServicesOnRoom[]
+}
+
+model ServicesOnRoom {
+  id         Int      @id @default(autoincrement())
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id])
+  roomTypeId Int
+  service    Services @relation(fields: [serviceId], references: [id])
+  serviceId  Int
 }
 
 // model ServicesOnRoom {
@@ -260,41 +268,57 @@ model Promotions {
 // }
 
 model Rooms {
-  id               Int        @id @default(autoincrement())
-  createdAt        DateTime   @default(now())
-  updateAt         DateTime?
-  floor            Int
-  roomNumber       Int
-  roomType         RoomType   @relation(fields: [roomTypeId], references: [id])
-  roomTypeId       Int
-  editedBy         String?    @db.VarChar(60)
-  observations     String
-  checkIn          DateTime?
-  checkOut         DateTime?
-  isBooking        Boolean    @default(false)
-  isBreakfast      Int        @default(0)
-  hotel            Hotels     @relation(fields: [hotelId], references: [id])
-  hotelId          Int
-  roomStatus       RoomStatus @relation(name: "RoomStatus", fields: [roomStatusId], references: [id])
-  roomStatusId     Int
-  lastRoomStatus   RoomStatus @relation(name: "LastRoomStatus", fields: [lastRoomStatusId], references: [id])
-  lastRoomStatusId Int
+  id                   Int            @id @default(autoincrement())
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime?
+  floor                Int
+  roomNumber           Int
+  roomType             RoomType       @relation(fields: [roomTypeId], references: [id])
+  roomTypeId           Int
+  editedBy             String?        @db.VarChar(60)
+  isBooking            Boolean        @default(false)
+  bookedAt             String?        @db.VarChar(30)
+  roomDetails          String         @default("Ninguno")
+  roomDetailsEmergency Int            @default(1) @db.TinyInt
+  hotel                Hotels         @relation(fields: [hotelId], references: [id])
+  hotelId              Int
+  roomStatus           RoomStatus     @relation(name: "RoomStatus", fields: [roomStatusId], references: [id])
+  roomStatusId         Int
+  lastRoomStatus       RoomStatus     @relation(name: "LastRoomStatus", fields: [lastRoomStatusId], references: [id])
+  lastRoomStatusId     Int
   // servicesOnRoom   ServicesOnRoom[]
+  RoomBookings         RoomBookings[]
 }
 
 model RoomType {
-  id           Int       @id @default(autoincrement())
-  createdAt    DateTime  @default(now())
-  updateAt     DateTime?
-  name         String    @db.VarChar(60)
-  keyWord      String    @db.VarChar(4)
-  editedBy     String?   @db.VarChar(60)
-  costPerNight Float
-  title        String
-  description  String
-  maxPeople    Int
-  smoke        Boolean
-  room         Rooms[]
+  id             Int              @id @default(autoincrement())
+  createdAt      DateTime         @default(now())
+  updateAt       DateTime?
+  name           String           @db.VarChar(60)
+  keyWord        String           @db.VarChar(4)
+  editedBy       String?          @db.VarChar(60)
+  title          String
+  maxPeople      Int
+  costPerNight   Float
+  description    String
+  smoke          Boolean
+  room           Rooms[]
+  ServicesOnRoom ServicesOnRoom[]
+  RoomTypeImages RoomTypeImages[]
+}
+
+model RoomTypeImages {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updateAt   DateTime?
+  pathDirect String    @db.VarChar(20)
+  imageUrl   String
+  editedBy   String    @db.VarChar(60)
+  index      Int       @db.TinyInt
+  roomType   RoomType  @relation(fields: [roomTypeId], references: [id])
+  hotel      Hotels    @relation(fields: [hotelId], references: [id])
+  roomTypeId Int
+  hotelId    Int
 }
 
 model RoomStatus {
@@ -308,6 +332,23 @@ model RoomStatus {
   border          Boolean
   roomStatus      Rooms[]   @relation("RoomStatus")
   lastRoomStatus  Rooms[]   @relation("LastRoomStatus")
+}
+
+model RoomBookings {
+  id                   Int     @id @default(autoincrement())
+  detailsOfRoom        String
+  detailsOfBooking     String
+  checkIn              String  @db.VarChar(30)
+  checkOut             String  @db.VarChar(30)
+  isBreakfast          Boolean @default(false)
+  wasBreakfastConsumed Int     @default(0)
+  createdAt            String  @db.VarChar(30)
+  updateAt             String? @db.VarChar(30)
+  status               String  @default("En proceso")
+  guest                Guest   @relation(fields: [guestId], references: [id])
+  guestId              Int
+  room                 Rooms   @relation(fields: [roomsId], references: [id])
+  roomsId              Int
 }
 
 model Comments {

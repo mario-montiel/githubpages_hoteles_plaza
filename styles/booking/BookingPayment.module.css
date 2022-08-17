@@ -1,0 +1,79 @@
+.paypment_container {
+    width: 96%;
+    max-width: 1290px;
+    margin: 8rem auto 10rem;
+}
+
+.paypment_container_data {
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+.container {
+    border-radius: 6px;
+    padding: 40px 20px;
+    background-color: var(--white);
+}
+
+.form_section {
+    height: 100%;
+    padding: 0px;
+    margin: 0px 10px;
+    position: relative;
+    background-color: var(--white);
+}
+
+.current_booking_detail_section {
+    height: 100%;
+    padding: 0px;
+    color: var(--black) !important;
+    margin: 0px 10px;
+    position: relative;
+    background-color: var(--white);
+}
+
+.paypment_container h2 {
+    margin: 0px;
+    font-weight: 400;
+    font-size: 42.50pt;
+    text-align: center;
+    text-align: center;
+    padding: 4rem 0px 2rem;
+    margin: 80px auto 30px;
+    color: var(--main-color-demo-1);
+    font-family: 'Playfair Display';
+}
+
+.paypment_container .texture_top_image {
+    top: 0%;
+    right: 0;
+    width: 30%;
+    z-index: 1;
+    height: auto;
+    position: absolute;
+}
+
+.paypment_container .symbol {
+    width: 90px;
+    height: 30px;
+    margin: auto;
+    display: block;
+}
+
+.paypment_container .texture_image {
+    left: 0;
+    bottom: 0;
+    width: 30%;
+    z-index: -1;
+    height: auto;
+    position: absolute;
+    transition: all 1s;
+}
+
+
+@media screen and (max-width: 1290px) {
+    .paypment_container_data {
+        width: 90%;
+        grid-template-columns: 100%;
+    }
+}

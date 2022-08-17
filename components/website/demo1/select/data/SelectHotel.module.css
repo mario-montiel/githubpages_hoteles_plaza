@@ -1,0 +1,110 @@
+.select_hotel {
+    margin: 0px;
+    padding: 0px;
+    height: 4rem;
+    cursor: pointer;
+    position: relative;
+    background-color: var(--white);
+    border-left: 4px solid var(--main-color-demo-1);
+}
+
+.select_hotel .overlay {
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: fixed;
+    cursor: default;
+}
+
+.select_hotel ul {
+    width: 100%;
+    z-index: 1;
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.select_hotel .show_data {
+    width: 100%;
+    height: 100%;
+}
+
+.select_hotel .show_data>li,
+.select_hotel .items_container li {
+    display: flex;
+    align-items: center;
+}
+
+.select_hotel .show_data>li {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 120px auto
+}
+
+.select_hotel .show_data>li:last-child {
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.select_hotel .items_container {
+    left: 0;
+    top: 105%;
+    width: 100%;
+    display: none;
+    position: absolute;
+    background-color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.1);
+}
+
+.select_hotel .hidden {
+    display: block;
+}
+
+.select_hotel .items_container li {
+    display: grid;
+    padding: 12px 0px;
+    grid-template-columns: 150px auto
+}
+
+.select_hotel .items_container li:hover {
+    font-weight: bold;
+    background-color: var(--select-items-hover);
+}
+
+.select_hotel ul li img {
+    width: auto;
+    height: 40px;
+    margin: auto;
+    object-fit: cover;
+}
+
+.select_hotel ul li .svg_icon {
+    width: 16px;
+    height: 16px;
+}
+
+@media screen and (max-width: 1000px) {
+    .select_hotel {
+        padding: 10px 0px;
+        height: 3rem;
+        border-bottom: 4px solid var(--main-color-demo-1);
+    }
+}

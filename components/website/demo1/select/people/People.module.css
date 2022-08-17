@@ -1,0 +1,185 @@
+.people_container {
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    position: relative;
+    background-color: var(--white);
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+    border-left: 4px solid var(--main-color-demo-1);
+    border-right: 4px solid var(--main-color-demo-1);
+}
+
+.people_container .overlay {
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: fixed;
+    cursor: default;
+}
+
+.people_container .show_data {
+    display: block !important;
+}
+
+.people_container .people_data {
+    top: 0;
+    left: 0;
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    position: absolute;
+}
+
+.people_container .people_data > li {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    padding: 0px;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 45px auto
+}
+
+.people_container .people_data li .svg_icon {
+    width: 24px;
+    height: 24px;
+    color: rgb(62, 62, 62);
+}
+
+.people_container .people_select_data {
+    top: 105%;
+    width: 100%;
+    margin: 0px;
+    list-style: none;
+    display: none;
+    padding: 10px 0px;
+    position: absolute;
+    z-index: 1;
+    background-color: var(--white);
+    box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.1);
+}
+
+.people_container .people_select_data li {
+    margin: 10px 0px;
+    padding: 0px 15px;
+}
+
+.people_container .people_select_data li .people_select_data_container {
+    width: 100%;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 50% 50%;
+}
+
+.people_container .people_select_data li .people_select_data_container .button_container {
+    margin: auto;
+    display: grid;
+    text-align: center;
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.people_container .people_select_data li .people_select_data_container .button_container button {
+    border: 1.5px solid var(--btn-lp-submit);
+    background-color: transparent;
+    width: 2rem;
+    height: 2rem;
+}
+
+.people_container .people_select_data li .people_select_data_container .button_container button:hover .svg_icon {
+    color: rgb(0, 0, 0);
+}
+
+.people_container .people_select_data .svg_icon {
+    width: 1rem;
+    height: 1rem;
+    color: rgb(64, 64, 64);
+}
+
+.btn_disabled {
+    pointer-events: none;
+    background-color: rgb(217, 217, 217) !important;
+}
+
+@media screen and (max-width: 1000px) {
+    .people_container {
+        padding: 10px 0px;
+        height: 3rem;
+        border-top: 4px solid var(--main-color-demo-1);
+        border-right: none
+    }
+
+    .people_container .people_data > li {
+        justify-content:left;
+        display: block;
+        margin: 0px;
+        display: grid;
+        grid-template-columns: 125px auto auto auto;
+    }
+
+    .people_container .svg_icon {
+        width: auto;
+        height: 30px;
+        margin: auto;
+        padding: 0px;
+    }
+}
+
+
+/* .overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.people_container {
+    width: 100%;
+    height: auto;
+    z-index: 100;
+    padding: 15px 5px;
+    position: absolute;
+    background-color: var(--white) !important;
+}
+
+.select_container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.select_group .input_people {
+    width: 80%;
+    padding: 5px;
+    outline: none;
+    height: 1rem;
+    border-radius: 5px;
+    border: 0.5px solid rgb(183, 183, 183);
+}
+
+.people_container>button {
+    font-weight: 600;
+    color: black !important;
+    border-radius: 0px !important;
+    padding: 0.7rem 2rem !important;
+    margin: 20px auto 10px !important;
+    font-family: 'Poppins', sans-serif;
+    background-color: #F9C81A !important;
+}
+
+.people_container>button:hover {
+    background-color: #d9bc00 !important;
+} */

@@ -1,0 +1,123 @@
+.select_multiple_date_container {
+    z-index: 1;
+    width: auto;
+    height: auto;
+    padding: 6px;
+    /* display: grid; */
+    /* grid-template-columns: repeat(2, 1fr); */
+    background-color: var(--white);
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.select_multiple_date_container .action_container {
+    /* display: flex; */
+    position: relative;
+    /* align-items: center; */
+}
+
+.select_multiple_date_container p {
+    text-align: center;
+    margin: 20px 0px 25px;
+}
+
+.select_multiple_date_container ul {
+    width: auto;
+    display: grid;
+    list-style: none;
+    padding: 0px 6px;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.select_multiple_date_container ul li {
+    padding: 8px;
+    margin: 0px 5px;
+    text-align: center;
+    border-radius: 4px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.select_multiple_date_container ul li:hover {
+    cursor: pointer;
+    background-color: #f5b96b;
+}
+
+.select_multiple_date_container .select {
+    background-color: #f5b96b;
+}
+
+.select_multiple_date_container button {
+    top: 7%;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    background-color: transparent;
+}
+
+.select_multiple_date_container .btn_left {
+    left: 5%;
+}
+
+.select_multiple_date_container .btn_right {
+    right: 5%;
+}
+
+.select_multiple_date_container button .svg_icon {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* // ASDFASDF */
+.select_multiple_date_container .days {
+    font-weight: bold;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.select_multiple_date_container .month_container {
+    width: 100%;
+}
+
+.select_multiple_date_container .days_disabled {
+    color: #9f9f9f;
+    pointer-events: none;
+}
+
+.select_multiple_date_container .month_container button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 4px;
+    background-color: var(--white);
+    box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.select_multiple_date_container .month_container button:hover {
+    box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.select_multiple_date_container .month_container btn_left {
+    float: left;
+}
+
+.select_multiple_date_container .month_container btn_right {
+    float: right;
+}
+.select_multiple_date_container .month_container p {
+    text-align: center;
+}
+
+.days_between_date_selected {
+    background-color: rgb(245, 239, 204) !important;
+}
+
+@media screen and (max-width: 1000px) {
+    .select_multiple_date_container button {
+        top: 3%;
+    }
+}

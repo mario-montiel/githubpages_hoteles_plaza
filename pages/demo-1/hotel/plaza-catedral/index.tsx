@@ -17,8 +17,7 @@ import { endpoint } from "../../../../config/endpoint"
 // Types
 
 HotelCatedralDemo1.getInitialProps = async (ctx: NextPageContext) => {
-    let weatherJson: any = []
-    weatherJson = await getFetchData(endpoint + '/api/weather', ctx)
+    const weatherJson = await getFetchData(endpoint + '/api/weather', ctx)
     return { weather: weatherJson }
 }
 

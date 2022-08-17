@@ -23,6 +23,7 @@ import RoomFunctions from "../../../../../../helpers/functions/admin/rooms/rooms
 
 // Types
 import { RoomType } from "../../../../../../types/RoomType";
+import { Room } from "../../../../../../types/Room";
 
 EditCategory.getInitialProps = async (ctx: NextPageContext) => {
     let rooomTypeJson: any = []
@@ -54,9 +55,7 @@ async function getFetch(url: string, ctx: NextPageContext, routeQuery?: any) {
     }
 
     const resp = await fetch(url, {
-        headers: {
-            cookie: cookie!
-        }
+        headers: { cookie: cookie! }
     })
 
     validations(resp, ctx)
@@ -89,34 +88,25 @@ const validations = (resp: any, ctx: NextPageContext) => {
 }
 
 export default function EditCategory(props: any) {
-    // console.log(props);
 
     // Variables
     const {
         showDialogConfirm,
         showLoading,
-        showEditDialog,
+        // showEditDialog,
         editRoomConfirm,
     } = RoomFunctions()
     const router = useRouter()
     const btnIconBack = `<svg class="svg_back" viewBox="0 0 24 24">
         <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
     </svg>`
-    const { register, setValue, handleSubmit, formState: { errors } } = useForm<any>();
-    const onSubmit = (data: any) => {
-        console.log(data);
-
-        editRoomConfirm(data)
-    }
+    const { register, setValue, handleSubmit, formState: { errors } } = useForm<Room>();
+    const onSubmit = (data: any) => { console.log(data); editRoomConfirm(data) }
 
     // States
 
     // Use Efffect
-    useEffect(() => {
-        if (props) {
-            fillDataOfRoom()
-        }
-    }, [props])
+    useEffect(() => { if (props) { fillDataOfRoom() } }, [props])
 
     // States
 
@@ -133,16 +123,17 @@ export default function EditCategory(props: any) {
 
     const fillDataOfRoom = async () => {
         const roomName = await showRoomName(props.room.data)
-
+        
         setValue('id', props.room.data.id)
         setValue('name', roomName)
         setValue('floor', props.room.data.floor)
         setValue('hotelId', props.room.data.hotel.name)
         setValue('roomTypeId', props.room.data.roomType.id)
         setValue('roomStatusId', props.room.data.roomStatus.id)
-        setValue('roomStatus', props.room.data.roomStatus.name)
+        // setValue('roomStatus', props.room.data.roomStatus.name)
         setValue('lastRoomStatusId', props.room.data.lastRoomStatus.name)
-        setValue('observations', props.room.data.observations)
+        setValue('observations', props.room.data.roomDetails)
+        setValue('typeEmergency', props.room.data.typeEmergency)
     }
 
     return (
@@ -295,6 +286,24 @@ export default function EditCategory(props: any) {
                         </div>
 
                         <div className="input-container">
+                            <label htmlFor="typeEmergency">Tipo de urgencia</label>
+                            <br />
+                            <select
+                                className="select"
+                                {...register("typeEmergency", { required: true })}
+                                id="typeEmergency"
+                                autoComplete="off"
+                                defaultValue={0}
+                            >
+                                <option value={0} disabled selected>Seleccione una opción</option>
+                                <option value={1}>Ninguna</option>
+                                <option value={2}>Normal</option>
+                                <option value={3}>Urgente</option>
+                            </select>
+                            <br />
+                        </div>
+
+                        <div className="input-container">
                             <label htmlFor="observations">Observaciones</label>
                             <br />
                             <textarea
@@ -309,7 +318,6 @@ export default function EditCategory(props: any) {
                             <br />
                         </div>
                     </div>
-
 
 
                     {!Object.values(errors).length ? (

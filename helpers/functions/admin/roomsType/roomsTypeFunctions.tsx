@@ -1,17 +1,21 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
 
+// CSS
+import styles from "../../../../styles/admin/system/rooms/roomTypes/CreateRoomTypes.module.css"
+
+// Libraries
+import { toast, TypeOptions } from 'react-toastify';
+
 // Helpers
 import { endpoint } from "../../../../config/endpoint";
 
 // Types
-import { RoomType, RoomTypeForm } from "../../../../types/RoomType"
+import { RoomType, RoomTypeForm, RoomTypeImages } from "../../../../types/RoomType"
+import { Hotel } from "../../../../types/Hotel";
 
-// Components and CSS
-import { toast, TypeOptions } from 'react-toastify';
-
-const TypeRoomsFunctions = () => {
-
+const TypeRoomsFunctions = (hotels: Array<Hotel>) => {
+    
     // Variables
     const router = useRouter()
     const initialDialogValues = {
@@ -29,11 +33,20 @@ const TypeRoomsFunctions = () => {
         show: false,
         title: 'Eliminando categoría',
     }
+    const initialImagesValues = {
+        type: 'add',
+        imageSelected: -1,
+        imageUrl: '',
+        hotelId: 0,
+        hotelName: ''
+    }
 
     // Use State
+    const [imagesUrl, setImagesUrl] = useState<Array<RoomTypeImages>>([])
     const [roomType, setRoomType] = useState<RoomTypeForm>()
-    const [showDialogConfirm, setShowDialogConfirm] = useState(initialDialogValues)
     const [showLoading, setShowLoading] = useState(initialLoadingValues)
+    const [showDialogConfirm, setShowDialogConfirm] = useState(initialDialogValues)
+    const [roomImageSelected, setRoomImageSelected] = useState(initialImagesValues)
 
     // Use Effect
 
@@ -44,6 +57,67 @@ const TypeRoomsFunctions = () => {
             autoClose: duration,
             closeOnClick: true,
             type: typeMessage
+        })
+    }
+
+    const loadHotelsImages = (hotels: Array<Hotel>) => {
+        const aImages = ['simple', 'double', 'suite']
+        
+        hotels.forEach((hotel: Hotel) => {
+            const pathHotelName = hotel.pathImageName.substring(0, hotel.pathImageName.length - 1)
+
+            aImages.forEach(image => {
+                const imageUrl = `${endpoint}/hotels/rooms/${pathHotelName}/to_show_website/${image}_room.webp`
+
+                setImagesUrl((oldValue: any) => [...oldValue, {hotelId: hotel.id, imageUrl, hotelName: hotel.pathImageName.substring(0, (hotel.pathImageName.length - 1))}])
+            });
+        });
+    }
+
+    const showImages = () => {
+        let html: any = []
+
+        imagesUrl.forEach((url: RoomTypeImages, index: number) => {
+            html.push(
+                <div key={index} className={styles.rooms_images_container}>
+                    <div className={styles.svg_icon_container}>
+                        <div className={styles.svg_icon_selected}>
+                            <svg className={styles.svg_icon} viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M16.59 7.58L10 14.17L7.41 11.59L6 13L10 17L18 9L16.59 7.58Z" />
+                            </svg>
+                            Imágen seleccionada
+                        </div>
+                        <div className={styles.remove_images} onClick={() => removeImages(index)}>
+                            <svg className={styles.svg_icon} viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <img src={url.imageUrl} alt="Habitación del hotel" onClick={() => addImages(index, url.hotelId, url.hotelName)} />
+                </div>
+            )
+        });
+
+        return html
+    }
+
+    const addImages = (index: number, hotelId: number, hotelName: string) => {
+        setRoomImageSelected({
+            ...roomImageSelected,
+            type: 'add',
+            imageSelected: index,
+            imageUrl: imagesUrl[index].imageUrl,
+            hotelId,
+            hotelName
+        })
+    }
+
+    const removeImages = (index: number) => {
+        setRoomImageSelected({
+            ...roomImageSelected,
+            type: 'remove',
+            imageSelected: index,
+            imageUrl: imagesUrl[index].imageUrl
         })
     }
 
@@ -113,6 +187,8 @@ const TypeRoomsFunctions = () => {
     }
 
     const showEditDialog = (dataForm: RoomType) => {
+        console.log(dataForm);
+        
         setShowDialogConfirm({
             ...showDialogConfirm,
             show: true,
@@ -128,11 +204,13 @@ const TypeRoomsFunctions = () => {
 
     const loadingData = (props: any) => {
         setShowLoading({ ...showLoading, show: true })
-        
-        if (!props.roomType.res) {
+
+        if (!props.res) {
             showMessage('El tipo de habitación que desea editar no se encuentra registrado en el sistema', 'warning', 4000)
             return router.replace(endpoint + '/aG90ZWxlc19wbGF6YQ0K/admin/system/rooms/rooms_type/rooms_type')
-        } else { setShowLoading({ ...showLoading, show: false }) }
+        } 
+        
+        setShowLoading({ ...showLoading, show: false })
     }
 
     const successEditConfirm = async (dataForm: RoomType) => {
@@ -154,9 +232,12 @@ const TypeRoomsFunctions = () => {
     }
 
     return {
+        imagesUrl,
+        showImages,
+        loadHotelsImages,
+        roomImageSelected,
         showDialogConfirm,
         showLoading,
-        // errorsMessages,
         successConfirm,
         successEditConfirm,
         showDialog,

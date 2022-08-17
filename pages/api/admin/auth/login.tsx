@@ -1,9 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// React and Next
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prismaDB from '../../../../prisma/Instance'
+
+// Libraries
 import * as cookie from 'cookie'
-import * as jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcrypt'
+import * as jwt from 'jsonwebtoken'
+import prismaDB from '../../../../prisma/Instance'
+
+// Helpers
 import { secret } from '../../../../api/secret'
 
 export default async function handler(
